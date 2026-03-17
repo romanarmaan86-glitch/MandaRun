@@ -1,0 +1,28 @@
+[gd_scene load_steps=7 format=3 uid="uid://bnii2d2u7oqgi"]
+
+[ext_resource type="PackedScene" uid="uid://cflhq27mnaldj" path="res://player.tscn" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://0dx64oxvii2t" path="res://obstaclespawner.gd" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://cvhr4c287cg3b" path="res://platformspawner.gd" id="2_lquwl"]
+[ext_resource type="PackedScene" uid="uid://jnl2hg513nmy" path="res://obstacle.tscn" id="3_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://cmoe7xasmk0f8" path="res://platform.tscn" id="3_7mycd"]
+[ext_resource type="PackedScene" uid="uid://csrc52403212j" path="res://star.tscn" id="4_lquwl"]
+
+[node name="Main" type="Node"]
+
+[node name="Player" parent="." instance=ExtResource("1_ig7tw")]
+
+[node name="Platformspawner" type="Node3D" parent="."]
+script = ExtResource("2_lquwl")
+platform_scene = ExtResource("3_7mycd")
+
+[node name="Obstaclespawner" type="Node3D" parent="."]
+script = ExtResource("2_0xm2m")
+obstacle_scene = ExtResource("3_1bvp3")
+star_scene = ExtResource("4_lquwl")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.70710677, -0.70710677, 0, 0.70710677, 0.70710677, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.90630776, 0.42261827, 0, -0.42261827, 0.90630776, 0, 3, 6)

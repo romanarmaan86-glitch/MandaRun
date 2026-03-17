@@ -1,22 +1,60 @@
-[gd_scene load_steps=4 format=3 uid="uid://c0a21lt3yvbla"]
+[gd_scene load_steps=13 format=3 uid="uid://bnii2d2u7oqgi"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rxg2q"]
-emission_enabled = true
-emission = Color(0.5449743, 0.54497427, 0.54497427, 1)
-emission_energy_multiplier = 7.44
+[ext_resource type="Script" uid="uid://gamauonbj2fw" path="res://main.gd" id="1_5vw27"]
+[ext_resource type="PackedScene" uid="uid://cflhq27mnaldj" path="res://player.tscn" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://0dx64oxvii2t" path="res://obstaclespawner.gd" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://7lwie4rk2p20" path="res://player.gd" id="2_5vw27"]
+[ext_resource type="PackedScene" uid="uid://jnl2hg513nmy" path="res://obstacle.tscn" id="3_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://csrc52403212j" path="res://star.tscn" id="4_lquwl"]
+[ext_resource type="Script" uid="uid://cvhr4c287cg3b" path="res://platformspawner.gd" id="6_7mycd"]
+[ext_resource type="PackedScene" uid="uid://cmoe7xasmk0f8" path="res://platform.tscn" id="7_5vw27"]
+[ext_resource type="Script" uid="uid://dwt5xejvpab6g" path="res://camera.gd" id="7_272bh"]
+[ext_resource type="PackedScene" uid="uid://cymjhoy1p0lsj" path="res://camera.tscn" id="8_kek77"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_glv2v"]
+[sub_resource type="Environment" id="Environment_5vw27"]
+ssr_enabled = true
+ssao_enabled = true
+ssil_enabled = true
+sdfgi_enabled = true
+glow_enabled = true
+fog_enabled = true
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.007
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uu6xs"]
+[sub_resource type="FogMaterial" id="FogMaterial_5vw27"]
+edge_fade = 2.8839984
 
-[node name="CharacterBody3D" type="CharacterBody3D"]
+[node name="Main" type="Node"]
+script = ExtResource("1_5vw27")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-material_override = SubResource("StandardMaterial3D_rxg2q")
-mesh = SubResource("CapsuleMesh_glv2v")
+[node name="World3D" type="Node3D" parent="."]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("CapsuleShape3D_uu6xs")
+[node name="Player" parent="World3D" instance=ExtResource("1_ig7tw")]
+script = ExtResource("2_5vw27")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.9659258, 0.25881904, 0, -0.25881904, 0.9659258, 0, 3, 5)
+[node name="Camera" parent="World3D/Player" instance=ExtResource("8_kek77")]
+transform = Transform3D(-4.222196e-08, 0.25881907, -0.9659258, 1.131334e-08, 0.9659259, 0.25881907, 1, 8.881784e-16, -4.371139e-08, -4, 3.5, 0)
+script = ExtResource("7_272bh")
+
+[node name="obstaclespawner" type="Node3D" parent="World3D"]
+script = ExtResource("2_0xm2m")
+obstacle_scene = ExtResource("3_1bvp3")
+star_scene = ExtResource("4_lquwl")
+
+[node name="platformspawner" type="Node3D" parent="World3D"]
+script = ExtResource("6_7mycd")
+platform_scene = ExtResource("7_5vw27")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="World3D"]
+environment = SubResource("Environment_5vw27")
+
+[node name="FogVolume" type="FogVolume" parent="World3D/WorldEnvironment"]
+transform = Transform3D(50, 0, 0, 0, 50, 0, 0, 0, 50, 70, 0, -0.271)
+shape = 2
+material = SubResource("FogMaterial_5vw27")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World3D/WorldEnvironment"]
+transform = Transform3D(0.49312222, 0.6726039, 0.5517559, 0, -0.6342313, 0.7731434, 0.86996007, -0.3812542, -0.31275356, 0, 0, 0)
+shadow_enabled = true
+
+[connection signal="died" from="World3D/Player" to="." method="_on_player_died"]

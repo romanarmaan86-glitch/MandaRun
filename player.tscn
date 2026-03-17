@@ -1,4 +1,7 @@
-extends CharacterBody3D
+[gd_scene load_steps=4 format=3 uid="uid://cflhq27mnaldj"]
+
+[sub_resource type="GDScript" id="GDScript_sh265"]
+script/source = "extends CharacterBody3D
 
 signal died
 
@@ -44,7 +47,7 @@ func _physics_process(delta: float) -> void:
 	position.z = lerp(position.z, target_z, LANE_LERP_SPEED * delta)
 
 	# Jump
-	if Input.is_action_just_pressed("ui_up") and is_on_floor() and not is_sliding:
+	if Input.is_action_just_pressed(\"ui_up\") and is_on_floor() and not is_sliding:
 		velocity.y = JUMP_VELOCITY
 
 	# Slide timer
@@ -63,11 +66,11 @@ func _input(event: InputEvent) -> void:
 	if dead:
 		return
 
-	if event.is_action_pressed("ui_left"):
+	if event.is_action_pressed(\"ui_left\"):
 		move_left()
-	elif event.is_action_pressed("ui_right"):
+	elif event.is_action_pressed(\"ui_right\"):
 		move_right()
-	elif event.is_action_pressed("ui_down"):
+	elif event.is_action_pressed(\"ui_down\"):
 		start_slide()
 
 func move_left() -> void:
@@ -90,7 +93,7 @@ func start_slide() -> void:
 	var shape = collider.shape as CapsuleShape3D
 	if shape:
 		var tween = create_tween().set_trans(Tween.TRANS_SINE)
-		tween.tween_property(shape, "height", SLIDE_HEIGHT, 0.15)
+		tween.tween_property(shape, \"height\", SLIDE_HEIGHT, 0.15)
 
 func end_slide() -> void:
 	is_sliding = false
@@ -98,11 +101,28 @@ func end_slide() -> void:
 	var shape = collider.shape as CapsuleShape3D
 	if shape:
 		var tween = create_tween().set_trans(Tween.TRANS_SINE)
-		tween.tween_property(shape, "height", NORMAL_HEIGHT, 0.15)
+		tween.tween_property(shape, \"height\", NORMAL_HEIGHT, 0.15)
 
 func hit_obstacle() -> void:
 	if dead:
 		return
 	dead = true
 	died.emit()
-	print("Player died! (obstacle / fall)")
+	print(\"Player died! (obstacle / fall)\")
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sh265"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_4flbx"]
+
+[node name="Player" type="CharacterBody3D"]
+collision_mask = 14
+script = SubResource("GDScript_sh265")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_sh265")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_4flbx")
