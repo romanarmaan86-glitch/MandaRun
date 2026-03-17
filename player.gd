@@ -8,7 +8,7 @@ const JUMP_VELOCITY     = 6.0
 const GRAVITY           = 20.0
 const AIR_SLIDE_FALL_SPEED = 12.0
 
-const SLIDE_TIME        = 0.6
+const SLIDE_TIME        = 0.5
 const NORMAL_HEIGHT     = 1.6
 const SLIDE_HEIGHT      = 0.8
 
@@ -22,6 +22,10 @@ var slide_timer  : float = 0.0
 var dead         : bool = false
 
 @onready var collider : CollisionShape3D = $CollisionShape3D
+@onready var mesh_stand: MeshInstance3D = $MeshInstance3D_Stand
+@onready var mesh_slide: MeshInstance3D = $MeshInstance3D_Slide 
+
+
 
 func _ready() -> void:
 	position.z = LANES[current_lane]
@@ -91,7 +95,10 @@ func start_slide() -> void:
 	if shape:
 		var tween = create_tween().set_trans(Tween.TRANS_SINE)
 		tween.tween_property(shape, "height", SLIDE_HEIGHT, 0.15)
-
+		
+	mesh_stand.visible = false
+	mesh_slide.visible = true
+	
 func end_slide() -> void:
 	is_sliding = false
 
@@ -99,6 +106,9 @@ func end_slide() -> void:
 	if shape:
 		var tween = create_tween().set_trans(Tween.TRANS_SINE)
 		tween.tween_property(shape, "height", NORMAL_HEIGHT, 0.15)
+		
+	mesh_stand.visible = true
+	mesh_slide.visible = false
 
 func hit_obstacle() -> void:
 	if dead:

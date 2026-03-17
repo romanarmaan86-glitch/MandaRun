@@ -1,128 +1,26 @@
-[gd_scene load_steps=4 format=3 uid="uid://cflhq27mnaldj"]
+[gd_scene load_steps=5 format=3 uid="uid://cflhq27mnaldj"]
 
-[sub_resource type="GDScript" id="GDScript_sh265"]
-script/source = "extends CharacterBody3D
-
-signal died
-
-const LANES = [-1.5, 0.0, 1.5]
-
-const JUMP_VELOCITY     = 6.0
-const GRAVITY           = 20.0
-const AIR_SLIDE_FALL_SPEED = 12.0
-
-const SLIDE_TIME        = 0.6
-const NORMAL_HEIGHT     = 1.6
-const SLIDE_HEIGHT      = 0.8
-
-const LANE_LERP_SPEED   = 12.0      # ← increased from 12 → much faster lane changes
-
-const DEATH_Y           = -10.0
-
-var current_lane : int = 1
-var is_sliding   : bool = false
-var slide_timer  : float = 0.0
-var dead         : bool = false
-
-@onready var collider : CollisionShape3D = $CollisionShape3D
-
-func _ready() -> void:
-	position.z = LANES[current_lane]
-
-func _physics_process(delta: float) -> void:
-	if dead:
-		velocity = Vector3.ZERO
-		return
-
-	# Gravity
-	if not is_on_floor():
-		velocity.y -= GRAVITY * delta
-
-	# Faster fall when sliding in air
-	if is_sliding and not is_on_floor() and velocity.y < 0:
-		velocity.y = -AIR_SLIDE_FALL_SPEED
-
-	# Smooth lane movement – now very responsive
-	var target_z = LANES[current_lane]
-	position.z = lerp(position.z, target_z, LANE_LERP_SPEED * delta)
-
-	# Jump
-	if Input.is_action_just_pressed(\"ui_up\") and is_on_floor() and not is_sliding:
-		velocity.y = JUMP_VELOCITY
-
-	# Slide timer
-	if is_sliding:
-		slide_timer -= delta
-		if slide_timer <= 0:
-			end_slide()
-
-	move_and_slide()
-
-	# Fall death
-	if global_position.y < DEATH_Y:
-		hit_obstacle()
-
-func _input(event: InputEvent) -> void:
-	if dead:
-		return
-
-	if event.is_action_pressed(\"ui_left\"):
-		move_left()
-	elif event.is_action_pressed(\"ui_right\"):
-		move_right()
-	elif event.is_action_pressed(\"ui_down\"):
-		start_slide()
-
-func move_left() -> void:
-	if is_sliding:
-		end_slide()
-	current_lane = max(current_lane - 1, 0)
-
-func move_right() -> void:
-	if is_sliding:
-		end_slide()
-	current_lane = min(current_lane + 1, LANES.size() - 1)
-
-func start_slide() -> void:
-	if is_sliding or not is_on_floor() or dead:
-		return
-
-	is_sliding = true
-	slide_timer = SLIDE_TIME
-
-	var shape = collider.shape as CapsuleShape3D
-	if shape:
-		var tween = create_tween().set_trans(Tween.TRANS_SINE)
-		tween.tween_property(shape, \"height\", SLIDE_HEIGHT, 0.15)
-
-func end_slide() -> void:
-	is_sliding = false
-
-	var shape = collider.shape as CapsuleShape3D
-	if shape:
-		var tween = create_tween().set_trans(Tween.TRANS_SINE)
-		tween.tween_property(shape, \"height\", NORMAL_HEIGHT, 0.15)
-
-func hit_obstacle() -> void:
-	if dead:
-		return
-	dead = true
-	died.emit()
-	print(\"Player died! (obstacle / fall)\")
-"
+[ext_resource type="Script" uid="uid://7lwie4rk2p20" path="res://player.gd" id="1_4flbx"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sh265"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_4flbx"]
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_sh265"]
+
 [node name="Player" type="CharacterBody3D"]
 collision_mask = 14
-script = SubResource("GDScript_sh265")
+script = ExtResource("1_4flbx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("BoxShape3D_sh265")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D_Stand" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_4flbx")
+
+[node name="MeshInstance3D_Slide" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 1.223919e-07, 7.642743e-15, 0, -3.059797e-08, 1, 1.7484557e-07, -0.7, -4.371139e-08, 0, 0.5, 0)
+visible = false
+mesh = SubResource("CapsuleMesh_sh265")
