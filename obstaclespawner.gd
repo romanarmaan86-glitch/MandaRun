@@ -19,7 +19,6 @@ func spawn_obstacle(platform: Node3D) -> void:
 	if randf() > spawn_chance:
 		last_single_free_lane = -1
 		return
-
 	# === SECTION 1 (front) ===
 	var section1_x = 4.0
 	var free1 = spawn_section(platform, section1_x)
