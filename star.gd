@@ -2,23 +2,21 @@ extends Area3D
 
 @export var points := 10
 
-func _ready():
-	# Connect in code to be sure (safer than editor sometimes)
+func _ready() -> void:
 	body_entered.connect(_on_body_entered)
-	# Debug: print when ready
 	print("Star ready at ", global_position, " - monitoring: ", monitoring)
 
-func _process(delta: float):
-	rotate_y(delta * 4.0)  # spin
+func _process(delta: float) -> void:
+	rotate_y(delta * 4.0)  # nice spin speed
 
-func _on_body_entered(body: Node3D):
-	print("Something entered star! Body: ", body.name, " | Class: ", body.get_class())
-	# Temporarily collect on ANY body – remove this check later
-	collect()
-	# Or stricter: if body.is_in_group("player") or body.name == "Player":
-	#     collect()
+func _on_body_entered(body: Node3D) -> void:
+	if body.is_in_group("player"):   # ← only player collects (safer)
+		print("⭐ Star collected by player! +", points, " at ", global_position)
+		collect()
 
-func collect():
-	print("⭐ Star collected! +", points)
-	# Add your score here later, e.g. Global.score += points
-	queue_free()
+func collect() -> void:
+	# Later: Global.score += points  or signal to HUD
+	# For now just visual feedback
+	var tween = create_tween().set_parallel()
+	tween.tween_property(self, "scale", Vector3(1.8, 1.8, 1.8), 0.12)
+	tween.tween_callback(queue_free)

@@ -1,9 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://bnii2d2u7oqgi"]
+[gd_scene load_steps=12 format=3 uid="uid://bnii2d2u7oqgi"]
 
 [ext_resource type="Script" uid="uid://gamauonbj2fw" path="res://main.gd" id="1_5vw27"]
 [ext_resource type="PackedScene" uid="uid://cflhq27mnaldj" path="res://player.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://0dx64oxvii2t" path="res://obstaclespawner.gd" id="2_0xm2m"]
-[ext_resource type="Script" uid="uid://7lwie4rk2p20" path="res://player.gd" id="2_5vw27"]
 [ext_resource type="PackedScene" uid="uid://jnl2hg513nmy" path="res://obstacle.tscn" id="3_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://csrc52403212j" path="res://star.tscn" id="4_lquwl"]
 [ext_resource type="Script" uid="uid://cvhr4c287cg3b" path="res://platformspawner.gd" id="6_7mycd"]
@@ -30,7 +29,6 @@ script = ExtResource("1_5vw27")
 [node name="World3D" type="Node3D" parent="."]
 
 [node name="Player" parent="World3D" instance=ExtResource("1_ig7tw")]
-script = ExtResource("2_5vw27")
 
 [node name="Camera" parent="World3D/Player" instance=ExtResource("8_kek77")]
 transform = Transform3D(-4.222196e-08, 0.25881907, -0.9659258, 1.131334e-08, 0.9659259, 0.25881907, 1, 8.881784e-16, -4.371139e-08, -4, 3.5, 0)
