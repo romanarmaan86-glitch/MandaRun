@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://daw3dl8tyfbvc"]
+
+[ext_resource type="Script" uid="uid://bmifmoucafa4l" path="res://star.gd" id="1_46ao5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_46ao5"]
+albedo_color = Color(0.62352943, 0.4862745, 0.18039216, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sl1jc"]
+lightmap_size_hint = Vector2i(14, 21)
+material = SubResource("StandardMaterial3D_46ao5")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aubd6"]
+
+[node name="Obstacle" type="Node3D"]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+mesh = SubResource("BoxMesh_sl1jc")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 4
+script = ExtResource("1_46ao5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+shape = SubResource("BoxShape3D_aubd6")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
