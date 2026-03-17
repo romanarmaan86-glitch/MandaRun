@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Manda-Run"
-run/main_scene="uid://bnii2d2u7oqgi"
+run/main_scene="uid://b740b53jde4ac"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 

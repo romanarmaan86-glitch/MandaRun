@@ -9,7 +9,6 @@ const MOVE_SPEED := 15.0
 
 var platforms: Array[Node3D] = []
 
-
 func _ready() -> void:
 	for i in PLATFORM_COUNT:
 		spawn_platform(i)

@@ -14,7 +14,7 @@ const EVADE_SIZE: Vector3       = Vector3(2.5, 2.0, 0.6)
 
 var last_single_free_lane: int = -1
 
-# ────────────────────────────────────────────────
+# ──────────────────────────────────────────────── 
 func spawn_obstacle(platform: Node3D) -> void:
 	if randf() > spawn_chance:
 		last_single_free_lane = -1
