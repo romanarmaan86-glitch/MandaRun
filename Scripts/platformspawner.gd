@@ -1,17 +1,21 @@
 extends Node3D
 
 # ─────────────────────────────────────────────────────────────
-# platformspawner.gd
-# Every QUIZ_EVERY_N platforms after the grace period becomes a
-# quiz platform (120 units long instead of 20).
+# platformspawner.gd  (Scripts/platformspawner.gd)
+#
+# Delete fix: instead of a fixed DELETE_X threshold, each platform
+# is deleted only when its FAR END has scrolled past x = -20.
+# Far end = position.x + platform_length.
+# This prevents the quiz platform (60 units long) from being
+# deleted while its panels are still on screen.
 # ─────────────────────────────────────────────────────────────
 
-const PLATFORM_COUNT      := 7
-const PLATFORM_LENGTH     := 20.0
-const QUIZ_PLATFORM_LENGTH := 120.0
-const DELETE_X            := -20
-const MOVE_SPEED          := 15.0
-const QUIZ_EVERY_N        := 5
+const PLATFORM_COUNT       := 7
+const PLATFORM_LENGTH      := 20.0
+const QUIZ_PLATFORM_LENGTH := 60.0
+const DELETE_X             := -20.0   # far end must pass this to delete
+const MOVE_SPEED           := 15.0
+const QUIZ_EVERY_N         := 5
 
 @export var platform_scene: PackedScene
 @export var quiz_platform_scene: PackedScene
@@ -30,8 +34,12 @@ func _physics_process(delta: float) -> void:
 		if platform == null or not is_instance_valid(platform):
 			platforms.erase(platform)
 			continue
+
 		platform.position.x -= MOVE_SPEED * delta
-		if platform.position.x < DELETE_X:
+
+		# Delete only when the FAR END of the platform is off screen
+		var length = _get_platform_length(platform)
+		if platform.position.x + length < DELETE_X:
 			platform.queue_free()
 			platforms.erase(platform)
 			_spawn_next()
@@ -60,7 +68,7 @@ func _spawn_normal(index: int = -1) -> void:
 
 func _spawn_quiz() -> void:
 	if quiz_platform_scene == null:
-		printerr("quiz_platform_scene not assigned — falling back to normal platform")
+		printerr("quiz_platform_scene not assigned — falling back to normal")
 		_spawn_normal()
 		return
 	var p = quiz_platform_scene.instantiate() as Node3D
@@ -70,17 +78,14 @@ func _spawn_quiz() -> void:
 	p.position = Vector3(_next_x(QUIZ_PLATFORM_LENGTH), 0, 0)
 	add_child(p)
 	platforms.append(p)
-	# No obstacles on quiz platforms
 
 func _next_x(incoming_length: float) -> float:
 	if platforms.is_empty():
 		return 0.0
 	var last = platforms.back()
-	var last_len = _get_platform_length(last)
-	return last.position.x + last_len
+	return last.position.x + _get_platform_length(last)
 
 func _get_platform_length(p: Node3D) -> float:
-	# Quiz platforms expose QUIZ_PLATFORM_LENGTH as a script constant
 	if p.get_script() != null:
 		var val = p.get("QUIZ_PLATFORM_LENGTH")
 		if val != null:
