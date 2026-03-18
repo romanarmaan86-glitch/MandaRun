@@ -1,15 +1,15 @@
 [gd_scene load_steps=13 format=3 uid="uid://bnii2d2u7oqgi"]
 
-[ext_resource type="Script" uid="uid://gamauonbj2fw" path="res://main.gd" id="1_5vw27"]
-[ext_resource type="PackedScene" uid="uid://cflhq27mnaldj" path="res://player.tscn" id="1_ig7tw"]
-[ext_resource type="Script" uid="uid://0dx64oxvii2t" path="res://obstaclespawner.gd" id="2_0xm2m"]
-[ext_resource type="PackedScene" uid="uid://jnl2hg513nmy" path="res://obstacle.tscn" id="3_1bvp3"]
-[ext_resource type="PackedScene" uid="uid://csrc52403212j" path="res://star.tscn" id="4_lquwl"]
-[ext_resource type="Script" uid="uid://cvhr4c287cg3b" path="res://platformspawner.gd" id="6_7mycd"]
-[ext_resource type="PackedScene" uid="uid://cmoe7xasmk0f8" path="res://platform.tscn" id="7_5vw27"]
-[ext_resource type="Script" uid="uid://dwt5xejvpab6g" path="res://camera.gd" id="7_272bh"]
-[ext_resource type="PackedScene" uid="uid://cymjhoy1p0lsj" path="res://camera.tscn" id="8_kek77"]
-[ext_resource type="PackedScene" uid="uid://df002e2cc4iyp" path="res://quiz_platform.tscn" id="10_4c57u"]
+[ext_resource type="Script" uid="uid://gamauonbj2fw" path="res://Scripts/main.gd" id="1_hptm8"]
+[ext_resource type="PackedScene" uid="uid://cflhq27mnaldj" path="res://Scenes/player.tscn" id="2_d1ilt"]
+[ext_resource type="PackedScene" uid="uid://cymjhoy1p0lsj" path="res://Scenes/camera.tscn" id="3_6iyac"]
+[ext_resource type="Script" uid="uid://dwt5xejvpab6g" path="res://Scripts/camera.gd" id="4_fdnlq"]
+[ext_resource type="Script" uid="uid://0dx64oxvii2t" path="res://Scripts/obstaclespawner.gd" id="5_jkdf5"]
+[ext_resource type="PackedScene" uid="uid://jnl2hg513nmy" path="res://Scenes/obstacle.tscn" id="6_wsu2k"]
+[ext_resource type="PackedScene" uid="uid://csrc52403212j" path="res://Scenes/star.tscn" id="7_k12tt"]
+[ext_resource type="Script" uid="uid://cvhr4c287cg3b" path="res://Scripts/platformspawner.gd" id="8_h1bgf"]
+[ext_resource type="PackedScene" uid="uid://cmoe7xasmk0f8" path="res://Scenes/platform.tscn" id="9_b3802"]
+[ext_resource type="PackedScene" uid="uid://df002e2cc4iyp" path="res://Scenes/quiz_platform.tscn" id="10_fevyy"]
 
 [sub_resource type="Environment" id="Environment_5vw27"]
 ssr_enabled = true
@@ -25,25 +25,25 @@ volumetric_fog_density = 0.007
 edge_fade = 2.8839984
 
 [node name="Main" type="Node"]
-script = ExtResource("1_5vw27")
+script = ExtResource("1_hptm8")
 
 [node name="World3D" type="Node3D" parent="."]
 
-[node name="Player" parent="World3D" instance=ExtResource("1_ig7tw")]
+[node name="Player" parent="World3D" instance=ExtResource("2_d1ilt")]
 
-[node name="Camera" parent="World3D/Player" instance=ExtResource("8_kek77")]
+[node name="Camera" parent="World3D/Player" instance=ExtResource("3_6iyac")]
 transform = Transform3D(-4.222196e-08, 0.25881907, -0.9659258, 1.131334e-08, 0.9659259, 0.25881907, 1, 8.881784e-16, -4.371139e-08, -4, 3.5, 0)
-script = ExtResource("7_272bh")
+script = ExtResource("4_fdnlq")
 
 [node name="obstaclespawner" type="Node3D" parent="World3D"]
-script = ExtResource("2_0xm2m")
-obstacle_scene = ExtResource("3_1bvp3")
-star_scene = ExtResource("4_lquwl")
+script = ExtResource("5_jkdf5")
+obstacle_scene = ExtResource("6_wsu2k")
+star_scene = ExtResource("7_k12tt")
 
 [node name="platformspawner" type="Node3D" parent="World3D"]
-script = ExtResource("6_7mycd")
-platform_scene = ExtResource("7_5vw27")
-quiz_platform_scene = ExtResource("10_4c57u")
+script = ExtResource("8_h1bgf")
+platform_scene = ExtResource("9_b3802")
+quiz_platform_scene = ExtResource("10_fevyy")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="World3D"]
 environment = SubResource("Environment_5vw27")

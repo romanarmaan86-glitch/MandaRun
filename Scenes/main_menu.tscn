@@ -1,11 +1,11 @@
 [gd_scene load_steps=9 format=3 uid="uid://b740b53jde4ac"]
 
-[ext_resource type="Texture2D" uid="uid://d26rq5df5su3u" path="res://Background.png" id="1_7vrkn"]
-[ext_resource type="Script" uid="uid://gaie2gl0tnbn" path="res://main_menu.gd" id="1_fu7sn"]
-[ext_resource type="FontFile" uid="uid://bn28sktmelutm" path="res://Some Time Later.otf" id="2_fu7sn"]
+[ext_resource type="Script" uid="uid://gaie2gl0tnbn" path="res://Scripts/main_menu.gd" id="1_1ehe0"]
+[ext_resource type="Texture2D" uid="uid://d26rq5df5su3u" path="res://Background.png" id="2_ce3w2"]
+[ext_resource type="FontFile" uid="uid://bn28sktmelutm" path="res://Some Time Later.otf" id="3_n45e2"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jix8l"]
-texture = ExtResource("1_7vrkn")
+texture = ExtResource("2_ce3w2")
 expand_margin_top = 51.0
 modulate_color = Color(0.36282945, 0.36282945, 0.36282945, 1)
 
@@ -42,7 +42,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_fu7sn")
+script = ExtResource("1_1ehe0")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -114,7 +114,7 @@ grow_vertical = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.38039216)
 theme_override_constants/shadow_offset_x = 5
 theme_override_constants/shadow_offset_y = 4
-theme_override_fonts/font = ExtResource("2_fu7sn")
+theme_override_fonts/font = ExtResource("3_n45e2")
 theme_override_font_sizes/font_size = 80
 text = "Manda-Run"
 horizontal_alignment = 1

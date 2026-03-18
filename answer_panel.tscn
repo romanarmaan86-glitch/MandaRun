@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://c4v5313h0jip6"]
-
-[ext_resource type="Script" uid="uid://b22223bdjmvao" path="res://answer_panel.gd" id="1_ul6s2"]
-
-[node name="answer_panel" type="Area3D"]
-script = ExtResource("1_ul6s2")
