@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bnii2d2u7oqgi"]
+[gd_scene load_steps=13 format=3 uid="uid://bnii2d2u7oqgi"]
 
 [ext_resource type="Script" uid="uid://gamauonbj2fw" path="res://main.gd" id="1_5vw27"]
 [ext_resource type="PackedScene" uid="uid://cflhq27mnaldj" path="res://player.tscn" id="1_ig7tw"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cmoe7xasmk0f8" path="res://platform.tscn" id="7_5vw27"]
 [ext_resource type="Script" uid="uid://dwt5xejvpab6g" path="res://camera.gd" id="7_272bh"]
 [ext_resource type="PackedScene" uid="uid://cymjhoy1p0lsj" path="res://camera.tscn" id="8_kek77"]
+[ext_resource type="PackedScene" uid="uid://df002e2cc4iyp" path="res://quiz_platform.tscn" id="10_4c57u"]
 
 [sub_resource type="Environment" id="Environment_5vw27"]
 ssr_enabled = true
@@ -42,6 +43,7 @@ star_scene = ExtResource("4_lquwl")
 [node name="platformspawner" type="Node3D" parent="World3D"]
 script = ExtResource("6_7mycd")
 platform_scene = ExtResource("7_5vw27")
+quiz_platform_scene = ExtResource("10_4c57u")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="World3D"]
 environment = SubResource("Environment_5vw27")
@@ -54,5 +56,64 @@ material = SubResource("FogMaterial_5vw27")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World3D/WorldEnvironment"]
 transform = Transform3D(0.49312222, 0.6726039, 0.5517559, 0, -0.6342313, 0.7731434, 0.86996007, -0.3812542, -0.31275356, 0, 0, 0)
 shadow_enabled = true
+
+[node name="Hud" type="CanvasLayer" parent="."]
+
+[node name="QuizBox" type="Control" parent="Hud"]
+visible = false
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -251.5
+offset_right = 251.5
+offset_bottom = 123.0
+grow_horizontal = 2
+
+[node name="Chinese" type="Label" parent="Hud/QuizBox"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -118.25
+offset_right = 118.25
+offset_bottom = 79.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="English" type="Label" parent="Hud/QuizBox"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -118.25
+offset_right = 118.25
+offset_bottom = 79.0
+grow_horizontal = 2
+
+[node name="Pinyin" type="Label" parent="Hud/QuizBox"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -118.0
+offset_top = 31.0
+offset_right = 118.5
+offset_bottom = 110.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FlashOverlay" type="ColorRect" parent="Hud"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [connection signal="died" from="World3D/Player" to="." method="_on_player_died"]

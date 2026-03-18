@@ -4,7 +4,7 @@ signal died
 
 const LANES = [-1.5, 0.0, 1.5]
 const JUMP_VELOCITY = 6.0
-const GRAVITY = 20.0
+const GRAVITY = 25.0
 const AIR_SLIDE_FALL_SPEED = 12.0
 const SLIDE_TIME = 0.5
 const AIR_SLIDE_TIME_MULTIPLIER = 0.7   # Makes mid-air slides feel snappier (optional)

@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://df002e2cc4iyp"]
+
+[ext_resource type="Script" uid="uid://qpjjbqdy0dpy" path="res://quiz_platform.gd" id="1_ouotr"]
+[ext_resource type="PackedScene" uid="uid://c4v5313h0jip6" path="res://answer_panel.tscn" id="2_wq4rj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wun37"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_t8niy"]
+
+[node name="quiz_platform" type="Node3D"]
+script = ExtResource("1_ouotr")
+answer_panel_scene = ExtResource("2_wq4rj")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(60, 0, 0, 0, 0.2, 0, 0, 0, 5, 0, -0.1, 0)
+shape = SubResource("BoxShape3D_wun37")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(60, 0, 0, 0, 0.2, 0, 0, 0, 5, 0, -0.1, 0)
+mesh = SubResource("BoxMesh_t8niy")

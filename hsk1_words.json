@@ -1,0 +1,3002 @@
+[
+  {
+    "rank": 1,
+    "chinese": "的",
+    "pinyin": "de",
+    "meaning": "structural particle (possessive/modifier)"
+  },
+  {
+    "rank": 2,
+    "chinese": "是",
+    "pinyin": "shì",
+    "meaning": "to be"
+  },
+  {
+    "rank": 3,
+    "chinese": "不",
+    "pinyin": "bù",
+    "meaning": "not, no"
+  },
+  {
+    "rank": 4,
+    "chinese": "了",
+    "pinyin": "le",
+    "meaning": "completed action particle"
+  },
+  {
+    "rank": 5,
+    "chinese": "人",
+    "pinyin": "rén",
+    "meaning": "person, people"
+  },
+  {
+    "rank": 6,
+    "chinese": "我",
+    "pinyin": "wǒ",
+    "meaning": "I, me"
+  },
+  {
+    "rank": 7,
+    "chinese": "在",
+    "pinyin": "zài",
+    "meaning": "at, in, on; to be at"
+  },
+  {
+    "rank": 8,
+    "chinese": "有",
+    "pinyin": "yǒu",
+    "meaning": "to have, there is/are"
+  },
+  {
+    "rank": 9,
+    "chinese": "他",
+    "pinyin": "tā",
+    "meaning": "he, him"
+  },
+  {
+    "rank": 10,
+    "chinese": "这",
+    "pinyin": "zhè",
+    "meaning": "this"
+  },
+  {
+    "rank": 11,
+    "chinese": "中",
+    "pinyin": "zhōng",
+    "meaning": "middle, center, China"
+  },
+  {
+    "rank": 12,
+    "chinese": "大",
+    "pinyin": "dà",
+    "meaning": "big, large, great"
+  },
+  {
+    "rank": 13,
+    "chinese": "来",
+    "pinyin": "lái",
+    "meaning": "to come"
+  },
+  {
+    "rank": 14,
+    "chinese": "上",
+    "pinyin": "shàng",
+    "meaning": "up, above, on"
+  },
+  {
+    "rank": 15,
+    "chinese": "国",
+    "pinyin": "guó",
+    "meaning": "country, nation"
+  },
+  {
+    "rank": 16,
+    "chinese": "个",
+    "pinyin": "gè",
+    "meaning": "general measure word"
+  },
+  {
+    "rank": 17,
+    "chinese": "到",
+    "pinyin": "dào",
+    "meaning": "to arrive, to reach"
+  },
+  {
+    "rank": 18,
+    "chinese": "说",
+    "pinyin": "shuō",
+    "meaning": "to say, to speak"
+  },
+  {
+    "rank": 19,
+    "chinese": "们",
+    "pinyin": "men",
+    "meaning": "plural suffix for pronouns"
+  },
+  {
+    "rank": 20,
+    "chinese": "为",
+    "pinyin": "wèi/wéi",
+    "meaning": "for, because of; to be, to do"
+  },
+  {
+    "rank": 21,
+    "chinese": "子",
+    "pinyin": "zi",
+    "meaning": "child; suffix for nouns"
+  },
+  {
+    "rank": 22,
+    "chinese": "和",
+    "pinyin": "hé",
+    "meaning": "and, with"
+  },
+  {
+    "rank": 23,
+    "chinese": "你",
+    "pinyin": "nǐ",
+    "meaning": "you"
+  },
+  {
+    "rank": 24,
+    "chinese": "地",
+    "pinyin": "de/dì",
+    "meaning": "structural particle (adverbial); ground, land"
+  },
+  {
+    "rank": 25,
+    "chinese": "出",
+    "pinyin": "chū",
+    "meaning": "to go out, to come out"
+  },
+  {
+    "rank": 26,
+    "chinese": "道",
+    "pinyin": "dào",
+    "meaning": "road, way; to say"
+  },
+  {
+    "rank": 27,
+    "chinese": "也",
+    "pinyin": "yě",
+    "meaning": "also, too"
+  },
+  {
+    "rank": 28,
+    "chinese": "时",
+    "pinyin": "shí",
+    "meaning": "time, period"
+  },
+  {
+    "rank": 29,
+    "chinese": "年",
+    "pinyin": "nián",
+    "meaning": "year"
+  },
+  {
+    "rank": 30,
+    "chinese": "得",
+    "pinyin": "de/dé/děi",
+    "meaning": "structural particle; to get; must"
+  },
+  {
+    "rank": 31,
+    "chinese": "就",
+    "pinyin": "jiù",
+    "meaning": "then, right away; just"
+  },
+  {
+    "rank": 32,
+    "chinese": "那",
+    "pinyin": "nà",
+    "meaning": "that"
+  },
+  {
+    "rank": 33,
+    "chinese": "要",
+    "pinyin": "yào",
+    "meaning": "to want, to need; will, going to"
+  },
+  {
+    "rank": 34,
+    "chinese": "下",
+    "pinyin": "xià",
+    "meaning": "down, below, under"
+  },
+  {
+    "rank": 35,
+    "chinese": "以",
+    "pinyin": "yǐ",
+    "meaning": "with, by means of, according to"
+  },
+  {
+    "rank": 36,
+    "chinese": "生",
+    "pinyin": "shēng",
+    "meaning": "to be born; life"
+  },
+  {
+    "rank": 37,
+    "chinese": "会",
+    "pinyin": "huì",
+    "meaning": "can, be able to; will; meeting"
+  },
+  {
+    "rank": 38,
+    "chinese": "自",
+    "pinyin": "zì",
+    "meaning": "self, oneself"
+  },
+  {
+    "rank": 39,
+    "chinese": "着",
+    "pinyin": "zhe",
+    "meaning": "ongoing action particle"
+  },
+  {
+    "rank": 40,
+    "chinese": "去",
+    "pinyin": "qù",
+    "meaning": "to go"
+  },
+  {
+    "rank": 41,
+    "chinese": "之",
+    "pinyin": "zhī",
+    "meaning": "structural particle (literary)"
+  },
+  {
+    "rank": 42,
+    "chinese": "过",
+    "pinyin": "guò",
+    "meaning": "to pass; experienced action particle"
+  },
+  {
+    "rank": 43,
+    "chinese": "家",
+    "pinyin": "jiā",
+    "meaning": "family, home, house"
+  },
+  {
+    "rank": 44,
+    "chinese": "学",
+    "pinyin": "xué",
+    "meaning": "to study, to learn"
+  },
+  {
+    "rank": 45,
+    "chinese": "对",
+    "pinyin": "duì",
+    "meaning": "correct; toward; to face"
+  },
+  {
+    "rank": 46,
+    "chinese": "可",
+    "pinyin": "kě",
+    "meaning": "can, may; but"
+  },
+  {
+    "rank": 47,
+    "chinese": "她",
+    "pinyin": "tā",
+    "meaning": "she, her"
+  },
+  {
+    "rank": 48,
+    "chinese": "里",
+    "pinyin": "lǐ",
+    "meaning": "inside, within"
+  },
+  {
+    "rank": 49,
+    "chinese": "后",
+    "pinyin": "hòu",
+    "meaning": "behind, after, later"
+  },
+  {
+    "rank": 50,
+    "chinese": "小",
+    "pinyin": "xiǎo",
+    "meaning": "small, little, young"
+  },
+  {
+    "rank": 51,
+    "chinese": "么",
+    "pinyin": "me",
+    "meaning": "suffix for question words"
+  },
+  {
+    "rank": 52,
+    "chinese": "心",
+    "pinyin": "xīn",
+    "meaning": "heart, mind"
+  },
+  {
+    "rank": 53,
+    "chinese": "多",
+    "pinyin": "duō",
+    "meaning": "many, much, more"
+  },
+  {
+    "rank": 54,
+    "chinese": "天",
+    "pinyin": "tiān",
+    "meaning": "sky, day, heaven"
+  },
+  {
+    "rank": 55,
+    "chinese": "而",
+    "pinyin": "ér",
+    "meaning": "and, but, yet"
+  },
+  {
+    "rank": 56,
+    "chinese": "能",
+    "pinyin": "néng",
+    "meaning": "can, be able to"
+  },
+  {
+    "rank": 57,
+    "chinese": "好",
+    "pinyin": "hǎo",
+    "meaning": "good, well; very"
+  },
+  {
+    "rank": 58,
+    "chinese": "都",
+    "pinyin": "dōu/dū",
+    "meaning": "all, both; capital city"
+  },
+  {
+    "rank": 59,
+    "chinese": "然",
+    "pinyin": "rán",
+    "meaning": "so, thus, like that"
+  },
+  {
+    "rank": 60,
+    "chinese": "没",
+    "pinyin": "méi",
+    "meaning": "not, no (negation of 有)"
+  },
+  {
+    "rank": 61,
+    "chinese": "日",
+    "pinyin": "rì",
+    "meaning": "sun, day"
+  },
+  {
+    "rank": 62,
+    "chinese": "于",
+    "pinyin": "yú",
+    "meaning": "at, in, on, to, from"
+  },
+  {
+    "rank": 63,
+    "chinese": "起",
+    "pinyin": "qǐ",
+    "meaning": "to rise, to start"
+  },
+  {
+    "rank": 64,
+    "chinese": "还",
+    "pinyin": "hái/huán",
+    "meaning": "still, yet, also; to return"
+  },
+  {
+    "rank": 65,
+    "chinese": "发",
+    "pinyin": "fā/fà",
+    "meaning": "to send out, to happen; hair"
+  },
+  {
+    "rank": 66,
+    "chinese": "成",
+    "pinyin": "chéng",
+    "meaning": "to become, to succeed"
+  },
+  {
+    "rank": 67,
+    "chinese": "事",
+    "pinyin": "shì",
+    "meaning": "matter, affair, thing"
+  },
+  {
+    "rank": 68,
+    "chinese": "只",
+    "pinyin": "zhī/zhǐ",
+    "meaning": "measure word for animals; only, just"
+  },
+  {
+    "rank": 69,
+    "chinese": "作",
+    "pinyin": "zuò",
+    "meaning": "to do, to make, to write"
+  },
+  {
+    "rank": 70,
+    "chinese": "当",
+    "pinyin": "dāng/dàng",
+    "meaning": "when; to serve as; suitable"
+  },
+  {
+    "rank": 71,
+    "chinese": "想",
+    "pinyin": "xiǎng",
+    "meaning": "to think, to miss, to want"
+  },
+  {
+    "rank": 72,
+    "chinese": "看",
+    "pinyin": "kàn",
+    "meaning": "to look, to watch, to read"
+  },
+  {
+    "rank": 73,
+    "chinese": "文",
+    "pinyin": "wén",
+    "meaning": "language, writing, culture"
+  },
+  {
+    "rank": 74,
+    "chinese": "无",
+    "pinyin": "wú",
+    "meaning": "without, none, no"
+  },
+  {
+    "rank": 75,
+    "chinese": "开",
+    "pinyin": "kāi",
+    "meaning": "to open, to start, to drive"
+  },
+  {
+    "rank": 76,
+    "chinese": "手",
+    "pinyin": "shǒu",
+    "meaning": "hand"
+  },
+  {
+    "rank": 77,
+    "chinese": "十",
+    "pinyin": "shí",
+    "meaning": "ten"
+  },
+  {
+    "rank": 78,
+    "chinese": "用",
+    "pinyin": "yòng",
+    "meaning": "to use"
+  },
+  {
+    "rank": 79,
+    "chinese": "主",
+    "pinyin": "zhǔ",
+    "meaning": "master, main, primary"
+  },
+  {
+    "rank": 80,
+    "chinese": "行",
+    "pinyin": "xíng/háng",
+    "meaning": "to walk, to travel; row, line"
+  },
+  {
+    "rank": 81,
+    "chinese": "方",
+    "pinyin": "fāng",
+    "meaning": "direction, square, method"
+  },
+  {
+    "rank": 82,
+    "chinese": "又",
+    "pinyin": "yòu",
+    "meaning": "again, also"
+  },
+  {
+    "rank": 83,
+    "chinese": "如",
+    "pinyin": "rú",
+    "meaning": "like, as if, as"
+  },
+  {
+    "rank": 84,
+    "chinese": "前",
+    "pinyin": "qián",
+    "meaning": "front, before, ago"
+  },
+  {
+    "rank": 85,
+    "chinese": "所",
+    "pinyin": "suǒ",
+    "meaning": "place; used in passive"
+  },
+  {
+    "rank": 86,
+    "chinese": "本",
+    "pinyin": "běn",
+    "meaning": "root; measure word for books; this"
+  },
+  {
+    "rank": 87,
+    "chinese": "见",
+    "pinyin": "jiàn",
+    "meaning": "to see, to meet"
+  },
+  {
+    "rank": 88,
+    "chinese": "经",
+    "pinyin": "jīng",
+    "meaning": "to pass through; classic, scripture"
+  },
+  {
+    "rank": 89,
+    "chinese": "头",
+    "pinyin": "tóu",
+    "meaning": "head; top"
+  },
+  {
+    "rank": 90,
+    "chinese": "面",
+    "pinyin": "miàn",
+    "meaning": "face, surface; noodles"
+  },
+  {
+    "rank": 91,
+    "chinese": "公",
+    "pinyin": "gōng",
+    "meaning": "public; male; duke"
+  },
+  {
+    "rank": 92,
+    "chinese": "同",
+    "pinyin": "tóng",
+    "meaning": "same, together with"
+  },
+  {
+    "rank": 93,
+    "chinese": "三",
+    "pinyin": "sān",
+    "meaning": "three"
+  },
+  {
+    "rank": 94,
+    "chinese": "已",
+    "pinyin": "yǐ",
+    "meaning": "already"
+  },
+  {
+    "rank": 95,
+    "chinese": "老",
+    "pinyin": "lǎo",
+    "meaning": "old, aged"
+  },
+  {
+    "rank": 96,
+    "chinese": "从",
+    "pinyin": "cóng",
+    "meaning": "from, since, through"
+  },
+  {
+    "rank": 97,
+    "chinese": "动",
+    "pinyin": "dòng",
+    "meaning": "to move, to act"
+  },
+  {
+    "rank": 98,
+    "chinese": "两",
+    "pinyin": "liǎng",
+    "meaning": "two (with measure words)"
+  },
+  {
+    "rank": 99,
+    "chinese": "长",
+    "pinyin": "cháng/zhǎng",
+    "meaning": "long; to grow, chief"
+  },
+  {
+    "rank": 100,
+    "chinese": "知",
+    "pinyin": "zhī",
+    "meaning": "to know, to realize"
+  },
+  {
+    "rank": 101,
+    "chinese": "民",
+    "pinyin": "mín",
+    "meaning": "people, citizen"
+  },
+  {
+    "rank": 102,
+    "chinese": "利",
+    "pinyin": "lì",
+    "meaning": "benefit, profit; sharp"
+  },
+  {
+    "rank": 103,
+    "chinese": "什",
+    "pinyin": "shén",
+    "meaning": "used in 什么 (what)"
+  },
+  {
+    "rank": 104,
+    "chinese": "次",
+    "pinyin": "cì",
+    "meaning": "time, occurrence; measure word for times"
+  },
+  {
+    "rank": 105,
+    "chinese": "明",
+    "pinyin": "míng",
+    "meaning": "bright, clear; understand"
+  },
+  {
+    "rank": 106,
+    "chinese": "进",
+    "pinyin": "jìn",
+    "meaning": "to enter, to advance"
+  },
+  {
+    "rank": 107,
+    "chinese": "问",
+    "pinyin": "wèn",
+    "meaning": "to ask"
+  },
+  {
+    "rank": 108,
+    "chinese": "别",
+    "pinyin": "bié",
+    "meaning": "don't; other, another"
+  },
+  {
+    "rank": 109,
+    "chinese": "间",
+    "pinyin": "jiān/jiàn",
+    "meaning": "between, among; room, space"
+  },
+  {
+    "rank": 110,
+    "chinese": "实",
+    "pinyin": "shí",
+    "meaning": "real, true, solid"
+  },
+  {
+    "rank": 111,
+    "chinese": "把",
+    "pinyin": "bǎ",
+    "meaning": "to hold; BA construction particle"
+  },
+  {
+    "rank": 112,
+    "chinese": "正",
+    "pinyin": "zhèng",
+    "meaning": "straight, upright, correct; just (doing)"
+  },
+  {
+    "rank": 113,
+    "chinese": "期",
+    "pinyin": "qī",
+    "meaning": "period, stage; to expect"
+  },
+  {
+    "rank": 114,
+    "chinese": "新",
+    "pinyin": "xīn",
+    "meaning": "new"
+  },
+  {
+    "rank": 115,
+    "chinese": "给",
+    "pinyin": "gěi/gěi",
+    "meaning": "to give; for, to (preposition)"
+  },
+  {
+    "rank": 116,
+    "chinese": "其",
+    "pinyin": "qí",
+    "meaning": "his/her/its/their (literary)"
+  },
+  {
+    "rank": 117,
+    "chinese": "此",
+    "pinyin": "cǐ",
+    "meaning": "this, here"
+  },
+  {
+    "rank": 118,
+    "chinese": "最",
+    "pinyin": "zuì",
+    "meaning": "most, -est"
+  },
+  {
+    "rank": 119,
+    "chinese": "位",
+    "pinyin": "wèi",
+    "meaning": "position; polite measure word for people"
+  },
+  {
+    "rank": 120,
+    "chinese": "两",
+    "pinyin": "liǎng",
+    "meaning": "two (before measure words)"
+  },
+  {
+    "rank": 121,
+    "chinese": "平",
+    "pinyin": "píng",
+    "meaning": "flat, level, peaceful"
+  },
+  {
+    "rank": 122,
+    "chinese": "做",
+    "pinyin": "zuò",
+    "meaning": "to do, to make"
+  },
+  {
+    "rank": 123,
+    "chinese": "报",
+    "pinyin": "bào",
+    "meaning": "newspaper; to report"
+  },
+  {
+    "rank": 124,
+    "chinese": "带",
+    "pinyin": "dài",
+    "meaning": "to carry, to bring; belt"
+  },
+  {
+    "rank": 125,
+    "chinese": "关",
+    "pinyin": "guān",
+    "meaning": "to close; related to; pass"
+  },
+  {
+    "rank": 126,
+    "chinese": "话",
+    "pinyin": "huà",
+    "meaning": "speech, words, conversation"
+  },
+  {
+    "rank": 127,
+    "chinese": "高",
+    "pinyin": "gāo",
+    "meaning": "tall, high"
+  },
+  {
+    "rank": 128,
+    "chinese": "电",
+    "pinyin": "diàn",
+    "meaning": "electricity, electric"
+  },
+  {
+    "rank": 129,
+    "chinese": "点",
+    "pinyin": "diǎn",
+    "meaning": "point, dot; o'clock; a little"
+  },
+  {
+    "rank": 130,
+    "chinese": "几",
+    "pinyin": "jǐ/jī",
+    "meaning": "how many, a few"
+  },
+  {
+    "rank": 131,
+    "chinese": "一",
+    "pinyin": "yī",
+    "meaning": "one"
+  },
+  {
+    "rank": 132,
+    "chinese": "二",
+    "pinyin": "èr",
+    "meaning": "two"
+  },
+  {
+    "rank": 133,
+    "chinese": "四",
+    "pinyin": "sì",
+    "meaning": "four"
+  },
+  {
+    "rank": 134,
+    "chinese": "五",
+    "pinyin": "wǔ",
+    "meaning": "five"
+  },
+  {
+    "rank": 135,
+    "chinese": "六",
+    "pinyin": "liù",
+    "meaning": "six"
+  },
+  {
+    "rank": 136,
+    "chinese": "七",
+    "pinyin": "qī",
+    "meaning": "seven"
+  },
+  {
+    "rank": 137,
+    "chinese": "八",
+    "pinyin": "bā",
+    "meaning": "eight"
+  },
+  {
+    "rank": 138,
+    "chinese": "九",
+    "pinyin": "jiǔ",
+    "meaning": "nine"
+  },
+  {
+    "rank": 139,
+    "chinese": "百",
+    "pinyin": "bǎi",
+    "meaning": "hundred"
+  },
+  {
+    "rank": 140,
+    "chinese": "千",
+    "pinyin": "qiān",
+    "meaning": "thousand"
+  },
+  {
+    "rank": 141,
+    "chinese": "万",
+    "pinyin": "wàn",
+    "meaning": "ten thousand"
+  },
+  {
+    "rank": 142,
+    "chinese": "零",
+    "pinyin": "líng",
+    "meaning": "zero"
+  },
+  {
+    "rank": 143,
+    "chinese": "名",
+    "pinyin": "míng",
+    "meaning": "name; measure word for people"
+  },
+  {
+    "rank": 144,
+    "chinese": "字",
+    "pinyin": "zì",
+    "meaning": "character, word, letter"
+  },
+  {
+    "rank": 145,
+    "chinese": "书",
+    "pinyin": "shū",
+    "meaning": "book"
+  },
+  {
+    "rank": 146,
+    "chinese": "纸",
+    "pinyin": "zhǐ",
+    "meaning": "paper"
+  },
+  {
+    "rank": 147,
+    "chinese": "笔",
+    "pinyin": "bǐ",
+    "meaning": "pen, pencil"
+  },
+  {
+    "rank": 148,
+    "chinese": "桌子",
+    "pinyin": "zhuōzi",
+    "meaning": "table, desk"
+  },
+  {
+    "rank": 149,
+    "chinese": "椅子",
+    "pinyin": "yǐzi",
+    "meaning": "chair"
+  },
+  {
+    "rank": 150,
+    "chinese": "床",
+    "pinyin": "chuáng",
+    "meaning": "bed"
+  },
+  {
+    "rank": 151,
+    "chinese": "门",
+    "pinyin": "mén",
+    "meaning": "door, gate"
+  },
+  {
+    "rank": 152,
+    "chinese": "窗",
+    "pinyin": "chuāng",
+    "meaning": "window"
+  },
+  {
+    "rank": 153,
+    "chinese": "楼",
+    "pinyin": "lóu",
+    "meaning": "building, floor (of building)"
+  },
+  {
+    "rank": 154,
+    "chinese": "房",
+    "pinyin": "fáng",
+    "meaning": "room, house"
+  },
+  {
+    "rank": 155,
+    "chinese": "学校",
+    "pinyin": "xuéxiào",
+    "meaning": "school"
+  },
+  {
+    "rank": 156,
+    "chinese": "医院",
+    "pinyin": "yīyuàn",
+    "meaning": "hospital"
+  },
+  {
+    "rank": 157,
+    "chinese": "银行",
+    "pinyin": "yínháng",
+    "meaning": "bank"
+  },
+  {
+    "rank": 158,
+    "chinese": "商店",
+    "pinyin": "shāngdiàn",
+    "meaning": "shop, store"
+  },
+  {
+    "rank": 159,
+    "chinese": "超市",
+    "pinyin": "chāoshì",
+    "meaning": "supermarket"
+  },
+  {
+    "rank": 160,
+    "chinese": "餐厅",
+    "pinyin": "cāntīng",
+    "meaning": "restaurant, dining hall"
+  },
+  {
+    "rank": 161,
+    "chinese": "图书馆",
+    "pinyin": "túshūguǎn",
+    "meaning": "library"
+  },
+  {
+    "rank": 162,
+    "chinese": "公园",
+    "pinyin": "gōngyuán",
+    "meaning": "park"
+  },
+  {
+    "rank": 163,
+    "chinese": "机场",
+    "pinyin": "jīchǎng",
+    "meaning": "airport"
+  },
+  {
+    "rank": 164,
+    "chinese": "火车站",
+    "pinyin": "huǒchēzhàn",
+    "meaning": "train station"
+  },
+  {
+    "rank": 165,
+    "chinese": "地铁站",
+    "pinyin": "dìtiězhàn",
+    "meaning": "subway station"
+  },
+  {
+    "rank": 166,
+    "chinese": "电影院",
+    "pinyin": "diànyǐngyuàn",
+    "meaning": "movie theater"
+  },
+  {
+    "rank": 167,
+    "chinese": "邮局",
+    "pinyin": "yóujú",
+    "meaning": "post office"
+  },
+  {
+    "rank": 168,
+    "chinese": "宾馆",
+    "pinyin": "bīnguǎn",
+    "meaning": "hotel"
+  },
+  {
+    "rank": 169,
+    "chinese": "中国",
+    "pinyin": "Zhōngguó",
+    "meaning": "China"
+  },
+  {
+    "rank": 170,
+    "chinese": "北京",
+    "pinyin": "Běijīng",
+    "meaning": "Beijing"
+  },
+  {
+    "rank": 171,
+    "chinese": "上海",
+    "pinyin": "Shànghǎi",
+    "meaning": "Shanghai"
+  },
+  {
+    "rank": 172,
+    "chinese": "今天",
+    "pinyin": "jīntiān",
+    "meaning": "today"
+  },
+  {
+    "rank": 173,
+    "chinese": "明天",
+    "pinyin": "míngtiān",
+    "meaning": "tomorrow"
+  },
+  {
+    "rank": 174,
+    "chinese": "昨天",
+    "pinyin": "zuótiān",
+    "meaning": "yesterday"
+  },
+  {
+    "rank": 175,
+    "chinese": "现在",
+    "pinyin": "xiànzài",
+    "meaning": "now, at present"
+  },
+  {
+    "rank": 176,
+    "chinese": "以前",
+    "pinyin": "yǐqián",
+    "meaning": "before, previously, ago"
+  },
+  {
+    "rank": 177,
+    "chinese": "以后",
+    "pinyin": "yǐhòu",
+    "meaning": "after, later, in the future"
+  },
+  {
+    "rank": 178,
+    "chinese": "早上",
+    "pinyin": "zǎoshang",
+    "meaning": "morning"
+  },
+  {
+    "rank": 179,
+    "chinese": "上午",
+    "pinyin": "shàngwǔ",
+    "meaning": "morning (before noon)"
+  },
+  {
+    "rank": 180,
+    "chinese": "中午",
+    "pinyin": "zhōngwǔ",
+    "meaning": "noon, midday"
+  },
+  {
+    "rank": 181,
+    "chinese": "下午",
+    "pinyin": "xiàwǔ",
+    "meaning": "afternoon"
+  },
+  {
+    "rank": 182,
+    "chinese": "晚上",
+    "pinyin": "wǎnshang",
+    "meaning": "evening, night"
+  },
+  {
+    "rank": 183,
+    "chinese": "月",
+    "pinyin": "yuè",
+    "meaning": "month, moon"
+  },
+  {
+    "rank": 184,
+    "chinese": "星期",
+    "pinyin": "xīngqī",
+    "meaning": "week"
+  },
+  {
+    "rank": 185,
+    "chinese": "号",
+    "pinyin": "hào",
+    "meaning": "number, date (of month)"
+  },
+  {
+    "rank": 186,
+    "chinese": "点钟",
+    "pinyin": "diǎnzhōng",
+    "meaning": "o'clock"
+  },
+  {
+    "rank": 187,
+    "chinese": "分钟",
+    "pinyin": "fēnzhōng",
+    "meaning": "minute"
+  },
+  {
+    "rank": 188,
+    "chinese": "小时",
+    "pinyin": "xiǎoshí",
+    "meaning": "hour"
+  },
+  {
+    "rank": 189,
+    "chinese": "吃",
+    "pinyin": "chī",
+    "meaning": "to eat"
+  },
+  {
+    "rank": 190,
+    "chinese": "喝",
+    "pinyin": "hē",
+    "meaning": "to drink"
+  },
+  {
+    "rank": 191,
+    "chinese": "买",
+    "pinyin": "mǎi",
+    "meaning": "to buy"
+  },
+  {
+    "rank": 192,
+    "chinese": "卖",
+    "pinyin": "mài",
+    "meaning": "to sell"
+  },
+  {
+    "rank": 193,
+    "chinese": "喜欢",
+    "pinyin": "xǐhuan",
+    "meaning": "to like, to enjoy"
+  },
+  {
+    "rank": 194,
+    "chinese": "爱",
+    "pinyin": "ài",
+    "meaning": "to love, love"
+  },
+  {
+    "rank": 195,
+    "chinese": "睡觉",
+    "pinyin": "shuìjiào",
+    "meaning": "to sleep"
+  },
+  {
+    "rank": 196,
+    "chinese": "起床",
+    "pinyin": "qǐchuáng",
+    "meaning": "to get up"
+  },
+  {
+    "rank": 197,
+    "chinese": "洗",
+    "pinyin": "xǐ",
+    "meaning": "to wash"
+  },
+  {
+    "rank": 198,
+    "chinese": "穿",
+    "pinyin": "chuān",
+    "meaning": "to wear, to put on"
+  },
+  {
+    "rank": 199,
+    "chinese": "坐",
+    "pinyin": "zuò",
+    "meaning": "to sit, to ride (vehicle)"
+  },
+  {
+    "rank": 200,
+    "chinese": "站",
+    "pinyin": "zhàn",
+    "meaning": "to stand; station, stop"
+  },
+  {
+    "rank": 201,
+    "chinese": "走",
+    "pinyin": "zǒu",
+    "meaning": "to walk, to go"
+  },
+  {
+    "rank": 202,
+    "chinese": "跑",
+    "pinyin": "pǎo",
+    "meaning": "to run"
+  },
+  {
+    "rank": 203,
+    "chinese": "游泳",
+    "pinyin": "yóuyǒng",
+    "meaning": "to swim"
+  },
+  {
+    "rank": 204,
+    "chinese": "打球",
+    "pinyin": "dǎqiú",
+    "meaning": "to play ball"
+  },
+  {
+    "rank": 205,
+    "chinese": "踢足球",
+    "pinyin": "tī zúqiú",
+    "meaning": "to play soccer"
+  },
+  {
+    "rank": 206,
+    "chinese": "听",
+    "pinyin": "tīng",
+    "meaning": "to listen, to hear"
+  },
+  {
+    "rank": 207,
+    "chinese": "写",
+    "pinyin": "xiě",
+    "meaning": "to write"
+  },
+  {
+    "rank": 208,
+    "chinese": "读",
+    "pinyin": "dú",
+    "meaning": "to read aloud; to study"
+  },
+  {
+    "rank": 209,
+    "chinese": "工作",
+    "pinyin": "gōngzuò",
+    "meaning": "to work; work, job"
+  },
+  {
+    "rank": 210,
+    "chinese": "上班",
+    "pinyin": "shàngbān",
+    "meaning": "to go to work"
+  },
+  {
+    "rank": 211,
+    "chinese": "下班",
+    "pinyin": "xiàbān",
+    "meaning": "to get off work"
+  },
+  {
+    "rank": 212,
+    "chinese": "上课",
+    "pinyin": "shàngkè",
+    "meaning": "to attend class"
+  },
+  {
+    "rank": 213,
+    "chinese": "下课",
+    "pinyin": "xiàkè",
+    "meaning": "class is over"
+  },
+  {
+    "rank": 214,
+    "chinese": "认识",
+    "pinyin": "rènshi",
+    "meaning": "to know (a person), to recognize"
+  },
+  {
+    "rank": 215,
+    "chinese": "知道",
+    "pinyin": "zhīdào",
+    "meaning": "to know (a fact)"
+  },
+  {
+    "rank": 216,
+    "chinese": "觉得",
+    "pinyin": "juéde",
+    "meaning": "to feel, to think"
+  },
+  {
+    "rank": 217,
+    "chinese": "希望",
+    "pinyin": "xīwàng",
+    "meaning": "to hope; hope"
+  },
+  {
+    "rank": 218,
+    "chinese": "帮助",
+    "pinyin": "bāngzhù",
+    "meaning": "to help; help"
+  },
+  {
+    "rank": 219,
+    "chinese": "请",
+    "pinyin": "qǐng",
+    "meaning": "please; to invite; to treat (meal)"
+  },
+  {
+    "rank": 220,
+    "chinese": "谢谢",
+    "pinyin": "xièxie",
+    "meaning": "thank you"
+  },
+  {
+    "rank": 221,
+    "chinese": "对不起",
+    "pinyin": "duìbuqǐ",
+    "meaning": "sorry, excuse me"
+  },
+  {
+    "rank": 222,
+    "chinese": "没关系",
+    "pinyin": "méiguānxi",
+    "meaning": "it doesn't matter, never mind"
+  },
+  {
+    "rank": 223,
+    "chinese": "你好",
+    "pinyin": "nǐ hǎo",
+    "meaning": "hello"
+  },
+  {
+    "rank": 224,
+    "chinese": "再见",
+    "pinyin": "zàijiàn",
+    "meaning": "goodbye"
+  },
+  {
+    "rank": 225,
+    "chinese": "是的",
+    "pinyin": "shìde",
+    "meaning": "yes, that's right"
+  },
+  {
+    "rank": 226,
+    "chinese": "好的",
+    "pinyin": "hǎode",
+    "meaning": "okay, alright"
+  },
+  {
+    "rank": 227,
+    "chinese": "妈妈",
+    "pinyin": "māma",
+    "meaning": "mom, mother"
+  },
+  {
+    "rank": 228,
+    "chinese": "爸爸",
+    "pinyin": "bàba",
+    "meaning": "dad, father"
+  },
+  {
+    "rank": 229,
+    "chinese": "哥哥",
+    "pinyin": "gēge",
+    "meaning": "older brother"
+  },
+  {
+    "rank": 230,
+    "chinese": "姐姐",
+    "pinyin": "jiějie",
+    "meaning": "older sister"
+  },
+  {
+    "rank": 231,
+    "chinese": "弟弟",
+    "pinyin": "dìdi",
+    "meaning": "younger brother"
+  },
+  {
+    "rank": 232,
+    "chinese": "妹妹",
+    "pinyin": "mèimei",
+    "meaning": "younger sister"
+  },
+  {
+    "rank": 233,
+    "chinese": "儿子",
+    "pinyin": "érzi",
+    "meaning": "son"
+  },
+  {
+    "rank": 234,
+    "chinese": "女儿",
+    "pinyin": "nǚér",
+    "meaning": "daughter"
+  },
+  {
+    "rank": 235,
+    "chinese": "丈夫",
+    "pinyin": "zhàngfu",
+    "meaning": "husband"
+  },
+  {
+    "rank": 236,
+    "chinese": "妻子",
+    "pinyin": "qīzi",
+    "meaning": "wife"
+  },
+  {
+    "rank": 237,
+    "chinese": "朋友",
+    "pinyin": "péngyou",
+    "meaning": "friend"
+  },
+  {
+    "rank": 238,
+    "chinese": "同学",
+    "pinyin": "tóngxué",
+    "meaning": "classmate"
+  },
+  {
+    "rank": 239,
+    "chinese": "老师",
+    "pinyin": "lǎoshī",
+    "meaning": "teacher"
+  },
+  {
+    "rank": 240,
+    "chinese": "学生",
+    "pinyin": "xuésheng",
+    "meaning": "student"
+  },
+  {
+    "rank": 241,
+    "chinese": "医生",
+    "pinyin": "yīshēng",
+    "meaning": "doctor"
+  },
+  {
+    "rank": 242,
+    "chinese": "护士",
+    "pinyin": "hùshi",
+    "meaning": "nurse"
+  },
+  {
+    "rank": 243,
+    "chinese": "司机",
+    "pinyin": "sījī",
+    "meaning": "driver"
+  },
+  {
+    "rank": 244,
+    "chinese": "服务员",
+    "pinyin": "fúwùyuán",
+    "meaning": "waiter, service staff"
+  },
+  {
+    "rank": 245,
+    "chinese": "经理",
+    "pinyin": "jīnglǐ",
+    "meaning": "manager"
+  },
+  {
+    "rank": 246,
+    "chinese": "米饭",
+    "pinyin": "mǐfàn",
+    "meaning": "cooked rice"
+  },
+  {
+    "rank": 247,
+    "chinese": "面条",
+    "pinyin": "miàntiáo",
+    "meaning": "noodles"
+  },
+  {
+    "rank": 248,
+    "chinese": "包子",
+    "pinyin": "bāozi",
+    "meaning": "steamed bun"
+  },
+  {
+    "rank": 249,
+    "chinese": "饺子",
+    "pinyin": "jiǎozi",
+    "meaning": "dumplings"
+  },
+  {
+    "rank": 250,
+    "chinese": "面包",
+    "pinyin": "miànbāo",
+    "meaning": "bread"
+  },
+  {
+    "rank": 251,
+    "chinese": "鸡蛋",
+    "pinyin": "jīdàn",
+    "meaning": "egg"
+  },
+  {
+    "rank": 252,
+    "chinese": "肉",
+    "pinyin": "ròu",
+    "meaning": "meat"
+  },
+  {
+    "rank": 253,
+    "chinese": "鱼",
+    "pinyin": "yú",
+    "meaning": "fish"
+  },
+  {
+    "rank": 254,
+    "chinese": "蔬菜",
+    "pinyin": "shūcài",
+    "meaning": "vegetables"
+  },
+  {
+    "rank": 255,
+    "chinese": "水果",
+    "pinyin": "shuǐguǒ",
+    "meaning": "fruit"
+  },
+  {
+    "rank": 256,
+    "chinese": "苹果",
+    "pinyin": "píngguǒ",
+    "meaning": "apple"
+  },
+  {
+    "rank": 257,
+    "chinese": "香蕉",
+    "pinyin": "xiāngjiāo",
+    "meaning": "banana"
+  },
+  {
+    "rank": 258,
+    "chinese": "橙子",
+    "pinyin": "chéngzi",
+    "meaning": "orange"
+  },
+  {
+    "rank": 259,
+    "chinese": "水",
+    "pinyin": "shuǐ",
+    "meaning": "water"
+  },
+  {
+    "rank": 260,
+    "chinese": "茶",
+    "pinyin": "chá",
+    "meaning": "tea"
+  },
+  {
+    "rank": 261,
+    "chinese": "咖啡",
+    "pinyin": "kāfēi",
+    "meaning": "coffee"
+  },
+  {
+    "rank": 262,
+    "chinese": "牛奶",
+    "pinyin": "niúnǎi",
+    "meaning": "milk"
+  },
+  {
+    "rank": 263,
+    "chinese": "果汁",
+    "pinyin": "guǒzhī",
+    "meaning": "fruit juice"
+  },
+  {
+    "rank": 264,
+    "chinese": "啤酒",
+    "pinyin": "píjiǔ",
+    "meaning": "beer"
+  },
+  {
+    "rank": 265,
+    "chinese": "衣服",
+    "pinyin": "yīfu",
+    "meaning": "clothes, clothing"
+  },
+  {
+    "rank": 266,
+    "chinese": "裤子",
+    "pinyin": "kùzi",
+    "meaning": "pants, trousers"
+  },
+  {
+    "rank": 267,
+    "chinese": "裙子",
+    "pinyin": "qúnzi",
+    "meaning": "skirt, dress"
+  },
+  {
+    "rank": 268,
+    "chinese": "鞋子",
+    "pinyin": "xiézi",
+    "meaning": "shoes"
+  },
+  {
+    "rank": 269,
+    "chinese": "帽子",
+    "pinyin": "màozi",
+    "meaning": "hat, cap"
+  },
+  {
+    "rank": 270,
+    "chinese": "眼镜",
+    "pinyin": "yǎnjìng",
+    "meaning": "glasses, spectacles"
+  },
+  {
+    "rank": 271,
+    "chinese": "手机",
+    "pinyin": "shǒujī",
+    "meaning": "mobile phone, cell phone"
+  },
+  {
+    "rank": 272,
+    "chinese": "电脑",
+    "pinyin": "diànnǎo",
+    "meaning": "computer"
+  },
+  {
+    "rank": 273,
+    "chinese": "电视",
+    "pinyin": "diànshì",
+    "meaning": "television, TV"
+  },
+  {
+    "rank": 274,
+    "chinese": "电话",
+    "pinyin": "diànhuà",
+    "meaning": "telephone, phone call"
+  },
+  {
+    "rank": 275,
+    "chinese": "照片",
+    "pinyin": "zhàopiàn",
+    "meaning": "photo, photograph"
+  },
+  {
+    "rank": 276,
+    "chinese": "相机",
+    "pinyin": "xiàngjī",
+    "meaning": "camera"
+  },
+  {
+    "rank": 277,
+    "chinese": "音乐",
+    "pinyin": "yīnyuè",
+    "meaning": "music"
+  },
+  {
+    "rank": 278,
+    "chinese": "电影",
+    "pinyin": "diànyǐng",
+    "meaning": "movie, film"
+  },
+  {
+    "rank": 279,
+    "chinese": "体育",
+    "pinyin": "tǐyù",
+    "meaning": "sports, physical education"
+  },
+  {
+    "rank": 280,
+    "chinese": "足球",
+    "pinyin": "zúqiú",
+    "meaning": "soccer, football"
+  },
+  {
+    "rank": 281,
+    "chinese": "篮球",
+    "pinyin": "lánqiú",
+    "meaning": "basketball"
+  },
+  {
+    "rank": 282,
+    "chinese": "车",
+    "pinyin": "chē",
+    "meaning": "car, vehicle"
+  },
+  {
+    "rank": 283,
+    "chinese": "公共汽车",
+    "pinyin": "gōnggòng qìchē",
+    "meaning": "bus"
+  },
+  {
+    "rank": 284,
+    "chinese": "出租车",
+    "pinyin": "chūzūchē",
+    "meaning": "taxi"
+  },
+  {
+    "rank": 285,
+    "chinese": "地铁",
+    "pinyin": "dìtiě",
+    "meaning": "subway, metro"
+  },
+  {
+    "rank": 286,
+    "chinese": "飞机",
+    "pinyin": "fēijī",
+    "meaning": "airplane"
+  },
+  {
+    "rank": 287,
+    "chinese": "火车",
+    "pinyin": "huǒchē",
+    "meaning": "train"
+  },
+  {
+    "rank": 288,
+    "chinese": "自行车",
+    "pinyin": "zìxíngchē",
+    "meaning": "bicycle"
+  },
+  {
+    "rank": 289,
+    "chinese": "钱",
+    "pinyin": "qián",
+    "meaning": "money"
+  },
+  {
+    "rank": 290,
+    "chinese": "块",
+    "pinyin": "kuài",
+    "meaning": "yuan (colloquial); piece, lump"
+  },
+  {
+    "rank": 291,
+    "chinese": "毛",
+    "pinyin": "máo",
+    "meaning": "jiao (0.1 yuan); hair; fur"
+  },
+  {
+    "rank": 292,
+    "chinese": "分",
+    "pinyin": "fēn",
+    "meaning": "fen (0.01 yuan); minute; point"
+  },
+  {
+    "rank": 293,
+    "chinese": "价格",
+    "pinyin": "jiàgé",
+    "meaning": "price"
+  },
+  {
+    "rank": 294,
+    "chinese": "贵",
+    "pinyin": "guì",
+    "meaning": "expensive"
+  },
+  {
+    "rank": 295,
+    "chinese": "便宜",
+    "pinyin": "piányí",
+    "meaning": "cheap, inexpensive"
+  },
+  {
+    "rank": 296,
+    "chinese": "多少",
+    "pinyin": "duōshǎo",
+    "meaning": "how many, how much"
+  },
+  {
+    "rank": 297,
+    "chinese": "哪",
+    "pinyin": "nǎ",
+    "meaning": "which, where"
+  },
+  {
+    "rank": 298,
+    "chinese": "谁",
+    "pinyin": "shuí/shéi",
+    "meaning": "who, whom"
+  },
+  {
+    "rank": 299,
+    "chinese": "什么",
+    "pinyin": "shénme",
+    "meaning": "what"
+  },
+  {
+    "rank": 300,
+    "chinese": "怎么",
+    "pinyin": "zěnme",
+    "meaning": "how, why"
+  },
+  {
+    "rank": 301,
+    "chinese": "为什么",
+    "pinyin": "wèishénme",
+    "meaning": "why, for what reason"
+  },
+  {
+    "rank": 302,
+    "chinese": "哪里",
+    "pinyin": "nǎlǐ",
+    "meaning": "where"
+  },
+  {
+    "rank": 303,
+    "chinese": "这里",
+    "pinyin": "zhèlǐ",
+    "meaning": "here, this place"
+  },
+  {
+    "rank": 304,
+    "chinese": "那里",
+    "pinyin": "nàlǐ",
+    "meaning": "there, that place"
+  },
+  {
+    "rank": 305,
+    "chinese": "左",
+    "pinyin": "zuǒ",
+    "meaning": "left"
+  },
+  {
+    "rank": 306,
+    "chinese": "右",
+    "pinyin": "yòu",
+    "meaning": "right"
+  },
+  {
+    "rank": 307,
+    "chinese": "东",
+    "pinyin": "dōng",
+    "meaning": "east"
+  },
+  {
+    "rank": 308,
+    "chinese": "西",
+    "pinyin": "xī",
+    "meaning": "west"
+  },
+  {
+    "rank": 309,
+    "chinese": "南",
+    "pinyin": "nán",
+    "meaning": "south"
+  },
+  {
+    "rank": 310,
+    "chinese": "北",
+    "pinyin": "běi",
+    "meaning": "north"
+  },
+  {
+    "rank": 311,
+    "chinese": "旁边",
+    "pinyin": "pángbiān",
+    "meaning": "beside, next to"
+  },
+  {
+    "rank": 312,
+    "chinese": "中间",
+    "pinyin": "zhōngjiān",
+    "meaning": "middle, between"
+  },
+  {
+    "rank": 313,
+    "chinese": "对面",
+    "pinyin": "duìmiàn",
+    "meaning": "opposite side, across"
+  },
+  {
+    "rank": 314,
+    "chinese": "附近",
+    "pinyin": "fùjìn",
+    "meaning": "nearby, in the vicinity"
+  },
+  {
+    "rank": 315,
+    "chinese": "远",
+    "pinyin": "yuǎn",
+    "meaning": "far, distant"
+  },
+  {
+    "rank": 316,
+    "chinese": "近",
+    "pinyin": "jìn",
+    "meaning": "near, close"
+  },
+  {
+    "rank": 317,
+    "chinese": "冷",
+    "pinyin": "lěng",
+    "meaning": "cold"
+  },
+  {
+    "rank": 318,
+    "chinese": "热",
+    "pinyin": "rè",
+    "meaning": "hot"
+  },
+  {
+    "rank": 319,
+    "chinese": "暖和",
+    "pinyin": "nuǎnhuo",
+    "meaning": "warm"
+  },
+  {
+    "rank": 320,
+    "chinese": "凉快",
+    "pinyin": "liángkuai",
+    "meaning": "cool, pleasantly cool"
+  },
+  {
+    "rank": 321,
+    "chinese": "晴天",
+    "pinyin": "qíngtiān",
+    "meaning": "sunny day, clear weather"
+  },
+  {
+    "rank": 322,
+    "chinese": "阴天",
+    "pinyin": "yīntiān",
+    "meaning": "cloudy/overcast day"
+  },
+  {
+    "rank": 323,
+    "chinese": "下雨",
+    "pinyin": "xià yǔ",
+    "meaning": "to rain"
+  },
+  {
+    "rank": 324,
+    "chinese": "下雪",
+    "pinyin": "xià xuě",
+    "meaning": "to snow"
+  },
+  {
+    "rank": 325,
+    "chinese": "风",
+    "pinyin": "fēng",
+    "meaning": "wind"
+  },
+  {
+    "rank": 326,
+    "chinese": "天气",
+    "pinyin": "tiānqì",
+    "meaning": "weather"
+  },
+  {
+    "rank": 327,
+    "chinese": "漂亮",
+    "pinyin": "piàoliang",
+    "meaning": "beautiful, pretty"
+  },
+  {
+    "rank": 328,
+    "chinese": "帅",
+    "pinyin": "shuài",
+    "meaning": "handsome"
+  },
+  {
+    "rank": 329,
+    "chinese": "胖",
+    "pinyin": "pàng",
+    "meaning": "fat, chubby"
+  },
+  {
+    "rank": 330,
+    "chinese": "瘦",
+    "pinyin": "shòu",
+    "meaning": "thin, slim"
+  },
+  {
+    "rank": 331,
+    "chinese": "高兴",
+    "pinyin": "gāoxìng",
+    "meaning": "happy, glad"
+  },
+  {
+    "rank": 332,
+    "chinese": "难过",
+    "pinyin": "nánguò",
+    "meaning": "sad, upset"
+  },
+  {
+    "rank": 333,
+    "chinese": "累",
+    "pinyin": "lèi",
+    "meaning": "tired, exhausted"
+  },
+  {
+    "rank": 334,
+    "chinese": "病",
+    "pinyin": "bìng",
+    "meaning": "sick, illness"
+  },
+  {
+    "rank": 335,
+    "chinese": "健康",
+    "pinyin": "jiànkāng",
+    "meaning": "healthy, health"
+  },
+  {
+    "rank": 336,
+    "chinese": "忙",
+    "pinyin": "máng",
+    "meaning": "busy"
+  },
+  {
+    "rank": 337,
+    "chinese": "容易",
+    "pinyin": "róngyì",
+    "meaning": "easy"
+  },
+  {
+    "rank": 338,
+    "chinese": "难",
+    "pinyin": "nán",
+    "meaning": "difficult, hard"
+  },
+  {
+    "rank": 339,
+    "chinese": "快",
+    "pinyin": "kuài",
+    "meaning": "fast, quick"
+  },
+  {
+    "rank": 340,
+    "chinese": "慢",
+    "pinyin": "màn",
+    "meaning": "slow"
+  },
+  {
+    "rank": 341,
+    "chinese": "早",
+    "pinyin": "zǎo",
+    "meaning": "early"
+  },
+  {
+    "rank": 342,
+    "chinese": "晚",
+    "pinyin": "wǎn",
+    "meaning": "late; evening"
+  },
+  {
+    "rank": 343,
+    "chinese": "干净",
+    "pinyin": "gānjìng",
+    "meaning": "clean"
+  },
+  {
+    "rank": 344,
+    "chinese": "脏",
+    "pinyin": "zāng",
+    "meaning": "dirty"
+  },
+  {
+    "rank": 345,
+    "chinese": "安静",
+    "pinyin": "ānjìng",
+    "meaning": "quiet, peaceful"
+  },
+  {
+    "rank": 346,
+    "chinese": "一下",
+    "pinyin": "yīxià",
+    "meaning": "a moment, a bit (softens verbs)"
+  },
+  {
+    "rank": 347,
+    "chinese": "一些",
+    "pinyin": "yīxiē",
+    "meaning": "some, a few"
+  },
+  {
+    "rank": 348,
+    "chinese": "一点",
+    "pinyin": "yīdiǎn",
+    "meaning": "a little, a bit"
+  },
+  {
+    "rank": 349,
+    "chinese": "很",
+    "pinyin": "hěn",
+    "meaning": "very, quite"
+  },
+  {
+    "rank": 350,
+    "chinese": "非常",
+    "pinyin": "fēicháng",
+    "meaning": "very, extremely, unusually"
+  },
+  {
+    "rank": 351,
+    "chinese": "太",
+    "pinyin": "tài",
+    "meaning": "too, excessively"
+  },
+  {
+    "rank": 352,
+    "chinese": "真",
+    "pinyin": "zhēn",
+    "meaning": "really, truly"
+  },
+  {
+    "rank": 353,
+    "chinese": "一起",
+    "pinyin": "yīqǐ",
+    "meaning": "together"
+  },
+  {
+    "rank": 354,
+    "chinese": "已经",
+    "pinyin": "yǐjīng",
+    "meaning": "already"
+  },
+  {
+    "rank": 355,
+    "chinese": "还是",
+    "pinyin": "háishi",
+    "meaning": "or; still"
+  },
+  {
+    "rank": 356,
+    "chinese": "因为",
+    "pinyin": "yīnwèi",
+    "meaning": "because"
+  },
+  {
+    "rank": 357,
+    "chinese": "所以",
+    "pinyin": "suǒyǐ",
+    "meaning": "therefore, so"
+  },
+  {
+    "rank": 358,
+    "chinese": "但是",
+    "pinyin": "dànshì",
+    "meaning": "but, however"
+  },
+  {
+    "rank": 359,
+    "chinese": "虽然",
+    "pinyin": "suīrán",
+    "meaning": "although, even though"
+  },
+  {
+    "rank": 360,
+    "chinese": "如果",
+    "pinyin": "rúguǒ",
+    "meaning": "if"
+  },
+  {
+    "rank": 361,
+    "chinese": "或者",
+    "pinyin": "huòzhě",
+    "meaning": "or (in statements)"
+  },
+  {
+    "rank": 362,
+    "chinese": "而且",
+    "pinyin": "érqiě",
+    "meaning": "and also, moreover"
+  },
+  {
+    "rank": 363,
+    "chinese": "不但",
+    "pinyin": "búdàn",
+    "meaning": "not only"
+  },
+  {
+    "rank": 364,
+    "chinese": "一边…一边",
+    "pinyin": "yībiān...yībiān",
+    "meaning": "at the same time, while"
+  },
+  {
+    "rank": 365,
+    "chinese": "先…然后",
+    "pinyin": "xiān...ránhòu",
+    "meaning": "first...then"
+  },
+  {
+    "rank": 366,
+    "chinese": "从…到",
+    "pinyin": "cóng...dào",
+    "meaning": "from...to"
+  },
+  {
+    "rank": 367,
+    "chinese": "对",
+    "pinyin": "duì",
+    "meaning": "towards, to (preposition)"
+  },
+  {
+    "rank": 368,
+    "chinese": "跟",
+    "pinyin": "gēn",
+    "meaning": "with, and; to follow"
+  },
+  {
+    "rank": 369,
+    "chinese": "比",
+    "pinyin": "bǐ",
+    "meaning": "compared to, than"
+  },
+  {
+    "rank": 370,
+    "chinese": "离",
+    "pinyin": "lí",
+    "meaning": "away from, from"
+  },
+  {
+    "rank": 371,
+    "chinese": "向",
+    "pinyin": "xiàng",
+    "meaning": "towards, to face"
+  },
+  {
+    "rank": 372,
+    "chinese": "用",
+    "pinyin": "yòng",
+    "meaning": "with, by using (preposition)"
+  },
+  {
+    "rank": 373,
+    "chinese": "为了",
+    "pinyin": "wèile",
+    "meaning": "in order to, for the sake of"
+  },
+  {
+    "rank": 374,
+    "chinese": "关于",
+    "pinyin": "guānyú",
+    "meaning": "about, regarding, concerning"
+  },
+  {
+    "rank": 375,
+    "chinese": "除了",
+    "pinyin": "chúle",
+    "meaning": "except for, besides, apart from"
+  },
+  {
+    "rank": 376,
+    "chinese": "按照",
+    "pinyin": "ànzhào",
+    "meaning": "according to, in accordance with"
+  },
+  {
+    "rank": 377,
+    "chinese": "通过",
+    "pinyin": "tōngguò",
+    "meaning": "through, by means of, to pass"
+  },
+  {
+    "rank": 378,
+    "chinese": "根据",
+    "pinyin": "gēnjù",
+    "meaning": "according to, based on"
+  },
+  {
+    "rank": 379,
+    "chinese": "先生",
+    "pinyin": "xiānsheng",
+    "meaning": "Mr., sir; husband (polite)"
+  },
+  {
+    "rank": 380,
+    "chinese": "女士",
+    "pinyin": "nǚshì",
+    "meaning": "Ms., madam"
+  },
+  {
+    "rank": 381,
+    "chinese": "小姐",
+    "pinyin": "xiǎojiě",
+    "meaning": "Miss, young lady"
+  },
+  {
+    "rank": 382,
+    "chinese": "眼睛",
+    "pinyin": "yǎnjing",
+    "meaning": "eye(s)"
+  },
+  {
+    "rank": 383,
+    "chinese": "耳朵",
+    "pinyin": "ěrduǒ",
+    "meaning": "ear(s)"
+  },
+  {
+    "rank": 384,
+    "chinese": "鼻子",
+    "pinyin": "bízi",
+    "meaning": "nose"
+  },
+  {
+    "rank": 385,
+    "chinese": "嘴",
+    "pinyin": "zuǐ",
+    "meaning": "mouth"
+  },
+  {
+    "rank": 386,
+    "chinese": "脸",
+    "pinyin": "liǎn",
+    "meaning": "face"
+  },
+  {
+    "rank": 387,
+    "chinese": "腿",
+    "pinyin": "tuǐ",
+    "meaning": "leg(s)"
+  },
+  {
+    "rank": 388,
+    "chinese": "脚",
+    "pinyin": "jiǎo",
+    "meaning": "foot, feet"
+  },
+  {
+    "rank": 389,
+    "chinese": "身体",
+    "pinyin": "shēntǐ",
+    "meaning": "body, health"
+  },
+  {
+    "rank": 390,
+    "chinese": "猫",
+    "pinyin": "māo",
+    "meaning": "cat"
+  },
+  {
+    "rank": 391,
+    "chinese": "狗",
+    "pinyin": "gǒu",
+    "meaning": "dog"
+  },
+  {
+    "rank": 392,
+    "chinese": "鸟",
+    "pinyin": "niǎo",
+    "meaning": "bird"
+  },
+  {
+    "rank": 393,
+    "chinese": "马",
+    "pinyin": "mǎ",
+    "meaning": "horse"
+  },
+  {
+    "rank": 394,
+    "chinese": "牛",
+    "pinyin": "niú",
+    "meaning": "cow, ox"
+  },
+  {
+    "rank": 395,
+    "chinese": "猪",
+    "pinyin": "zhū",
+    "meaning": "pig"
+  },
+  {
+    "rank": 396,
+    "chinese": "字典",
+    "pinyin": "zìdiǎn",
+    "meaning": "dictionary"
+  },
+  {
+    "rank": 397,
+    "chinese": "地图",
+    "pinyin": "dìtú",
+    "meaning": "map"
+  },
+  {
+    "rank": 398,
+    "chinese": "票",
+    "pinyin": "piào",
+    "meaning": "ticket"
+  },
+  {
+    "rank": 399,
+    "chinese": "护照",
+    "pinyin": "hùzhào",
+    "meaning": "passport"
+  },
+  {
+    "rank": 400,
+    "chinese": "行李",
+    "pinyin": "xíngli",
+    "meaning": "luggage, baggage"
+  },
+  {
+    "rank": 401,
+    "chinese": "旅游",
+    "pinyin": "lǚyóu",
+    "meaning": "to travel, tourism"
+  },
+  {
+    "rank": 402,
+    "chinese": "参观",
+    "pinyin": "cānguān",
+    "meaning": "to visit (a place)"
+  },
+  {
+    "rank": 403,
+    "chinese": "介绍",
+    "pinyin": "jièshào",
+    "meaning": "to introduce; introduction"
+  },
+  {
+    "rank": 404,
+    "chinese": "复习",
+    "pinyin": "fùxí",
+    "meaning": "to review, to revise"
+  },
+  {
+    "rank": 405,
+    "chinese": "练习",
+    "pinyin": "liànxí",
+    "meaning": "to practice; exercise"
+  },
+  {
+    "rank": 406,
+    "chinese": "考试",
+    "pinyin": "kǎoshì",
+    "meaning": "exam; to take an exam"
+  },
+  {
+    "rank": 407,
+    "chinese": "成绩",
+    "pinyin": "chéngjì",
+    "meaning": "grade, score, result"
+  },
+  {
+    "rank": 408,
+    "chinese": "题目",
+    "pinyin": "títù",
+    "meaning": "title, topic, question"
+  },
+  {
+    "rank": 409,
+    "chinese": "问题",
+    "pinyin": "wèntí",
+    "meaning": "question, problem"
+  },
+  {
+    "rank": 410,
+    "chinese": "答案",
+    "pinyin": "dá'àn",
+    "meaning": "answer"
+  },
+  {
+    "rank": 411,
+    "chinese": "方法",
+    "pinyin": "fāngfǎ",
+    "meaning": "method, way"
+  },
+  {
+    "rank": 412,
+    "chinese": "计划",
+    "pinyin": "jìhuà",
+    "meaning": "plan; to plan"
+  },
+  {
+    "rank": 413,
+    "chinese": "准备",
+    "pinyin": "zhǔnbèi",
+    "meaning": "to prepare; preparation"
+  },
+  {
+    "rank": 414,
+    "chinese": "开始",
+    "pinyin": "kāishǐ",
+    "meaning": "to start, to begin; beginning"
+  },
+  {
+    "rank": 415,
+    "chinese": "结束",
+    "pinyin": "jiéshù",
+    "meaning": "to end, to finish; end"
+  },
+  {
+    "rank": 416,
+    "chinese": "完成",
+    "pinyin": "wánchéng",
+    "meaning": "to complete, to finish"
+  },
+  {
+    "rank": 417,
+    "chinese": "等",
+    "pinyin": "děng",
+    "meaning": "to wait; etc."
+  },
+  {
+    "rank": 418,
+    "chinese": "找",
+    "pinyin": "zhǎo",
+    "meaning": "to look for, to find"
+  },
+  {
+    "rank": 419,
+    "chinese": "放",
+    "pinyin": "fàng",
+    "meaning": "to put, to place; to let go"
+  },
+  {
+    "rank": 420,
+    "chinese": "拿",
+    "pinyin": "ná",
+    "meaning": "to take, to hold, to carry"
+  },
+  {
+    "rank": 421,
+    "chinese": "送",
+    "pinyin": "sòng",
+    "meaning": "to send, to give as gift, to see off"
+  },
+  {
+    "rank": 422,
+    "chinese": "借",
+    "pinyin": "jiè",
+    "meaning": "to borrow, to lend"
+  },
+  {
+    "rank": 423,
+    "chinese": "还",
+    "pinyin": "huán",
+    "meaning": "to return (something)"
+  },
+  {
+    "rank": 424,
+    "chinese": "打",
+    "pinyin": "dǎ",
+    "meaning": "to hit, to make (a call)"
+  },
+  {
+    "rank": 425,
+    "chinese": "接",
+    "pinyin": "jiē",
+    "meaning": "to receive, to pick up, to answer"
+  },
+  {
+    "rank": 426,
+    "chinese": "打电话",
+    "pinyin": "dǎ diànhuà",
+    "meaning": "to make a phone call"
+  },
+  {
+    "rank": 427,
+    "chinese": "发短信",
+    "pinyin": "fā duǎnxìn",
+    "meaning": "to send a text message"
+  },
+  {
+    "rank": 428,
+    "chinese": "上网",
+    "pinyin": "shàngwǎng",
+    "meaning": "to go online, to surf the internet"
+  },
+  {
+    "rank": 429,
+    "chinese": "下载",
+    "pinyin": "xiàzài",
+    "meaning": "to download"
+  },
+  {
+    "rank": 430,
+    "chinese": "打开",
+    "pinyin": "dǎkāi",
+    "meaning": "to open (file, app)"
+  },
+  {
+    "rank": 431,
+    "chinese": "关闭",
+    "pinyin": "guānbì",
+    "meaning": "to close, to shut down"
+  },
+  {
+    "rank": 432,
+    "chinese": "换",
+    "pinyin": "huàn",
+    "meaning": "to change, to exchange"
+  },
+  {
+    "rank": 433,
+    "chinese": "修",
+    "pinyin": "xiū",
+    "meaning": "to repair, to fix"
+  },
+  {
+    "rank": 434,
+    "chinese": "检查",
+    "pinyin": "jiǎnchá",
+    "meaning": "to check, to examine"
+  },
+  {
+    "rank": 435,
+    "chinese": "付钱",
+    "pinyin": "fù qián",
+    "meaning": "to pay (money)"
+  },
+  {
+    "rank": 436,
+    "chinese": "花",
+    "pinyin": "huā",
+    "meaning": "to spend (money/time); flower"
+  },
+  {
+    "rank": 437,
+    "chinese": "节约",
+    "pinyin": "jiéyuē",
+    "meaning": "to save, to economize"
+  },
+  {
+    "rank": 438,
+    "chinese": "聊天",
+    "pinyin": "liáotiān",
+    "meaning": "to chat"
+  },
+  {
+    "rank": 439,
+    "chinese": "玩",
+    "pinyin": "wán",
+    "meaning": "to play, to have fun"
+  },
+  {
+    "rank": 440,
+    "chinese": "唱歌",
+    "pinyin": "chànggē",
+    "meaning": "to sing (a song)"
+  },
+  {
+    "rank": 441,
+    "chinese": "跳舞",
+    "pinyin": "tiàowǔ",
+    "meaning": "to dance"
+  },
+  {
+    "rank": 442,
+    "chinese": "画画",
+    "pinyin": "huà huà",
+    "meaning": "to draw, to paint"
+  },
+  {
+    "rank": 443,
+    "chinese": "做饭",
+    "pinyin": "zuòfàn",
+    "meaning": "to cook, to make food"
+  },
+  {
+    "rank": 444,
+    "chinese": "打扫",
+    "pinyin": "dǎsǎo",
+    "meaning": "to clean, to sweep"
+  },
+  {
+    "rank": 445,
+    "chinese": "洗碗",
+    "pinyin": "xǐwǎn",
+    "meaning": "to wash dishes"
+  },
+  {
+    "rank": 446,
+    "chinese": "散步",
+    "pinyin": "sànbù",
+    "meaning": "to take a walk, to stroll"
+  },
+  {
+    "rank": 447,
+    "chinese": "锻炼",
+    "pinyin": "duànliàn",
+    "meaning": "to exercise, to work out"
+  },
+  {
+    "rank": 448,
+    "chinese": "休息",
+    "pinyin": "xiūxi",
+    "meaning": "to rest; rest"
+  },
+  {
+    "rank": 449,
+    "chinese": "生病",
+    "pinyin": "shēngbìng",
+    "meaning": "to get sick"
+  },
+  {
+    "rank": 450,
+    "chinese": "吃药",
+    "pinyin": "chī yào",
+    "meaning": "to take medicine"
+  },
+  {
+    "rank": 451,
+    "chinese": "哭",
+    "pinyin": "kū",
+    "meaning": "to cry, to weep"
+  },
+  {
+    "rank": 452,
+    "chinese": "笑",
+    "pinyin": "xiào",
+    "meaning": "to laugh, to smile"
+  },
+  {
+    "rank": 453,
+    "chinese": "回答",
+    "pinyin": "huídá",
+    "meaning": "to answer, to reply"
+  },
+  {
+    "rank": 454,
+    "chinese": "告诉",
+    "pinyin": "gàosu",
+    "meaning": "to tell, to inform"
+  },
+  {
+    "rank": 455,
+    "chinese": "解释",
+    "pinyin": "jiěshì",
+    "meaning": "to explain"
+  },
+  {
+    "rank": 456,
+    "chinese": "同意",
+    "pinyin": "tóngyì",
+    "meaning": "to agree"
+  },
+  {
+    "rank": 457,
+    "chinese": "反对",
+    "pinyin": "fǎnduì",
+    "meaning": "to oppose, to object"
+  },
+  {
+    "rank": 458,
+    "chinese": "决定",
+    "pinyin": "juédìng",
+    "meaning": "to decide; decision"
+  },
+  {
+    "rank": 459,
+    "chinese": "选择",
+    "pinyin": "xuǎnzé",
+    "meaning": "to choose; choice"
+  },
+  {
+    "rank": 460,
+    "chinese": "注意",
+    "pinyin": "zhùyì",
+    "meaning": "to pay attention, to notice"
+  },
+  {
+    "rank": 461,
+    "chinese": "记住",
+    "pinyin": "jìzhù",
+    "meaning": "to remember, to memorize"
+  },
+  {
+    "rank": 462,
+    "chinese": "忘记",
+    "pinyin": "wàngjì",
+    "meaning": "to forget"
+  },
+  {
+    "rank": 463,
+    "chinese": "理解",
+    "pinyin": "lǐjiě",
+    "meaning": "to understand, to comprehend"
+  },
+  {
+    "rank": 464,
+    "chinese": "相信",
+    "pinyin": "xiāngxìn",
+    "meaning": "to believe, to trust"
+  },
+  {
+    "rank": 465,
+    "chinese": "担心",
+    "pinyin": "dānxīn",
+    "meaning": "to worry, to be concerned"
+  },
+  {
+    "rank": 466,
+    "chinese": "害怕",
+    "pinyin": "hàipà",
+    "meaning": "to be afraid, to fear"
+  },
+  {
+    "rank": 467,
+    "chinese": "尝",
+    "pinyin": "cháng",
+    "meaning": "to taste, to try"
+  },
+  {
+    "rank": 468,
+    "chinese": "闻",
+    "pinyin": "wén",
+    "meaning": "to smell"
+  },
+  {
+    "rank": 469,
+    "chinese": "摸",
+    "pinyin": "mō",
+    "meaning": "to touch, to feel"
+  },
+  {
+    "rank": 470,
+    "chinese": "画",
+    "pinyin": "huà",
+    "meaning": "picture; to draw"
+  },
+  {
+    "rank": 471,
+    "chinese": "语言",
+    "pinyin": "yǔyán",
+    "meaning": "language"
+  },
+  {
+    "rank": 472,
+    "chinese": "汉语",
+    "pinyin": "Hànyǔ",
+    "meaning": "Chinese (Mandarin)"
+  },
+  {
+    "rank": 473,
+    "chinese": "英语",
+    "pinyin": "Yīngyǔ",
+    "meaning": "English (language)"
+  },
+  {
+    "rank": 474,
+    "chinese": "句子",
+    "pinyin": "jùzi",
+    "meaning": "sentence"
+  },
+  {
+    "rank": 475,
+    "chinese": "词",
+    "pinyin": "cí",
+    "meaning": "word, term"
+  },
+  {
+    "rank": 476,
+    "chinese": "语法",
+    "pinyin": "yǔfǎ",
+    "meaning": "grammar"
+  },
+  {
+    "rank": 477,
+    "chinese": "发音",
+    "pinyin": "fāyīn",
+    "meaning": "pronunciation"
+  },
+  {
+    "rank": 478,
+    "chinese": "声调",
+    "pinyin": "shēngdiào",
+    "meaning": "tone (in Chinese)"
+  },
+  {
+    "rank": 479,
+    "chinese": "拼音",
+    "pinyin": "Pīnyīn",
+    "meaning": "Pinyin (romanization)"
+  },
+  {
+    "rank": 480,
+    "chinese": "汉字",
+    "pinyin": "Hànzì",
+    "meaning": "Chinese character(s)"
+  },
+  {
+    "rank": 481,
+    "chinese": "课文",
+    "pinyin": "kèwén",
+    "meaning": "text (in a lesson)"
+  },
+  {
+    "rank": 482,
+    "chinese": "作业",
+    "pinyin": "zuòyè",
+    "meaning": "homework, assignment"
+  },
+  {
+    "rank": 483,
+    "chinese": "考虑",
+    "pinyin": "kǎolǜ",
+    "meaning": "to consider, to think about"
+  },
+  {
+    "rank": 484,
+    "chinese": "明白",
+    "pinyin": "míngbai",
+    "meaning": "to understand, to be clear"
+  },
+  {
+    "rank": 485,
+    "chinese": "表示",
+    "pinyin": "biǎoshì",
+    "meaning": "to express, to indicate"
+  },
+  {
+    "rank": 486,
+    "chinese": "一样",
+    "pinyin": "yīyàng",
+    "meaning": "same, alike"
+  },
+  {
+    "rank": 487,
+    "chinese": "不同",
+    "pinyin": "bùtóng",
+    "meaning": "different, unlike"
+  },
+  {
+    "rank": 488,
+    "chinese": "特别",
+    "pinyin": "tèbié",
+    "meaning": "especially, particularly"
+  },
+  {
+    "rank": 489,
+    "chinese": "只有",
+    "pinyin": "zhǐyǒu",
+    "meaning": "only if, only when"
+  },
+  {
+    "rank": 490,
+    "chinese": "不管",
+    "pinyin": "bùguǎn",
+    "meaning": "regardless of, no matter"
+  },
+  {
+    "rank": 491,
+    "chinese": "虽然…但是",
+    "pinyin": "suīrán...dànshì",
+    "meaning": "although...but"
+  },
+  {
+    "rank": 492,
+    "chinese": "既然",
+    "pinyin": "jìrán",
+    "meaning": "since, now that"
+  },
+  {
+    "rank": 493,
+    "chinese": "另外",
+    "pinyin": "lìngwài",
+    "meaning": "in addition, besides; another"
+  },
+  {
+    "rank": 494,
+    "chinese": "第",
+    "pinyin": "dì",
+    "meaning": "ordinal prefix (first, second...)"
+  },
+  {
+    "rank": 495,
+    "chinese": "呢",
+    "pinyin": "ne",
+    "meaning": "sentence-final question particle"
+  },
+  {
+    "rank": 496,
+    "chinese": "吗",
+    "pinyin": "ma",
+    "meaning": "yes/no question particle"
+  },
+  {
+    "rank": 497,
+    "chinese": "吧",
+    "pinyin": "ba",
+    "meaning": "suggestion/assumption particle"
+  },
+  {
+    "rank": 498,
+    "chinese": "啊",
+    "pinyin": "a",
+    "meaning": "exclamation particle, softens tone"
+  },
+  {
+    "rank": 499,
+    "chinese": "嘛",
+    "pinyin": "ma",
+    "meaning": "obvious assertion particle"
+  },
+  {
+    "rank": 500,
+    "chinese": "哦",
+    "pinyin": "ó/ò",
+    "meaning": "oh (realization or agreement)"
+  }
+]
