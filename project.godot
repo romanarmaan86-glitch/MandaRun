@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+SaveManager="*res://save_manager.gd"
 QuizManager="*res://Scripts/quiz_manager.gd"
 
 [input]
