@@ -7,7 +7,7 @@ extends Node3D
 const LANES: Array[float]    = [-1.5, 0.0, 1.5]
 const PLATFORM_LENGTH: float = 60.0
 const PANEL_X: float         = 45.0
-const PANEL_SIZE: Vector3    = Vector3(0.2, 3.0, 2.9)
+const PANEL_SIZE: Vector3    = Vector3(0.2, 3.0, 1.45)
 
 const COLOR_IDLE    = Color(0.08, 0.08, 0.45)
 const COLOR_CORRECT = Color(0.08, 0.72, 0.18)
