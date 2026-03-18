@@ -2,11 +2,6 @@ extends Node3D
 
 # ─────────────────────────────────────────────────────────────
 # quiz_platform.gd  (Scripts/quiz_platform.gd)
-#
-# Root fix: store the question as a local variable (_my_question)
-# at spawn time. Never read QuizManager.current_question after
-# _ready() — by trigger time the next platform may have already
-# overwritten it with a different question.
 # ─────────────────────────────────────────────────────────────
 
 const LANES: Array[float]    = [-1.5, 0.0, 1.5]
@@ -21,12 +16,10 @@ const COLOR_IDLE = Color(0.08, 0.08, 0.45)
 
 const QUIZ_PLATFORM_LENGTH: float = PLATFORM_LENGTH
 
-# ── This platform's own question — set once at _ready, never touched again ──
-var _my_question: Dictionary = {}
-
-var _question_done: bool = false
-var _hud_shown: bool     = false
-var _panel_meshes: Array  = []
+var _my_question:   Dictionary = {}
+var _question_done: bool       = false
+var _hud_shown:     bool       = false
+var _panel_meshes:  Array      = []
 
 var _quiz_box:    Control   = null
 var _lbl_chinese: Label     = null
@@ -38,27 +31,21 @@ var _flash:       ColorRect = null
 
 func _ready() -> void:
 	_cache_hud_nodes()
-
-	# Generate and immediately snapshot into _my_question.
-	# QuizManager.current_question may be overwritten by the next
-	# platform's _ready() before the player ever reaches this one.
 	QuizManager.generate_question()
 	_my_question = QuizManager.current_question.duplicate(true)
-
 	_build_trigger_zone()
 	_build_panels()
-
 	QuizManager.question_answered.connect(_on_question_answered)
 
 # ─────────────────────────────────────────────────────────────
 # TRIGGER ZONE
 
 func _build_trigger_zone() -> void:
-	var area = Area3D.new()
-	var col = CollisionShape3D.new()
+	var area  = Area3D.new()
+	var col   = CollisionShape3D.new()
 	var shape = BoxShape3D.new()
 	shape.size = TRIGGER_SIZE
-	col.shape = shape
+	col.shape  = shape
 	area.add_child(col)
 	area.position = Vector3(TRIGGER_X, 1.0, 0.0)
 	area.body_entered.connect(_on_trigger_entered)
@@ -71,7 +58,7 @@ func _on_trigger_entered(body: Node3D) -> void:
 	_show_hud_question()
 
 # ─────────────────────────────────────────────────────────────
-# HUD — always uses _my_question, never QuizManager.current_question
+# HUD
 
 func _cache_hud_nodes() -> void:
 	var scene = get_tree().current_scene
@@ -92,11 +79,22 @@ func _show_hud_question() -> void:
 		_lbl_english.modulate = Color.WHITE
 	if _quiz_box:    _quiz_box.visible    = true
 
+# After answering: keep question visible and reveal the correct meaning
+func _reveal_hud_answer(correct: bool) -> void:
+	if _my_question.is_empty():
+		return
+	var word = _my_question["word"]
+	# Chinese and pinyin stay the same — just reveal the meaning
+	if _lbl_english:
+		_lbl_english.text     = word["meaning"]
+		_lbl_english.modulate = Color(0.3, 1.0, 0.3) if correct else Color(1.0, 0.4, 0.4)
+	# QuizBox stays visible so the player can read the answer as they run off
+
 func _hide_hud_question() -> void:
 	if _quiz_box: _quiz_box.visible = false
 
 # ─────────────────────────────────────────────────────────────
-# ANSWER PANELS — built from _my_question
+# ANSWER PANELS
 
 func _build_panels() -> void:
 	if _my_question.is_empty():
@@ -105,26 +103,26 @@ func _build_panels() -> void:
 	for i in 3:
 		var area = Area3D.new()
 
-		var col = CollisionShape3D.new()
+		var col   = CollisionShape3D.new()
 		var shape = BoxShape3D.new()
 		shape.size = PANEL_SIZE
-		col.shape = shape
+		col.shape  = shape
 		area.add_child(col)
 
 		var mesh_inst = MeshInstance3D.new()
-		var box = BoxMesh.new()
-		box.size = PANEL_SIZE
+		var box       = BoxMesh.new()
+		box.size      = PANEL_SIZE
 		mesh_inst.mesh = box
 		var mat = StandardMaterial3D.new()
 		mat.albedo_color = COLOR_IDLE
-		mat.roughness = 0.5
+		mat.roughness    = 0.5
 		mesh_inst.material_override = mat
 		area.add_child(mesh_inst)
 		_panel_meshes.append(mesh_inst)
 
 		var lbl = Label3D.new()
 		lbl.text             = _my_question["answers"][i]
-		lbl.font_size        = 64
+		lbl.font_size        = 60
 		lbl.modulate         = Color.WHITE
 		lbl.outline_size     = 6
 		lbl.outline_modulate = Color.BLACK
@@ -148,19 +146,12 @@ func _on_panel_body_entered(body: Node3D, lane: int) -> void:
 	if _question_done or not body.is_in_group("player"):
 		return
 	_question_done = true
-	# Temporarily restore our question into QuizManager so submit_answer
-	# records the right word — then it will be overwritten by the next platform
 	QuizManager.current_question = _my_question.duplicate(true)
 	QuizManager.submit_answer(lane)
 
 func _on_question_answered(correct: bool, _correct_lane: int) -> void:
-	_reveal_answer(correct)
+	_reveal_hud_answer(correct)   # show correct meaning in HUD, keep question visible
 	_show_flash(correct)
-
-func _reveal_answer(correct: bool) -> void:
-	if _lbl_english and not _my_question.is_empty():
-		_lbl_english.text     = _my_question["word"]["meaning"]
-		_lbl_english.modulate = Color(0.3, 1.0, 0.3) if correct else Color(1.0, 0.4, 0.4)
 
 func _show_flash(correct: bool) -> void:
 	if _flash == null:
@@ -179,13 +170,14 @@ func _show_flash(correct: bool) -> void:
 
 func _exit_tree() -> void:
 	if not _question_done:
-		# Record skip using our own question, not QuizManager's current one
 		QuizManager.run_results.append({
-			"chinese":  _my_question.get("word", {}).get("chinese", ""),
-			"pinyin":   _my_question.get("word", {}).get("pinyin", ""),
-			"meaning":  _my_question.get("word", {}).get("meaning", ""),
-			"correct":  false,
-			"answered": false
+			"chinese":      _my_question.get("word", {}).get("chinese", ""),
+			"pinyin":       _my_question.get("word", {}).get("pinyin", ""),
+			"meaning":      _my_question.get("word", {}).get("meaning", ""),
+			"correct":      false,
+			"answered":     false,
+			"correct_lane": _my_question.get("correct_lane", -1),
+			"answers":      _my_question.get("answers", [])
 		})
 	_hide_hud_question()
 	if _lbl_english:

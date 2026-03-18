@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://cgrxk4kdc4vix"]
+[gd_scene load_steps=7 format=3 uid="uid://cgrxk4kdc4vix"]
 
 [ext_resource type="Script" uid="uid://13yx1gbsu6rp" path="res://Scripts/run_results.gd" id="1_uyqxt"]
+[ext_resource type="FontFile" uid="uid://bn28sktmelutm" path="res://Some Time Later.otf" id="2_aiqrq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kmcjb"]
 bg_color = Color(1, 1, 1, 1)
@@ -106,6 +107,7 @@ theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_aiqrq")
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxFlat_kmcjb")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_u5nta")

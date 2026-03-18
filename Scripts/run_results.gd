@@ -1,16 +1,6 @@
 extends Control
 
-# ─────────────────────────────────────────────────────────────
 # run_results.gd  (Scripts/run_results.gd)
-#
-# FIX 4: English meaning was wrapping vertically (one letter per line)
-# because the Label had no minimum width and SIZE_EXPAND_FILL alone
-# doesn't work inside an HBoxContainer that has no fixed width itself.
-#
-# Solution: give the meaning label a large custom_minimum_size.x so
-# it has room to display horizontally, and set autowrap to WORD only
-# (not character), so it only breaks at spaces if it must wrap at all.
-# ─────────────────────────────────────────────────────────────
 
 @onready var title_label:   Label         = $TitleLabel
 @onready var summary_label: Label         = $SummaryLabel
@@ -26,23 +16,47 @@ func _populate() -> void:
 	var results = QuizManager.run_results
 
 	if results.is_empty():
-		summary_label.text = "No quiz questions this run."
+		summary_label.text = "No quiz questions this run.\nStars collected: %d" % QuizManager.stars_collected
 		return
 
 	var correct_count  = results.filter(func(e): return e["correct"]).size()
 	var answered_count = results.filter(func(e): return e["answered"]).size()
-	summary_label.text = "%d / %d correct   (%d skipped)" % [
-		correct_count, results.size(), results.size() - answered_count
+
+	summary_label.text = "%d / %d correct   |   %d skipped   |   ⭐ %d stars" % [
+		correct_count,
+		results.size(),
+		results.size() - answered_count,
+		QuizManager.stars_collected
 	]
+
+	# Header row
+	results_list.add_child(_make_header())
 
 	for entry in results:
 		results_list.add_child(_make_row(entry))
+
+func _make_header() -> HBoxContainer:
+	var row = HBoxContainer.new()
+	row.add_theme_constant_override("separation", 16)
+	for text in ["", "字", "Pinyin", "Meaning"]:
+		var lbl = Label.new()
+		lbl.text = text
+		lbl.modulate = Color(0.7, 0.7, 0.7)
+		match text:
+			"":       lbl.custom_minimum_size = Vector2(28, 0)
+			"字":      lbl.custom_minimum_size = Vector2(56, 0)
+			"Pinyin": lbl.custom_minimum_size = Vector2(110, 0)
+			"Meaning":
+				lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+				lbl.custom_minimum_size   = Vector2(300, 0)
+		row.add_child(lbl)
+	return row
 
 func _make_row(entry: Dictionary) -> HBoxContainer:
 	var row = HBoxContainer.new()
 	row.add_theme_constant_override("separation", 16)
 
-	# ── Status icon ──
+	# Status
 	var status = Label.new()
 	if not entry["answered"]:
 		status.text     = "–"
@@ -56,27 +70,24 @@ func _make_row(entry: Dictionary) -> HBoxContainer:
 	status.custom_minimum_size = Vector2(28, 0)
 	row.add_child(status)
 
-	# ── Chinese character ──
+	# Chinese
 	var chinese = Label.new()
-	chinese.text               = entry["chinese"]
+	chinese.text                = entry["chinese"]
 	chinese.custom_minimum_size = Vector2(56, 0)
 	row.add_child(chinese)
 
-	# ── Pinyin ──
+	# Pinyin
 	var pinyin = Label.new()
 	pinyin.text                = entry["pinyin"]
 	pinyin.custom_minimum_size = Vector2(110, 0)
 	row.add_child(pinyin)
 
-	# ── English meaning ──
-	# FIX: custom_minimum_size.x = 300 ensures the label has enough
-	# horizontal room. SIZE_EXPAND_FILL then fills whatever is left.
-	# AUTOWRAP_WORD means it only wraps at spaces, never mid-word.
+	# Meaning — fixed width so it never wraps character-by-character
 	var meaning = Label.new()
-	meaning.text                = entry["meaning"]
-	meaning.custom_minimum_size = Vector2(300, 0)
+	meaning.text                  = entry["meaning"]
+	meaning.custom_minimum_size   = Vector2(300, 0)
 	meaning.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	meaning.autowrap_mode       = TextServer.AUTOWRAP_WORD
+	meaning.autowrap_mode         = TextServer.AUTOWRAP_WORD
 	row.add_child(meaning)
 
 	return row
