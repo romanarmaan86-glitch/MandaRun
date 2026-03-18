@@ -15,6 +15,7 @@ const TRIGGER_X: float       = 20.0
 const COLOR_IDLE = Color(0.08, 0.08, 0.45)
 
 const QUIZ_PLATFORM_LENGTH: float = PLATFORM_LENGTH
+const SPEED_PENALTY: float        = 5.0
 
 var _my_question:   Dictionary = {}
 var _question_done: bool       = false
@@ -79,19 +80,16 @@ func _show_hud_question() -> void:
 		_lbl_english.modulate = Color.WHITE
 	if _quiz_box:    _quiz_box.visible    = true
 
-# After answering: keep question visible and reveal the correct meaning
 func _reveal_hud_answer(correct: bool) -> void:
 	if _my_question.is_empty():
 		return
 	var word = _my_question["word"]
-	# Chinese and pinyin stay the same — just reveal the meaning
+	if _lbl_chinese: _lbl_chinese.text = word["chinese"]
+	if _lbl_pinyin:  _lbl_pinyin.text  = word["pinyin"]
 	if _lbl_english:
 		_lbl_english.text     = word["meaning"]
 		_lbl_english.modulate = Color(0.3, 1.0, 0.3) if correct else Color(1.0, 0.4, 0.4)
-	# QuizBox stays visible so the player can read the answer as they run off
-
-func _hide_hud_question() -> void:
-	if _quiz_box: _quiz_box.visible = false
+	if _quiz_box: _quiz_box.visible = true
 
 # ─────────────────────────────────────────────────────────────
 # ANSWER PANELS
@@ -101,7 +99,7 @@ func _build_panels() -> void:
 		return
 
 	for i in 3:
-		var area = Area3D.new()
+		var area  = Area3D.new()
 
 		var col   = CollisionShape3D.new()
 		var shape = BoxShape3D.new()
@@ -122,7 +120,7 @@ func _build_panels() -> void:
 
 		var lbl = Label3D.new()
 		lbl.text             = _my_question["answers"][i]
-		lbl.font_size        = 60
+		lbl.font_size        = 64
 		lbl.modulate         = Color.WHITE
 		lbl.outline_size     = 6
 		lbl.outline_modulate = Color.BLACK
@@ -150,8 +148,14 @@ func _on_panel_body_entered(body: Node3D, lane: int) -> void:
 	QuizManager.submit_answer(lane)
 
 func _on_question_answered(correct: bool, _correct_lane: int) -> void:
-	_reveal_hud_answer(correct)   # show correct meaning in HUD, keep question visible
+	if QuizManager.question_answered.is_connected(_on_question_answered):
+		QuizManager.question_answered.disconnect(_on_question_answered)
+	_reveal_hud_answer(correct)
 	_show_flash(correct)
+	if not correct:
+		# Reduce speed — platformspawner will restore it on the next platform spawn
+		QuizManager.move_speed = max(QuizManager.move_speed - SPEED_PENALTY, 3.0)
+		QuizManager.speed_penalised = true
 
 func _show_flash(correct: bool) -> void:
 	if _flash == null:
@@ -179,7 +183,7 @@ func _exit_tree() -> void:
 			"correct_lane": _my_question.get("correct_lane", -1),
 			"answers":      _my_question.get("answers", [])
 		})
-	_hide_hud_question()
+		if _quiz_box: _quiz_box.visible = false
 	if _lbl_english:
 		_lbl_english.modulate = Color.WHITE
 	if QuizManager.question_answered.is_connected(_on_question_answered):

@@ -1,21 +1,12 @@
 extends Node3D
 
-# ─────────────────────────────────────────────────────────────
 # platformspawner.gd  (Scripts/platformspawner.gd)
-#
-# Delete fix: instead of a fixed DELETE_X threshold, each platform
-# is deleted only when its FAR END has scrolled past x = -20.
-# Far end = position.x + platform_length.
-# This prevents the quiz platform (60 units long) from being
-# deleted while its panels are still on screen.
-# ─────────────────────────────────────────────────────────────
 
 const PLATFORM_COUNT       := 7
 const PLATFORM_LENGTH      := 20.0
 const QUIZ_PLATFORM_LENGTH := 60.0
-const DELETE_X             := -20.0   # far end must pass this to delete
-const MOVE_SPEED           := 15.0
-const QUIZ_EVERY_N         := 5
+const DELETE_X             := -20.0
+const QUIZ_EVERY_N         := 8
 
 @export var platform_scene: PackedScene
 @export var quiz_platform_scene: PackedScene
@@ -30,14 +21,13 @@ func _ready() -> void:
 		_spawn_normal(i)
 
 func _physics_process(delta: float) -> void:
+	var speed: float = QuizManager.move_speed if QuizManager.get("move_speed") != null else 15.0
+
 	for platform in platforms.duplicate():
 		if platform == null or not is_instance_valid(platform):
 			platforms.erase(platform)
 			continue
-
-		platform.position.x -= MOVE_SPEED * delta
-
-		# Delete only when the FAR END of the platform is off screen
+		platform.position.x -= speed * delta
 		var length = _get_platform_length(platform)
 		if platform.position.x + length < DELETE_X:
 			platform.queue_free()
@@ -59,8 +49,14 @@ func _spawn_normal(index: int = -1) -> void:
 		printerr("Failed to instantiate platform_scene!")
 		return
 	p.position = Vector3(_next_x(PLATFORM_LENGTH), 0, 0)
+	p.set_meta("platform_length", PLATFORM_LENGTH)
 	add_child(p)
 	platforms.append(p)
+
+	# Restore speed when the next platform spawns after a wrong answer
+	if QuizManager.get("speed_penalised") and QuizManager.speed_penalised:
+		QuizManager.move_speed      = QuizManager.base_move_speed
+		QuizManager.speed_penalised = false
 
 	var obs = get_parent().get_node_or_null("obstaclespawner")
 	if obs:
@@ -76,6 +72,7 @@ func _spawn_quiz() -> void:
 		printerr("Failed to instantiate quiz_platform_scene!")
 		return
 	p.position = Vector3(_next_x(QUIZ_PLATFORM_LENGTH), 0, 0)
+	p.set_meta("platform_length", QUIZ_PLATFORM_LENGTH)
 	add_child(p)
 	platforms.append(p)
 
@@ -86,8 +83,6 @@ func _next_x(incoming_length: float) -> float:
 	return last.position.x + _get_platform_length(last)
 
 func _get_platform_length(p: Node3D) -> float:
-	if p.get_script() != null:
-		var val = p.get("QUIZ_PLATFORM_LENGTH")
-		if val != null:
-			return float(val)
+	if p.has_meta("platform_length"):
+		return p.get_meta("platform_length")
 	return PLATFORM_LENGTH

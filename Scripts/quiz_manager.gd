@@ -4,14 +4,20 @@ extends Node
 # QuizManager — Autoload singleton  (Scripts/quiz_manager.gd)
 # ─────────────────────────────────────────────────────────────
 
-const WORD_FILE        = "res://hsk1_words.json"
+const WORD_FILE         = "res://hsk1_words.json"
 const NEW_WORDS_PER_DAY = 10
 
-var all_words:      Array = []
-var unlocked_up_to: int   = NEW_WORDS_PER_DAY
+var all_words:        Array      = []
+var unlocked_up_to:   int        = NEW_WORDS_PER_DAY
 var current_question: Dictionary = {}
-var run_results:    Array = []
-var stars_collected: int  = 0   # incremented by star.gd on collect
+var run_results:      Array      = []
+var stars_collected:  int        = 0
+
+# Speed — base_move_speed holds the chosen difficulty speed so it
+# can be restored after a wrong-answer penalty.
+var base_move_speed:  float = 15.0
+var move_speed:       float = 15.0
+var speed_penalised:  bool  = false
 
 signal question_answered(correct: bool, correct_lane: int)
 
@@ -32,13 +38,10 @@ func _load_words() -> void:
 	else:
 		printerr("QuizManager: failed to parse hsk1_words.json")
 
-# ─────────────────────────────────────────────────────────────
-
 func generate_question() -> void:
 	if all_words.is_empty():
 		return
-
-	var pool_size   = min(unlocked_up_to, all_words.size())
+	var pool_size    = min(unlocked_up_to, all_words.size())
 	var correct_word = all_words[randi() % pool_size]
 
 	var wrong_answers: Array[String] = []
@@ -61,8 +64,6 @@ func generate_question() -> void:
 		"answered":     false
 	}
 
-# ─────────────────────────────────────────────────────────────
-
 func submit_answer(chosen_lane: int) -> void:
 	if current_question.is_empty() or current_question.get("answered", false):
 		return
@@ -81,9 +82,11 @@ func submit_answer(chosen_lane: int) -> void:
 
 	question_answered.emit(correct, current_question["correct_lane"])
 
-# ─────────────────────────────────────────────────────────────
-
 func reset_run() -> void:
 	run_results.clear()
-	current_question = {}
-	stars_collected  = 0
+	current_question  = {}
+	stars_collected   = 0
+	speed_penalised   = false
+	move_speed        = base_move_speed
+	# base_move_speed and move_speed intentionally NOT reset to default —
+	# difficulty choice persists between runs
