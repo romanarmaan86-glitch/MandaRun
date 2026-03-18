@@ -2,15 +2,12 @@ extends Node3D
 
 # ─────────────────────────────────────────────────────────────
 # quiz_platform.gd  (Scripts/quiz_platform.gd)
-#
-# Platform floor scale: 60 (set in quiz_platform.tscn)
-# Answer panels at: x = 45  (3/4 of 60)
 # ─────────────────────────────────────────────────────────────
 
 const LANES: Array[float]    = [-1.5, 0.0, 1.5]
 const PLATFORM_LENGTH: float = 60.0
-const PANEL_X: float         = 45.0   # 3/4 of 60
-const PANEL_SIZE: Vector3    = Vector3(0.2, 2.4, 2.8)
+const PANEL_X: float         = 45.0
+const PANEL_SIZE: Vector3    = Vector3(0.2, 3.0, 2.9)
 
 const COLOR_IDLE    = Color(0.08, 0.08, 0.45)
 const COLOR_CORRECT = Color(0.08, 0.72, 0.18)
@@ -19,7 +16,7 @@ const COLOR_WRONG   = Color(0.72, 0.08, 0.08)
 const QUIZ_PLATFORM_LENGTH: float = PLATFORM_LENGTH
 
 var _question_done: bool = false
-var _panel_meshes:  Array = []
+var _panel_meshes:  Array = []   # MeshInstance3D refs
 
 var _quiz_box:    Control   = null
 var _lbl_chinese: Label     = null
@@ -32,8 +29,9 @@ var _flash:       ColorRect = null
 func _ready() -> void:
 	_cache_hud_nodes()
 	QuizManager.generate_question()
-	_show_hud_question()
 	_build_panels()
+	_reset_panel_colours()       # always start idle — clears any leftover tint
+	_show_hud_question()         # question visible immediately from spawn
 	QuizManager.question_answered.connect(_on_question_answered)
 
 # ─────────────────────────────────────────────────────────────
@@ -73,12 +71,14 @@ func _build_panels() -> void:
 	for i in 3:
 		var area = Area3D.new()
 
+		# Collision
 		var col = CollisionShape3D.new()
 		var shape = BoxShape3D.new()
 		shape.size = PANEL_SIZE
 		col.shape = shape
 		area.add_child(col)
 
+		# Mesh
 		var mesh_inst = MeshInstance3D.new()
 		var box = BoxMesh.new()
 		box.size = PANEL_SIZE
@@ -90,20 +90,34 @@ func _build_panels() -> void:
 		area.add_child(mesh_inst)
 		_panel_meshes.append(mesh_inst)
 
+		# Label — FIX: -90 so text faces the approaching player correctly
 		var lbl = Label3D.new()
 		lbl.text             = q["answers"][i]
 		lbl.font_size        = 64
 		lbl.modulate         = Color.WHITE
-		lbl.outline_size     = 8
+		lbl.outline_size     = 6
 		lbl.outline_modulate = Color.BLACK
 		lbl.double_sided     = true
-		lbl.billboard        = BaseMaterial3D.BILLBOARD_ENABLED
-		lbl.position         = Vector3(-0.25, 0.0, 0.0)
+		lbl.billboard        = BaseMaterial3D.BILLBOARD_DISABLED
+		lbl.rotation_degrees = Vector3(0, -90, 0)   # FIX: was +90, text was mirrored
+		lbl.pixel_size       = 0.005
+		lbl.width            = 300
+		lbl.autowrap_mode    = TextServer.AUTOWRAP_WORD
+		lbl.position         = Vector3(-0.15, 0.0, 0.0)
 		area.add_child(lbl)
 
-		area.position = Vector3(PANEL_X, 1.2, LANES[i])
+		area.position = Vector3(PANEL_X, 1.5, LANES[i])
 		area.body_entered.connect(_on_panel_body_entered.bind(i))
 		add_child(area)
+
+# Resets all panels to idle colour — called on _ready to clear
+# any colour that leaked from the previous quiz platform instance.
+func _reset_panel_colours() -> void:
+	for mesh_inst in _panel_meshes:
+		var mat = StandardMaterial3D.new()
+		mat.albedo_color = COLOR_IDLE
+		mat.roughness = 0.5
+		mesh_inst.material_override = mat
 
 # ─────────────────────────────────────────────────────────────
 # ANSWER LOGIC
@@ -116,16 +130,9 @@ func _on_panel_body_entered(body: Node3D, lane: int) -> void:
 	_question_done = true
 	QuizManager.submit_answer(lane)
 
-func _on_question_answered(correct: bool, correct_lane: int) -> void:
-	_recolour_panels(correct_lane)
+func _on_question_answered(correct: bool, _correct_lane: int) -> void:
 	_reveal_answer(correct)
 	_show_flash(correct)
-
-func _recolour_panels(correct_lane: int) -> void:
-	for i in _panel_meshes.size():
-		var mat = StandardMaterial3D.new()
-		mat.albedo_color = COLOR_CORRECT if i == correct_lane else COLOR_WRONG
-		_panel_meshes[i].material_override = mat
 
 func _reveal_answer(correct: bool) -> void:
 	var q = QuizManager.current_question
