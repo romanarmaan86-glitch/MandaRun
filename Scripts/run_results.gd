@@ -2,22 +2,41 @@ extends Control
 
 # run_results.gd  (Scripts/run_results.gd)
 
-@onready var title_label:   Label         = $TitleLabel
-@onready var summary_label: Label         = $SummaryLabel
-@onready var results_list:  VBoxContainer = $ScrollContainer/ResultsList
-@onready var continue_btn:  Button        = $ContinueButton
-
 func _ready() -> void:
-	continue_btn.pressed.connect(_on_continue)
-	title_label.text = "Run Results"
-	_populate()
+	UIStyle.make_bg(self)
+	UIStyle.make_title("Run Results", self)
 
-func _populate() -> void:
-	var all_results = QuizManager.run_results
-	var answered    = all_results.filter(func(e): return e["answered"])
+	# Summary panel
+	var summary_panel = PanelContainer.new()
+	summary_panel.add_theme_stylebox_override("panel", UIStyle.card_style())
+	summary_panel.set_anchors_preset(Control.PRESET_CENTER_TOP)
+	summary_panel.position = Vector2(-280, 80)
+	summary_panel.custom_minimum_size = Vector2(560, 0)
+	add_child(summary_panel)
+
+	var summary_lbl = UIStyle.make_label("", UIStyle.FS_BODY, UIStyle.ACCENT)
+	summary_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	summary_panel.add_child(summary_lbl)
+
+	# Results list
+	var results_list = UIStyle.make_scroll(self, 180, -80)
+
+	# Continue button
+	var cont_btn = UIStyle.make_button("Continue", UIStyle.FS_BODY)
+	cont_btn.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
+	cont_btn.offset_left   = -220
+	cont_btn.offset_top    = -60
+	cont_btn.offset_right  = -20
+	cont_btn.offset_bottom = -10
+	cont_btn.pressed.connect(_on_continue)
+	add_child(cont_btn)
+
+	# Populate
+	var all_results   = QuizManager.run_results
+	var answered      = all_results.filter(func(e): return e["answered"])
 	var correct_count = answered.filter(func(e): return e["correct"]).size()
 
-	summary_label.text = "%d / %d correct   |   ⭐ %d this run   |   ⭐ %d total" % [
+	summary_lbl.text = "%d / %d correct   |   ⭐ %d this run   |   ⭐ %d total" % [
 		correct_count,
 		answered.size(),
 		QuizManager.stars_collected,
@@ -25,57 +44,57 @@ func _populate() -> void:
 	]
 
 	if answered.is_empty():
+		var empty_lbl = UIStyle.make_label("No questions answered this run.", UIStyle.FS_BODY, UIStyle.TEXT_DIM)
+		empty_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		results_list.add_child(empty_lbl)
 		return
 
+	# Header
 	results_list.add_child(_make_header())
 	for entry in answered:
 		results_list.add_child(_make_row(entry))
 
 func _make_header() -> HBoxContainer:
 	var row = HBoxContainer.new()
-	row.add_theme_constant_override("separation", 16)
-	for pair in [["", 28], ["字", 56], ["Pinyin", 110], ["Meaning", 300]]:
-		var lbl = Label.new()
-		lbl.text     = pair[0]
-		lbl.modulate = Color(0.7, 0.7, 0.7)
+	row.add_theme_constant_override("separation", 12)
+	for pair in [["", 28], ["字", 50], ["Pinyin", 110], ["Meaning", 300]]:
+		var lbl = UIStyle.make_label(pair[0], UIStyle.FS_SMALL, UIStyle.TEXT_DIM)
 		lbl.custom_minimum_size = Vector2(pair[1], 0)
 		if pair[0] == "Meaning":
 			lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		row.add_child(lbl)
 	return row
 
-func _make_row(entry: Dictionary) -> HBoxContainer:
-	var row = HBoxContainer.new()
-	row.add_theme_constant_override("separation", 16)
+func _make_row(entry: Dictionary) -> PanelContainer:
+	var panel = PanelContainer.new()
+	panel.add_theme_stylebox_override("panel", UIStyle.card_style())
 
-	var status = Label.new()
-	if entry["correct"]:
-		status.text     = "✓"
-		status.modulate = Color(0.2, 0.9, 0.3)
-	else:
-		status.text     = "✗"
-		status.modulate = Color(0.9, 0.2, 0.2)
+	var hbox = HBoxContainer.new()
+	hbox.add_theme_constant_override("separation", 12)
+	panel.add_child(hbox)
+
+	var status = UIStyle.make_label(
+		"✓" if entry["correct"] else "✗",
+		UIStyle.FS_BODY,
+		UIStyle.GREEN if entry["correct"] else UIStyle.RED
+	)
 	status.custom_minimum_size = Vector2(28, 0)
-	row.add_child(status)
+	hbox.add_child(status)
 
-	var chinese = Label.new()
-	chinese.text                = entry["chinese"]
-	chinese.custom_minimum_size = Vector2(56, 0)
-	row.add_child(chinese)
+	var chinese = UIStyle.make_label(entry["chinese"], 20)
+	chinese.custom_minimum_size = Vector2(50, 0)
+	hbox.add_child(chinese)
 
-	var pinyin = Label.new()
-	pinyin.text                = entry["pinyin"]
+	var pinyin = UIStyle.make_label(entry["pinyin"], UIStyle.FS_SMALL, UIStyle.TEXT_DIM)
 	pinyin.custom_minimum_size = Vector2(110, 0)
-	row.add_child(pinyin)
+	hbox.add_child(pinyin)
 
-	var meaning = Label.new()
-	meaning.text                  = entry["meaning"]
-	meaning.custom_minimum_size   = Vector2(300, 0)
+	var meaning = UIStyle.make_label(entry["meaning"], UIStyle.FS_SUB)
 	meaning.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	meaning.autowrap_mode         = TextServer.AUTOWRAP_WORD
-	row.add_child(meaning)
+	hbox.add_child(meaning)
 
-	return row
+	return panel
 
 func _on_continue() -> void:
 	QuizManager.reset_run()
