@@ -26,7 +26,7 @@ const FS_SUB     = 14
 const FS_SMALL   = 12
 
 # ── Custom font (used for titles) ──
-const TITLE_FONT_PATH = "res://Some Time Later.otf"
+const TITLE_FONT_PATH = "res://SomeTimeLater.otf"
 
 # ─────────────────────────────────────────────────────────────
 # Style factories
