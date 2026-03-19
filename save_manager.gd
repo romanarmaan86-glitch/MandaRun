@@ -2,15 +2,17 @@ extends Node
 
 # ─────────────────────────────────────────────────────────────
 # SaveManager — Autoload singleton  (Scripts/save_manager.gd)
-# Add to Autoloads ABOVE QuizManager.
+# Must be ABOVE QuizManager in the Autoload list.
 # ─────────────────────────────────────────────────────────────
 
 const SAVE_PATH = "user://save.tres"
 
-var _data: SaveData = null
+# _data is created immediately so accessors never hit a null reference
+# even if something reads SaveManager before _ready() finishes.
+var _data: SaveData = SaveData.new()
 
 # ─────────────────────────────────────────────────────────────
-# Convenience accessors
+# Accessors — rest of codebase uses SaveManager.streak etc.
 
 var last_played_date: String:
 	get: return _data.last_played_date
@@ -43,9 +45,10 @@ var saved_new_words_per_day: int:
 # ─────────────────────────────────────────────────────────────
 
 func _ready() -> void:
-	load_save()
+	load_save()          # overwrites _data with saved values
+	_check_day_change()  # must run BEFORE _apply_saved_settings
+						 # so streak is correct before anything reads it
 	_apply_saved_settings()
-	_check_day_change()
 
 func _apply_saved_settings() -> void:
 	QuizManager.base_move_speed   = _data.saved_move_speed
@@ -56,14 +59,16 @@ func _check_day_change() -> void:
 	var today = _today_string()
 
 	if _data.last_played_date == "":
+		# First ever launch
 		_data.last_played_date = today
 		_data.streak           = 0
 		save()
 		return
 
 	if today == _data.last_played_date:
-		return
+		return   # Same day, nothing to do
 
+	# New day
 	if _is_consecutive(_data.last_played_date, today):
 		_data.streak += 1
 	else:
@@ -91,21 +96,27 @@ func introduce_new_words(all_words: Array, max_new: int) -> void:
 	if remaining <= 0:
 		return
 
+	# Build lookup of already-introduced ranks
 	var introduced_set = {}
 	for rank in _data.words_introduced:
 		introduced_set[rank] = true
 
+	# Build a new array — reassigning fixes the Resource dirty-tracking bug
+	# where appending to the existing array doesn't mark the resource as changed
+	var new_list: Array = _data.words_introduced.duplicate()
 	var added = 0
+
 	for word in all_words:
 		if added >= remaining:
 			break
 		var rank = word["rank"]
 		if not introduced_set.has(rank):
-			_data.words_introduced.append(rank)
+			new_list.append(rank)
 			introduced_set[rank] = true
 			added += 1
 
 	if added > 0:
+		_data.words_introduced = new_list   # reassign so Resource tracks the change
 		_data.new_words_today += added
 		save()
 
@@ -138,11 +149,13 @@ func save() -> void:
 		printerr("SaveManager: failed to save — error ", err)
 
 func load_save() -> void:
-	if ResourceLoader.exists(SAVE_PATH):
-		var loaded = ResourceLoader.load(SAVE_PATH)
-		if loaded is SaveData:
-			_data = loaded
-			return
-		else:
-			printerr("SaveManager: save file corrupt or wrong type — resetting")
-	_data = SaveData.new()
+	if not ResourceLoader.exists(SAVE_PATH):
+		# No save file yet — _data is already a fresh SaveData from var declaration
+		return
+
+	var loaded = ResourceLoader.load(SAVE_PATH)
+	if loaded is SaveData:
+		_data = loaded
+	else:
+		printerr("SaveManager: corrupt save — starting fresh")
+		_data = SaveData.new()

@@ -2,7 +2,6 @@ extends Resource
 class_name SaveData
 
 # save_data.gd  (Scripts/save_data.gd)
-# This is the data container — just properties, no logic.
 
 @export var last_played_date:        String = ""
 @export var words_introduced:        Array  = []

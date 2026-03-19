@@ -26,6 +26,7 @@ var _quiz_box:    Control   = null
 var _lbl_chinese: Label     = null
 var _lbl_pinyin:  Label     = null
 var _lbl_english: Label     = null
+var _lbl_answers: Array     = []   # [Answer0, Answer1, Answer2]
 var _flash:       ColorRect = null
 
 # ─────────────────────────────────────────────────────────────
@@ -69,6 +70,11 @@ func _cache_hud_nodes() -> void:
 	_lbl_english = scene.find_child("English",      true, false) as Label
 	_flash       = scene.find_child("FlashOverlay", true, false) as ColorRect
 
+	# Answer option labels — lane 0 = left, 1 = middle, 2 = right
+	for name in ["Answer0", "Answer1", "Answer2"]:
+		var lbl = scene.find_child(name, true, false) as Label
+		_lbl_answers.append(lbl)
+
 func _show_hud_question() -> void:
 	if _my_question.is_empty():
 		return
@@ -78,18 +84,41 @@ func _show_hud_question() -> void:
 	if _lbl_english:
 		_lbl_english.text     = "???"
 		_lbl_english.modulate = Color.WHITE
-	if _quiz_box:    _quiz_box.visible    = true
+
+	# Show the three answer options with lane indicators
+	var answers = _my_question["answers"]
+	var lane_labels = ["← ", "↑ ", "→ "]
+	for i in 3:
+		if _lbl_answers[i]:
+			_lbl_answers[i].text     = lane_labels[i] + answers[i]
+			_lbl_answers[i].modulate = Color.WHITE
+			_lbl_answers[i].visible  = true
+
+	if _quiz_box: _quiz_box.visible = true
 
 func _reveal_hud_answer(correct: bool) -> void:
 	if _my_question.is_empty():
 		return
-	var word = _my_question["word"]
+	var word         = _my_question["word"]
+	var correct_lane = _my_question["correct_lane"]
+
 	if _lbl_chinese: _lbl_chinese.text = word["chinese"]
 	if _lbl_pinyin:  _lbl_pinyin.text  = word["pinyin"]
 	if _lbl_english:
 		_lbl_english.text     = word["meaning"]
 		_lbl_english.modulate = Color(0.3, 1.0, 0.3) if correct else Color(1.0, 0.4, 0.4)
+
+	# Highlight correct answer green, wrong ones red
+	for i in 3:
+		if _lbl_answers[i]:
+			_lbl_answers[i].modulate = Color(0.3, 1.0, 0.3) if i == correct_lane else Color(1.0, 0.4, 0.4)
+
 	if _quiz_box: _quiz_box.visible = true
+
+func _hide_hud_question() -> void:
+	if _quiz_box: _quiz_box.visible = false
+	for lbl in _lbl_answers:
+		if lbl: lbl.visible = false
 
 # ─────────────────────────────────────────────────────────────
 # ANSWER PANELS
@@ -153,8 +182,7 @@ func _on_question_answered(correct: bool, _correct_lane: int) -> void:
 	_reveal_hud_answer(correct)
 	_show_flash(correct)
 	if not correct:
-		# Reduce speed — platformspawner will restore it on the next platform spawn
-		QuizManager.move_speed = max(QuizManager.move_speed - SPEED_PENALTY, 3.0)
+		QuizManager.move_speed      = max(QuizManager.move_speed - SPEED_PENALTY, 3.0)
 		QuizManager.speed_penalised = true
 
 func _show_flash(correct: bool) -> void:
@@ -183,7 +211,7 @@ func _exit_tree() -> void:
 			"correct_lane": _my_question.get("correct_lane", -1),
 			"answers":      _my_question.get("answers", [])
 		})
-		if _quiz_box: _quiz_box.visible = false
+		_hide_hud_question()
 	if _lbl_english:
 		_lbl_english.modulate = Color.WHITE
 	if QuizManager.question_answered.is_connected(_on_question_answered):

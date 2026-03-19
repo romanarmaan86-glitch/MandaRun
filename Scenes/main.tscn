@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bnii2d2u7oqgi"]
+[gd_scene load_steps=14 format=3 uid="uid://bnii2d2u7oqgi"]
 
 [ext_resource type="Script" uid="uid://gamauonbj2fw" path="res://Scripts/main.gd" id="1_hptm8"]
 [ext_resource type="PackedScene" uid="uid://cflhq27mnaldj" path="res://Scenes/player.tscn" id="2_d1ilt"]
@@ -23,6 +23,8 @@ volumetric_fog_density = 0.007
 
 [sub_resource type="FogMaterial" id="FogMaterial_5vw27"]
 edge_fade = 2.8839984
+
+[sub_resource type="LabelSettings" id="LabelSettings_hptm8"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_hptm8")
@@ -60,7 +62,6 @@ shadow_enabled = true
 [node name="Hud" type="CanvasLayer" parent="."]
 
 [node name="QuizBox" type="Control" parent="Hud"]
-visible = false
 layout_mode = 3
 anchors_preset = 5
 anchor_left = 0.5
@@ -89,9 +90,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -118.25
-offset_top = 79.0
+offset_top = 47.0
 offset_right = 118.25
-offset_bottom = 158.0
+offset_bottom = 126.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 16
 horizontal_alignment = 1
@@ -103,11 +104,53 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -118.0
-offset_top = 105.0
+offset_top = 81.0
 offset_right = 118.5
-offset_bottom = 184.0
+offset_bottom = 160.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Hud/QuizBox"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -251.0
+offset_top = 45.5
+offset_right = 255.0
+offset_bottom = 169.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="Answer0" type="Label" parent="Hud/QuizBox/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+theme_override_font_sizes/font_size = 16
+label_settings = SubResource("LabelSettings_hptm8")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Answer1" type="Label" parent="Hud/QuizBox/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+theme_override_font_sizes/font_size = 16
+label_settings = SubResource("LabelSettings_hptm8")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Answer2" type="Label" parent="Hud/QuizBox/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+theme_override_font_sizes/font_size = 16
+label_settings = SubResource("LabelSettings_hptm8")
 horizontal_alignment = 1
 vertical_alignment = 1
 

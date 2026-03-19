@@ -13,30 +13,22 @@ func _ready() -> void:
 	_populate()
 
 func _populate() -> void:
-	var results = QuizManager.run_results
+	var all_results = QuizManager.run_results
+	var answered    = all_results.filter(func(e): return e["answered"])
+	var correct_count = answered.filter(func(e): return e["correct"]).size()
 
-	var correct_count  = results.filter(func(e): return e["correct"]).size()
-	var answered_count = results.filter(func(e): return e["answered"]).size()
-
-	summary_label.text = (
-		"%d / %d correct   |   %d skipped\n" +
-		"⭐ %d this run   |   ⭐ %d total\n" +
-		"🔥 %d day streak   |   📖 %d words learned"
-	) % [
+	summary_label.text = "%d / %d correct   |   ⭐ %d this run   |   ⭐ %d total" % [
 		correct_count,
-		results.size(),
-		results.size() - answered_count,
+		answered.size(),
 		QuizManager.stars_collected,
-		SaveManager.total_stars + QuizManager.stars_collected,
-		SaveManager.words_introduced.size(),
-		SaveManager.streak
+		SaveManager.total_stars + QuizManager.stars_collected
 	]
 
-	if results.is_empty():
+	if answered.is_empty():
 		return
 
 	results_list.add_child(_make_header())
-	for entry in results:
+	for entry in answered:
 		results_list.add_child(_make_row(entry))
 
 func _make_header() -> HBoxContainer:
@@ -44,7 +36,7 @@ func _make_header() -> HBoxContainer:
 	row.add_theme_constant_override("separation", 16)
 	for pair in [["", 28], ["字", 56], ["Pinyin", 110], ["Meaning", 300]]:
 		var lbl = Label.new()
-		lbl.text    = pair[0]
+		lbl.text     = pair[0]
 		lbl.modulate = Color(0.7, 0.7, 0.7)
 		lbl.custom_minimum_size = Vector2(pair[1], 0)
 		if pair[0] == "Meaning":
@@ -57,10 +49,7 @@ func _make_row(entry: Dictionary) -> HBoxContainer:
 	row.add_theme_constant_override("separation", 16)
 
 	var status = Label.new()
-	if not entry["answered"]:
-		status.text     = "–"
-		status.modulate = Color(0.6, 0.6, 0.6)
-	elif entry["correct"]:
+	if entry["correct"]:
 		status.text     = "✓"
 		status.modulate = Color(0.2, 0.9, 0.3)
 	else:
