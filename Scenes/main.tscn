@@ -13,10 +13,12 @@
 [ext_resource type="AudioStream" uid="uid://ub0480sywtvh" path="res://bgmusic.mp3" id="11_d1ilt"]
 
 [sub_resource type="Environment" id="Environment_5vw27"]
-ssr_enabled = true
-ssao_enabled = true
-ssil_enabled = true
 sdfgi_enabled = true
+sdfgi_bounce_feedback = 0.0
+sdfgi_cascades = 3
+sdfgi_y_scale = 0
+sdfgi_energy = 0.4
+sdfgi_normal_bias = 0.6
 glow_enabled = true
 fog_enabled = true
 volumetric_fog_enabled = true
