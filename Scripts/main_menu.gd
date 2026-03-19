@@ -17,10 +17,10 @@ func _update_streak() -> void:
 		lbl.text = "🔥 %d day streak" % SaveManager.streak if SaveManager.streak > 0 else ""
 
 func _on_start_pressed() -> void:
-	get_tree().change_scene_to_file("res://Scenes/main.tscn")
+	get_tree().change_scene_to_file("res://Scenes/pack_select.tscn")
+
+func _on_words_pressed() -> void:
+	get_tree().change_scene_to_file("res://Scenes/words_hub.tscn")
 
 func _on_settings_pressed() -> void:
 	get_tree().change_scene_to_file("res://Scenes/settings.tscn")
-
-func _on_words_pressed() -> void:
-	get_tree().change_scene_to_file("res://Scenes/word_list.tscn")

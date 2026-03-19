@@ -3,16 +3,11 @@ extends Node
 # ─────────────────────────────────────────────────────────────
 # SaveManager — Autoload singleton  (Scripts/save_manager.gd)
 # Must be ABOVE QuizManager in the Autoload list.
-#
-# Mastery system:
-#   3 consecutive correct answers → level up (max level 5)
-#   Any wrong answer              → streak resets to 0, level down 1
-#   First encounter (intro card)  → doesn't affect streak or level
 # ─────────────────────────────────────────────────────────────
 
 const SAVE_PATH          = "user://save.tres"
 const MAX_LEVEL          = 5
-const STREAK_TO_LEVEL_UP = 3   # correct answers in a row to gain a level
+const STREAK_TO_LEVEL_UP = 3
 
 var _data: SaveData = SaveData.new()
 
@@ -59,6 +54,14 @@ var saved_new_words_per_day: int:
 	get: return _data.saved_new_words_per_day
 	set(v): _data.saved_new_words_per_day = v
 
+var owned_packs: Array:
+	get: return _data.owned_packs
+	set(v): _data.owned_packs = v
+
+var active_pack: String:
+	get: return _data.active_pack
+	set(v): _data.active_pack = v
+
 # ─────────────────────────────────────────────────────────────
 
 func _ready() -> void:
@@ -100,6 +103,31 @@ func _is_consecutive(prev: String, today: String) -> bool:
 	return (today_unix - prev_unix) == 86400
 
 # ─────────────────────────────────────────────────────────────
+# Pack ownership
+
+func owns_pack(pack_id: String) -> bool:
+	return _data.owned_packs.has(pack_id)
+
+func buy_pack(pack_id: String, price: int) -> bool:
+	if owns_pack(pack_id):
+		return false
+	if _data.total_stars < price:
+		return false
+	_data.total_stars -= price
+	var new_owned = _data.owned_packs.duplicate()
+	new_owned.append(pack_id)
+	_data.owned_packs = new_owned
+	save()
+	return true
+
+func set_active_pack(pack_id: String) -> void:
+	if not owns_pack(pack_id):
+		return
+	_data.active_pack = pack_id
+	save()
+
+# ─────────────────────────────────────────────────────────────
+# Word pool — scoped to active pack
 
 func introduce_new_words(all_words: Array, max_new: int) -> void:
 	var remaining = max_new - _data.new_words_today
@@ -147,7 +175,6 @@ func mark_word_seen(rank: int) -> void:
 	var new_seen = _data.words_seen.duplicate()
 	new_seen.append(rank)
 	_data.words_seen = new_seen
-	# Initialise level and streak at 0
 	var new_levels = _data.word_levels.duplicate()
 	if not new_levels.has(str(rank)):
 		new_levels[str(rank)] = 0
@@ -164,56 +191,42 @@ func get_level(rank: int) -> int:
 func get_word_streak(rank: int) -> int:
 	return _data.word_streaks.get(str(rank), 0)
 
-# Called on correct answer — increments streak, levels up every STREAK_TO_LEVEL_UP
 func record_correct(rank: int) -> void:
 	var new_levels  = _data.word_levels.duplicate()
 	var new_streaks = _data.word_streaks.duplicate()
-
 	var current_level  = new_levels.get(str(rank), 0)
 	var current_streak = new_streaks.get(str(rank), 0) + 1
-
 	if current_streak >= STREAK_TO_LEVEL_UP:
-		# Level up and reset streak counter
 		new_levels[str(rank)]  = min(current_level + 1, MAX_LEVEL)
 		new_streaks[str(rank)] = 0
 	else:
 		new_streaks[str(rank)] = current_streak
-
 	_data.word_levels  = new_levels
 	_data.word_streaks = new_streaks
 	save()
 
-# Called on wrong answer — resets streak to 0, drops level by 1
 func record_wrong(rank: int) -> void:
 	var new_levels  = _data.word_levels.duplicate()
 	var new_streaks = _data.word_streaks.duplicate()
-
-	var current_level      = new_levels.get(str(rank), 0)
-	new_levels[str(rank)]  = max(current_level - 1, 0)
-	new_streaks[str(rank)] = 0   # reset streak on any wrong answer
-
+	new_levels[str(rank)]  = max(new_levels.get(str(rank), 0) - 1, 0)
+	new_streaks[str(rank)] = 0
 	_data.word_levels  = new_levels
 	_data.word_streaks = new_streaks
 	save()
 
-# Fully resets a word — removes from all tracking
 func reset_word(rank: int) -> void:
 	var new_seen = _data.words_seen.duplicate()
 	new_seen.erase(rank)
 	_data.words_seen = new_seen
-
 	var new_introduced = _data.words_introduced.duplicate()
 	new_introduced.erase(rank)
 	_data.words_introduced = new_introduced
-
 	var new_levels = _data.word_levels.duplicate()
 	new_levels.erase(str(rank))
 	_data.word_levels = new_levels
-
 	var new_streaks = _data.word_streaks.duplicate()
 	new_streaks.erase(str(rank))
 	_data.word_streaks = new_streaks
-
 	save()
 
 # ─────────────────────────────────────────────────────────────

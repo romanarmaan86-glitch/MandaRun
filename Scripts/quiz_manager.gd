@@ -4,14 +4,11 @@ extends Node
 # QuizManager — Autoload singleton  (Scripts/quiz_manager.gd)
 # ─────────────────────────────────────────────────────────────
 
-const WORD_FILE = "res://hsk1_words.json"
-
 const TYPE_EN_TO_ZH = 0
 const TYPE_PY_TO_ZH = 1
 const TYPE_ZH_TO_EN = 2
 const TYPE_INTRO    = 3
 
-# Lower level = appears more often
 const LEVEL_WEIGHTS = [8, 5, 3, 2, 1, 0]
 
 var all_words:         Array      = []
@@ -29,21 +26,14 @@ signal question_answered(correct: bool, correct_lane: int)
 # ─────────────────────────────────────────────────────────────
 
 func _ready() -> void:
-	_load_words()
+	pass   # words loaded in prepare_run() so active pack is already set
 
-func _load_words() -> void:
-	if not FileAccess.file_exists(WORD_FILE):
-		printerr("QuizManager: hsk1_words.json not found")
-		return
-	var file   = FileAccess.open(WORD_FILE, FileAccess.READ)
-	var parsed = JSON.parse_string(file.get_as_text())
-	if parsed is Array:
-		all_words = parsed
-		print("QuizManager: loaded ", all_words.size(), " words")
-	else:
-		printerr("QuizManager: failed to parse hsk1_words.json")
-
+# Load words from the currently active pack
 func prepare_run() -> void:
+	all_words = WordPacks.load_words_for_pack(SaveManager.active_pack)
+	if all_words.is_empty():
+		printerr("QuizManager: no words loaded for pack: ", SaveManager.active_pack)
+		return
 	SaveManager.introduce_new_words(all_words, new_words_per_day)
 
 # ─────────────────────────────────────────────────────────────
@@ -61,6 +51,9 @@ func _pick_word(pool: Array) -> Dictionary:
 	return weighted[randi() % weighted.size()]
 
 func generate_question() -> void:
+	if all_words.is_empty():
+		printerr("QuizManager: no words loaded — was prepare_run() called?")
+		return
 	var pool = SaveManager.get_active_pool(all_words)
 	if pool.is_empty():
 		printerr("QuizManager: no words in pool")
@@ -126,10 +119,8 @@ func submit_answer(chosen_lane: int) -> void:
 
 	if rank >= 0:
 		if not SaveManager.has_seen(rank):
-			# First encounter — just mark seen, don't affect streak/level
 			SaveManager.mark_word_seen(rank)
 		elif q_type != TYPE_INTRO:
-			# Only quiz answers count toward streak/mastery
 			if correct:
 				SaveManager.record_correct(rank)
 			else:

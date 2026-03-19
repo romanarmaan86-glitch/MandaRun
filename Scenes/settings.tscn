@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bfroalhnwstqv"]
 
 [ext_resource type="FontFile" uid="uid://bn28sktmelutm" path="res://Some Time Later.otf" id="1_4geyq"]
-[ext_resource type="Script" uid="uid://bivs7fd2xy0iv" path="res://Scenes/settings.gd" id="1_i44u3"]
+[ext_resource type="Script" uid="uid://bivs7fd2xy0iv" path="res://Scripts/settings.gd" id="1_i44u3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i44u3"]
 bg_color = Color(1, 1, 1, 1)

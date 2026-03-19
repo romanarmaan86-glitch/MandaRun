@@ -1,9 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bnl5gjoysgei8"]
+[gd_scene load_steps=7 format=3 uid="uid://b4pfqy1t2pn7v"]
 
-[ext_resource type="Script" uid="uid://xlxftv28egyo" path="res://Scripts/word_list.gd" id="1_j073a"]
-[ext_resource type="FontFile" uid="uid://bn28sktmelutm" path="res://Some Time Later.otf" id="2_yitw0"]
+[ext_resource type="Script" uid="uid://bdx3omluwoioh" path="res://Scripts/word_packs_scene.gd" id="1_fswmh"]
+[ext_resource type="FontFile" uid="uid://bn28sktmelutm" path="res://Some Time Later.otf" id="2_y01wn"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ubrb"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vb3lw"]
 bg_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
@@ -11,7 +11,7 @@ corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 shadow_size = 5
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fuot3"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bgbob"]
 bg_color = Color(0.3553136, 0.35531354, 0.35531357, 1)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
@@ -19,7 +19,7 @@ corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 shadow_size = 5
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_up1xd"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ehmvr"]
 bg_color = Color(0.6296744, 0.6296749, 0.62967455, 1)
 corner_radius_top_left = 16
 corner_radius_top_right = 16
@@ -27,16 +27,16 @@ corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 shadow_size = 5
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tifpy"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bnlpi"]
 
-[node name="WordList" type="Control"]
+[node name="WordPacks" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_j073a")
+script = ExtResource("1_fswmh")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -46,27 +46,38 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TitleLabel" type="Label" parent="."]
+[node name="Title" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -160.0
-offset_top = -289.0
-offset_right = 160.0
-offset_bottom = -200.0
+offset_left = -170.5
+offset_top = -280.0
+offset_right = 170.5
+offset_bottom = -191.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.38039216)
 theme_override_constants/shadow_offset_x = 5
 theme_override_constants/shadow_offset_y = 4
-theme_override_fonts/font = ExtResource("2_yitw0")
+theme_override_fonts/font = ExtResource("2_y01wn")
 theme_override_font_sizes/font_size = 80
-text = "My Words"
+text = "Word Packs"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="StarsLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -272.0
+offset_top = 32.0
+offset_right = -63.0
+offset_bottom = 97.0
+grow_horizontal = 0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 1
@@ -76,13 +87,13 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -433.5
-offset_top = -139.0
+offset_top = -169.5
 offset_right = 433.5
 offset_bottom = 169.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="WordList" type="VBoxContainer" parent="ScrollContainer"]
+[node name="PackList" type="VBoxContainer" parent="ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -107,24 +118,12 @@ theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("2_yitw0")
+theme_override_fonts/font = ExtResource("2_y01wn")
 theme_override_font_sizes/font_size = 40
-theme_override_styles/normal = SubResource("StyleBoxFlat_4ubrb")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_fuot3")
-theme_override_styles/hover = SubResource("StyleBoxFlat_up1xd")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_tifpy")
+theme_override_styles/normal = SubResource("StyleBoxFlat_vb3lw")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_bgbob")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ehmvr")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bnlpi")
 text = "Back"
 
-[node name="SearchBox" type="LineEdit" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -333.0
-offset_top = -187.0
-offset_right = 334.0
-offset_bottom = -156.0
-grow_horizontal = 2
-grow_vertical = 2
+[connection signal="pressed" from="BackBtn" to="." method="_on_back_btn_pressed"]
