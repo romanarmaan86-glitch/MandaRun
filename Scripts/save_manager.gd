@@ -3,10 +3,16 @@ extends Node
 # ─────────────────────────────────────────────────────────────
 # SaveManager — Autoload singleton  (Scripts/save_manager.gd)
 # Must be ABOVE QuizManager in the Autoload list.
+#
+# Mastery system:
+#   3 consecutive correct answers → level up (max level 5)
+#   Any wrong answer              → streak resets to 0, level down 1
+#   First encounter (intro card)  → doesn't affect streak or level
 # ─────────────────────────────────────────────────────────────
 
-const SAVE_PATH  = "user://save.tres"
-const MAX_LEVEL  = 5   # fully mastered
+const SAVE_PATH          = "user://save.tres"
+const MAX_LEVEL          = 5
+const STREAK_TO_LEVEL_UP = 3   # correct answers in a row to gain a level
 
 var _data: SaveData = SaveData.new()
 
@@ -28,6 +34,10 @@ var words_seen: Array:
 var word_levels: Dictionary:
 	get: return _data.word_levels
 	set(v): _data.word_levels = v
+
+var word_streaks: Dictionary:
+	get: return _data.word_streaks
+	set(v): _data.word_streaks = v
 
 var new_words_today: int:
 	get: return _data.new_words_today
@@ -126,7 +136,7 @@ func get_active_pool(all_words: Array) -> Array:
 	return pool
 
 # ─────────────────────────────────────────────────────────────
-# Word seen / level tracking
+# Word seen / mastery
 
 func has_seen(rank: int) -> bool:
 	return _data.words_seen.has(rank)
@@ -136,31 +146,74 @@ func mark_word_seen(rank: int) -> void:
 		return
 	var new_seen = _data.words_seen.duplicate()
 	new_seen.append(rank)
-	_data.words_seen    = new_seen
-	# Initialise level at 0 if not already set
-	var new_levels      = _data.word_levels.duplicate()
+	_data.words_seen = new_seen
+	# Initialise level and streak at 0
+	var new_levels = _data.word_levels.duplicate()
 	if not new_levels.has(str(rank)):
 		new_levels[str(rank)] = 0
-	_data.word_levels   = new_levels
+	_data.word_levels = new_levels
+	var new_streaks = _data.word_streaks.duplicate()
+	if not new_streaks.has(str(rank)):
+		new_streaks[str(rank)] = 0
+	_data.word_streaks = new_streaks
 	save()
 
 func get_level(rank: int) -> int:
 	return _data.word_levels.get(str(rank), 0)
 
-# Call after a correct answer — moves word up one level (max MAX_LEVEL)
-func level_up(rank: int) -> void:
-	var new_levels        = _data.word_levels.duplicate()
-	var current           = new_levels.get(str(rank), 0)
-	new_levels[str(rank)] = min(current + 1, MAX_LEVEL)
-	_data.word_levels     = new_levels
+func get_word_streak(rank: int) -> int:
+	return _data.word_streaks.get(str(rank), 0)
+
+# Called on correct answer — increments streak, levels up every STREAK_TO_LEVEL_UP
+func record_correct(rank: int) -> void:
+	var new_levels  = _data.word_levels.duplicate()
+	var new_streaks = _data.word_streaks.duplicate()
+
+	var current_level  = new_levels.get(str(rank), 0)
+	var current_streak = new_streaks.get(str(rank), 0) + 1
+
+	if current_streak >= STREAK_TO_LEVEL_UP:
+		# Level up and reset streak counter
+		new_levels[str(rank)]  = min(current_level + 1, MAX_LEVEL)
+		new_streaks[str(rank)] = 0
+	else:
+		new_streaks[str(rank)] = current_streak
+
+	_data.word_levels  = new_levels
+	_data.word_streaks = new_streaks
 	save()
 
-# Call after a wrong answer — drops word back one level (min 0)
-func level_down(rank: int) -> void:
-	var new_levels        = _data.word_levels.duplicate()
-	var current           = new_levels.get(str(rank), 0)
-	new_levels[str(rank)] = max(current - 1, 0)
-	_data.word_levels     = new_levels
+# Called on wrong answer — resets streak to 0, drops level by 1
+func record_wrong(rank: int) -> void:
+	var new_levels  = _data.word_levels.duplicate()
+	var new_streaks = _data.word_streaks.duplicate()
+
+	var current_level      = new_levels.get(str(rank), 0)
+	new_levels[str(rank)]  = max(current_level - 1, 0)
+	new_streaks[str(rank)] = 0   # reset streak on any wrong answer
+
+	_data.word_levels  = new_levels
+	_data.word_streaks = new_streaks
+	save()
+
+# Fully resets a word — removes from all tracking
+func reset_word(rank: int) -> void:
+	var new_seen = _data.words_seen.duplicate()
+	new_seen.erase(rank)
+	_data.words_seen = new_seen
+
+	var new_introduced = _data.words_introduced.duplicate()
+	new_introduced.erase(rank)
+	_data.words_introduced = new_introduced
+
+	var new_levels = _data.word_levels.duplicate()
+	new_levels.erase(str(rank))
+	_data.word_levels = new_levels
+
+	var new_streaks = _data.word_streaks.duplicate()
+	new_streaks.erase(str(rank))
+	_data.word_streaks = new_streaks
+
 	save()
 
 # ─────────────────────────────────────────────────────────────
@@ -173,8 +226,6 @@ func save_settings() -> void:
 	_data.saved_move_speed        = QuizManager.base_move_speed
 	_data.saved_new_words_per_day = QuizManager.new_words_per_day
 	save()
-
-# ─────────────────────────────────────────────────────────────
 
 func save() -> void:
 	var err = ResourceSaver.save(_data, SAVE_PATH)

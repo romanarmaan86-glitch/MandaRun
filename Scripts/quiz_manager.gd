@@ -2,16 +2,6 @@ extends Node
 
 # ─────────────────────────────────────────────────────────────
 # QuizManager — Autoload singleton  (Scripts/quiz_manager.gd)
-#
-# Word selection — Quizlet-style weighted by mastery level:
-#   Level 0 (just introduced) : weight 8  — seen very often
-#   Level 1                   : weight 5
-#   Level 2                   : weight 3
-#   Level 3                   : weight 2
-#   Level 4                   : weight 1
-#   Level 5 (mastered)        : weight 0  — no longer quizzed
-#
-# Unseen words always appear first as intro cards.
 # ─────────────────────────────────────────────────────────────
 
 const WORD_FILE = "res://hsk1_words.json"
@@ -21,7 +11,7 @@ const TYPE_PY_TO_ZH = 1
 const TYPE_ZH_TO_EN = 2
 const TYPE_INTRO    = 3
 
-# Weight per mastery level — index = level
+# Lower level = appears more often
 const LEVEL_WEIGHTS = [8, 5, 3, 2, 1, 0]
 
 var all_words:         Array      = []
@@ -57,11 +47,8 @@ func prepare_run() -> void:
 	SaveManager.introduce_new_words(all_words, new_words_per_day)
 
 # ─────────────────────────────────────────────────────────────
-# Word selection — weighted by mastery level
 
 func _pick_word(pool: Array) -> Dictionary:
-	# Build weighted list — unseen words get highest weight automatically
-	# because they start at level 0 (weight 8) and haven't been introduced yet
 	var weighted: Array = []
 	for word in pool:
 		var rank   = word["rank"]
@@ -69,11 +56,8 @@ func _pick_word(pool: Array) -> Dictionary:
 		var weight = LEVEL_WEIGHTS[level] if level < LEVEL_WEIGHTS.size() else 0
 		for _i in weight:
 			weighted.append(word)
-
 	if weighted.is_empty():
-		# All words mastered — fall back to full pool
 		return pool[randi() % pool.size()]
-
 	return weighted[randi() % weighted.size()]
 
 func generate_question() -> void:
@@ -82,15 +66,12 @@ func generate_question() -> void:
 		printerr("QuizManager: no words in pool")
 		return
 
-	# Always show unseen words first as intro cards
 	var unseen = pool.filter(func(w): return not SaveManager.has_seen(w["rank"]))
 	if not unseen.is_empty():
 		_build_intro_question(unseen[randi() % unseen.size()])
 		return
 
-	# Pick word weighted by mastery level
-	var correct_word = _pick_word(pool)
-	_build_quiz_question(correct_word, pool)
+	_build_quiz_question(_pick_word(pool), pool)
 
 func _build_intro_question(word: Dictionary) -> void:
 	current_question = {
@@ -143,15 +124,16 @@ func submit_answer(chosen_lane: int) -> void:
 	var rank    = current_question["word"].get("rank", -1)
 	var correct = (q_type == TYPE_INTRO) or (chosen_lane == current_question["correct_lane"])
 
-	# Mark seen and update mastery level
 	if rank >= 0:
 		if not SaveManager.has_seen(rank):
+			# First encounter — just mark seen, don't affect streak/level
 			SaveManager.mark_word_seen(rank)
 		elif q_type != TYPE_INTRO:
+			# Only quiz answers count toward streak/mastery
 			if correct:
-				SaveManager.level_up(rank)
+				SaveManager.record_correct(rank)
 			else:
-				SaveManager.level_down(rank)
+				SaveManager.record_wrong(rank)
 
 	run_results.append({
 		"chinese":      current_question["word"]["chinese"],
@@ -162,7 +144,8 @@ func submit_answer(chosen_lane: int) -> void:
 		"correct_lane": current_question["correct_lane"],
 		"answers":      current_question["answers"],
 		"intro":        q_type == TYPE_INTRO,
-		"level":        SaveManager.get_level(rank)
+		"level":        SaveManager.get_level(rank),
+		"word_streak":  SaveManager.get_word_streak(rank)
 	})
 
 	question_answered.emit(correct, current_question["correct_lane"])

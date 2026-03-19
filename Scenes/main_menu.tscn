@@ -132,7 +132,7 @@ text = "Manda-Run"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="StreakLabel" type="Label" parent="."]
+[node name="StarsLabel" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -144,4 +144,5 @@ offset_bottom = 97.0
 grow_horizontal = 0
 
 [connection signal="pressed" from="VBoxContainer/start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="VBoxContainer/Words" to="." method="_on_words_pressed"]
 [connection signal="pressed" from="VBoxContainer/settings" to="." method="_on_settings_pressed"]
