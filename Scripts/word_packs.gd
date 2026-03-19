@@ -19,6 +19,15 @@ const PACKS: Array = [
 		"size": 500,
 		"free": true
 	},
+	
+	{
+	"id":   "hsk2",
+	"name": "HSK 2",
+	"desc": "HSK level 2 vocabulary",
+	"file": "res://hsk2_words.json",
+	"size": 772,
+	"free": false
+	}
 	# Future packs — uncomment and add JSON file when ready:
 	# {
 	#   "id":   "hsk2",
