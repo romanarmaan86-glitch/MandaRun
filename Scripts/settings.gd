@@ -2,17 +2,14 @@ extends Control
 
 # settings.gd  (Scenes/settings.gd)
 
-const SPEED_EASY   := 9.0
-const SPEED_NORMAL := 15.0
-const SPEED_HARD   := 23.0
-const WORDS_MIN    := 5
-const WORDS_MAX    := 50
-const WORDS_STEP   := 5
+const WORDS_MIN  := 5
+const WORDS_MAX  := 50
+const WORDS_STEP := 5
 
-var _diff_btns:    Array = []
-var _words_val:    Label
-var _dec_btn:      Button
-var _inc_btn:      Button
+var _words_val: Label
+var _dec_btn:   Button
+var _inc_btn:   Button
+var _vol_slider: HSlider
 
 func _ready() -> void:
 	UIStyle.make_bg(self)
@@ -20,25 +17,35 @@ func _ready() -> void:
 
 	var vbox = VBoxContainer.new()
 	vbox.set_anchors_preset(Control.PRESET_CENTER)
-	vbox.position = Vector2(-180, -100)
+	vbox.position = Vector2(-180, -80)
 	vbox.custom_minimum_size = Vector2(360, 0)
 	vbox.add_theme_constant_override("separation", 20)
 	add_child(vbox)
 
-	# ── Difficulty ──
-	var diff_lbl = UIStyle.make_label("Difficulty", UIStyle.FS_HEADING, UIStyle.TEXT_DIM)
-	vbox.add_child(diff_lbl)
+	# ── Volume ──
+	var vol_lbl = UIStyle.make_label("Volume", UIStyle.FS_HEADING, UIStyle.TEXT_DIM)
+	vbox.add_child(vol_lbl)
 
-	var diff_row = HBoxContainer.new()
-	diff_row.add_theme_constant_override("separation", 10)
-	vbox.add_child(diff_row)
+	var vol_row = HBoxContainer.new()
+	vol_row.add_theme_constant_override("separation", 12)
+	vbox.add_child(vol_row)
 
-	for pair in [["Easy", SPEED_EASY], ["Normal", SPEED_NORMAL], ["Hard", SPEED_HARD]]:
-		var btn = UIStyle.make_button(pair[0], UIStyle.FS_BODY)
-		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		btn.pressed.connect(_on_difficulty.bind(pair[1], btn))
-		diff_row.add_child(btn)
-		_diff_btns.append({"btn": btn, "speed": pair[1]})
+	_vol_slider = HSlider.new()
+	_vol_slider.min_value = 0.0
+	_vol_slider.max_value = 1.0
+	_vol_slider.step = 0.01
+	_vol_slider.value = db_to_linear(AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Master")))
+	_vol_slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_vol_slider.custom_minimum_size = Vector2(0, 32)
+	_vol_slider.value_changed.connect(_on_volume_changed)
+	vol_row.add_child(_vol_slider)
+
+	var vol_pct = UIStyle.make_label("%d%%" % roundi(_vol_slider.value * 100), UIStyle.FS_BODY, UIStyle.ACCENT)
+	vol_pct.custom_minimum_size = Vector2(46, 0)
+	vol_pct.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	vol_row.add_child(vol_pct)
+	# keep a reference so we can update it live
+	_vol_slider.set_meta("pct_label", vol_pct)
 
 	# ── Words per day ──
 	var words_lbl = UIStyle.make_label("New Words Per Day", UIStyle.FS_HEADING, UIStyle.TEXT_DIM)
@@ -54,9 +61,9 @@ func _ready() -> void:
 	words_row.add_child(_dec_btn)
 
 	_words_val = UIStyle.make_label("10", UIStyle.FS_HEADING, UIStyle.ACCENT)
-	_words_val.custom_minimum_size    = Vector2(60, 0)
-	_words_val.horizontal_alignment   = HORIZONTAL_ALIGNMENT_CENTER
-	_words_val.size_flags_horizontal  = Control.SIZE_EXPAND_FILL
+	_words_val.custom_minimum_size   = Vector2(60, 0)
+	_words_val.horizontal_alignment  = HORIZONTAL_ALIGNMENT_CENTER
+	_words_val.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	words_row.add_child(_words_val)
 
 	_inc_btn = UIStyle.make_button("+", UIStyle.FS_HEADING)
@@ -64,25 +71,18 @@ func _ready() -> void:
 	_inc_btn.pressed.connect(_increase_words)
 	words_row.add_child(_inc_btn)
 
-	# Apply current values
-	_highlight_difficulty(QuizManager.base_move_speed)
 	_update_words_display()
 
 	UIStyle.make_back_button(self, "res://Scenes/main_menu.tscn")
 
 # ─────────────────────────────────────────────────────────────
 
-func _on_difficulty(speed: float, btn: Button) -> void:
-	QuizManager.base_move_speed = speed
-	QuizManager.move_speed      = speed
-	QuizManager.speed_penalised = false
-	SaveManager.save_settings()
-	_highlight_difficulty(speed)
-
-func _highlight_difficulty(active_speed: float) -> void:
-	for entry in _diff_btns:
-		var is_active = is_equal_approx(entry["speed"], active_speed)
-		entry["btn"].modulate = UIStyle.GREEN if is_active else UIStyle.TEXT
+func _on_volume_changed(value: float) -> void:
+	var bus = AudioServer.get_bus_index("Master")
+	AudioServer.set_bus_volume_db(bus, linear_to_db(value))
+	var lbl = _vol_slider.get_meta("pct_label") as Label
+	if lbl:
+		lbl.text = "%d%%" % roundi(value * 100)
 
 func _decrease_words() -> void:
 	QuizManager.new_words_per_day = max(QuizManager.new_words_per_day - WORDS_STEP, WORDS_MIN)
@@ -95,6 +95,6 @@ func _increase_words() -> void:
 	_update_words_display()
 
 func _update_words_display() -> void:
-	_words_val.text    = str(QuizManager.new_words_per_day)
-	_dec_btn.modulate  = UIStyle.TEXT_DARK if QuizManager.new_words_per_day <= WORDS_MIN else UIStyle.TEXT
-	_inc_btn.modulate  = UIStyle.TEXT_DARK if QuizManager.new_words_per_day >= WORDS_MAX else UIStyle.TEXT
+	_words_val.text   = str(QuizManager.new_words_per_day)
+	_dec_btn.modulate = UIStyle.TEXT_DARK if QuizManager.new_words_per_day <= WORDS_MIN else UIStyle.TEXT
+	_inc_btn.modulate = UIStyle.TEXT_DARK if QuizManager.new_words_per_day >= WORDS_MAX else UIStyle.TEXT

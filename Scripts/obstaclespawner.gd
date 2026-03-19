@@ -8,13 +8,17 @@ const EVADE_GAP: float = 7.5
 
 @export var obstacle_scene: PackedScene
 @export var star_scene: PackedScene
-@export var spawn_chance: float = 0.95
+@export var spawn_chance: float = 0.95  # overridden by difficulty at run start
 
 const JUMP_OVER_SIZE: Vector3 = Vector3(1.0, 0.5, 0.5)
 const SLIDE_UNDER_SIZE: Vector3 = Vector3(1.0, 0.5, 0.5)
 const EVADE_SIZE: Vector3 = Vector3(2.5, 2.0, 0.6)
 
 var last_single_free_lane: int = -1
+
+func _ready() -> void:
+	if QuizManager.has_meta("spawn_chance"):
+		spawn_chance = QuizManager.get_meta("spawn_chance")
 
 const GRACE_PLATFORMS: int = 3
 var platforms_seen: int = 0

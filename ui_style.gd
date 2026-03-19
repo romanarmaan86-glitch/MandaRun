@@ -25,6 +25,9 @@ const FS_BODY    = 18
 const FS_SUB     = 14
 const FS_SMALL   = 12
 
+# ── Custom font (used for titles) ──
+const TITLE_FONT_PATH = "res://Some Time Later.otf"
+
 # ─────────────────────────────────────────────────────────────
 # Style factories
 
@@ -74,6 +77,7 @@ func make_title(text: String, parent: Control, y: float = 24.0) -> Label:
 	var lbl = Label.new()
 	lbl.text = text
 	lbl.add_theme_font_size_override("font_size", FS_TITLE)
+	lbl.add_theme_font_override("font", load(TITLE_FONT_PATH))  # ← custom font
 	lbl.set_anchors_preset(Control.PRESET_CENTER_TOP)
 	lbl.position = Vector2(-200, y)
 	lbl.custom_minimum_size = Vector2(400, 50)

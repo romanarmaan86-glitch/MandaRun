@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bnii2d2u7oqgi"]
+[gd_scene load_steps=15 format=3 uid="uid://bnii2d2u7oqgi"]
 
 [ext_resource type="Script" uid="uid://gamauonbj2fw" path="res://Scripts/main.gd" id="1_hptm8"]
 [ext_resource type="PackedScene" uid="uid://cflhq27mnaldj" path="res://Scenes/player.tscn" id="2_d1ilt"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://cvhr4c287cg3b" path="res://Scripts/platformspawner.gd" id="8_h1bgf"]
 [ext_resource type="PackedScene" uid="uid://cmoe7xasmk0f8" path="res://Scenes/platform.tscn" id="9_b3802"]
 [ext_resource type="PackedScene" uid="uid://df002e2cc4iyp" path="res://Scenes/quiz_platform.tscn" id="10_fevyy"]
+[ext_resource type="AudioStream" uid="uid://ub0480sywtvh" path="res://bgmusic.mp3" id="11_d1ilt"]
 
 [sub_resource type="Environment" id="Environment_5vw27"]
 ssr_enabled = true
@@ -162,5 +163,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_d1ilt")
+autoplay = true
 
 [connection signal="died" from="World3D/Player" to="." method="_on_player_died"]
