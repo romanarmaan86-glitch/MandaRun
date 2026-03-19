@@ -12,10 +12,14 @@ const PANEL_SIZE: Vector3    = Vector3(0.2, 3.0, 1.45)
 const TRIGGER_SIZE: Vector3  = Vector3(40.0, 4.0, 6.0)
 const TRIGGER_X: float       = 20.0
 
-const COLOR_IDLE = Color(0.08, 0.08, 0.45)
+const COLOR_IDLE  = Color(0.08, 0.08, 0.45)
+const COLOR_INTRO = Color(0.08, 0.45, 0.55)   # teal = new word
 
 const QUIZ_PLATFORM_LENGTH: float = PLATFORM_LENGTH
 const SPEED_PENALTY: float        = 5.0
+
+const FONT_SIZE_CHINESE: int = 30
+const FONT_SIZE_ENGLISH: int = 16
 
 var _my_question:   Dictionary = {}
 var _question_done: bool       = false
@@ -26,7 +30,7 @@ var _quiz_box:    Control   = null
 var _lbl_chinese: Label     = null
 var _lbl_pinyin:  Label     = null
 var _lbl_english: Label     = null
-var _lbl_answers: Array     = []   # [Answer0, Answer1, Answer2]
+var _lbl_answers: Array     = []
 var _flash:       ColorRect = null
 
 # ─────────────────────────────────────────────────────────────
@@ -69,54 +73,95 @@ func _cache_hud_nodes() -> void:
 	_lbl_pinyin  = scene.find_child("Pinyin",       true, false) as Label
 	_lbl_english = scene.find_child("English",      true, false) as Label
 	_flash       = scene.find_child("FlashOverlay", true, false) as ColorRect
-
-	# Answer option labels — lane 0 = left, 1 = middle, 2 = right
 	for name in ["Answer0", "Answer1", "Answer2"]:
 		var lbl = scene.find_child(name, true, false) as Label
+		if lbl:
+			lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			lbl.autowrap_mode         = TextServer.AUTOWRAP_WORD
+			lbl.horizontal_alignment  = HORIZONTAL_ALIGNMENT_CENTER
+			lbl.label_settings        = null
 		_lbl_answers.append(lbl)
+
+func _set_answer_font_size(size: int) -> void:
+	for lbl in _lbl_answers:
+		if lbl:
+			lbl.add_theme_font_size_override("font_size", size)
 
 func _show_hud_question() -> void:
 	if _my_question.is_empty():
 		return
-	var word = _my_question["word"]
-	if _lbl_chinese: _lbl_chinese.text    = word["chinese"]
-	if _lbl_pinyin:  _lbl_pinyin.text     = word["pinyin"]
-	if _lbl_english:
-		_lbl_english.text     = "???"
-		_lbl_english.modulate = Color.WHITE
 
-	# Show the three answer options with lane indicators
+	var word    = _my_question["word"]
+	var q_type  = _my_question["q_type"]
 	var answers = _my_question["answers"]
-	var lane_labels = ["← ", "↑ ", "→ "]
-	for i in 3:
-		if _lbl_answers[i]:
-			_lbl_answers[i].text     = lane_labels[i] + answers[i]
-			_lbl_answers[i].modulate = Color.WHITE
-			_lbl_answers[i].visible  = true
+	var is_intro = (q_type == QuizManager.TYPE_INTRO)
+
+	# Reset all
+	if _lbl_chinese: _lbl_chinese.visible = false
+	if _lbl_pinyin:  _lbl_pinyin.visible  = false
+	if _lbl_english: _lbl_english.visible = false
+	for lbl in _lbl_answers:
+		if lbl: lbl.visible = false
+
+	if is_intro:
+		# Show Chinese + pinyin + English meaning — no answer labels needed
+		if _lbl_chinese:
+			_lbl_chinese.text    = word["chinese"]
+			_lbl_chinese.visible = true
+		if _lbl_pinyin:
+			_lbl_pinyin.text    = word["pinyin"]
+			_lbl_pinyin.visible = true
+		if _lbl_english:
+			_lbl_english.text    = word["meaning"]
+			_lbl_english.visible = true
+		# Answer labels stay hidden — player just runs through any panel
+	else:
+		var is_chinese_answer = (q_type != QuizManager.TYPE_ZH_TO_EN)
+		match q_type:
+			QuizManager.TYPE_ZH_TO_EN:
+				if _lbl_chinese:
+					_lbl_chinese.text    = word["chinese"]
+					_lbl_chinese.visible = true
+				if _lbl_pinyin:
+					_lbl_pinyin.text    = word["pinyin"]
+					_lbl_pinyin.visible = true
+			QuizManager.TYPE_PY_TO_ZH:
+				if _lbl_pinyin:
+					_lbl_pinyin.text    = word["pinyin"]
+					_lbl_pinyin.visible = true
+			QuizManager.TYPE_EN_TO_ZH:
+				if _lbl_english:
+					_lbl_english.text    = word["meaning"]
+					_lbl_english.visible = true
+
+		_set_answer_font_size(FONT_SIZE_CHINESE if is_chinese_answer else FONT_SIZE_ENGLISH)
+		for i in 3:
+			if _lbl_answers[i]:
+				_lbl_answers[i].text     = answers[i]
+				_lbl_answers[i].modulate = Color.WHITE
+				_lbl_answers[i].visible  = true
 
 	if _quiz_box: _quiz_box.visible = true
 
 func _reveal_hud_answer(correct: bool) -> void:
 	if _my_question.is_empty():
 		return
-	var word         = _my_question["word"]
+	var q_type       = _my_question["q_type"]
 	var correct_lane = _my_question["correct_lane"]
-
-	if _lbl_chinese: _lbl_chinese.text = word["chinese"]
-	if _lbl_pinyin:  _lbl_pinyin.text  = word["pinyin"]
-	if _lbl_english:
-		_lbl_english.text     = word["meaning"]
-		_lbl_english.modulate = Color(0.3, 1.0, 0.3) if correct else Color(1.0, 0.4, 0.4)
-
-	# Highlight correct answer green, wrong ones red
-	for i in 3:
-		if _lbl_answers[i]:
-			_lbl_answers[i].modulate = Color(0.3, 1.0, 0.3) if i == correct_lane else Color(1.0, 0.4, 0.4)
-
+	if q_type == QuizManager.TYPE_INTRO:
+		# Nothing to reveal — the English label already shows the meaning
+		pass
+	else:
+		for i in 3:
+			if _lbl_answers[i]:
+				_lbl_answers[i].modulate = Color(0.3, 1.0, 0.3) if i == correct_lane else Color(1.0, 0.4, 0.4)
 	if _quiz_box: _quiz_box.visible = true
 
 func _hide_hud_question() -> void:
-	if _quiz_box: _quiz_box.visible = false
+	if _quiz_box:    _quiz_box.visible    = false
+	if _lbl_chinese: _lbl_chinese.visible = false
+	if _lbl_pinyin:  _lbl_pinyin.visible  = false
+	if _lbl_english: _lbl_english.visible = false
 	for lbl in _lbl_answers:
 		if lbl: lbl.visible = false
 
@@ -126,6 +171,11 @@ func _hide_hud_question() -> void:
 func _build_panels() -> void:
 	if _my_question.is_empty():
 		return
+
+	var q_type            = _my_question["q_type"]
+	var is_intro          = (q_type == QuizManager.TYPE_INTRO)
+	var is_chinese_answer = (q_type != QuizManager.TYPE_ZH_TO_EN)
+	var panel_color       = COLOR_INTRO if is_intro else COLOR_IDLE
 
 	for i in 3:
 		var area  = Area3D.new()
@@ -141,15 +191,16 @@ func _build_panels() -> void:
 		box.size      = PANEL_SIZE
 		mesh_inst.mesh = box
 		var mat = StandardMaterial3D.new()
-		mat.albedo_color = COLOR_IDLE
+		mat.albedo_color = panel_color
 		mat.roughness    = 0.5
 		mesh_inst.material_override = mat
 		area.add_child(mesh_inst)
 		_panel_meshes.append(mesh_inst)
 
+		# Intro panels show nothing on the 3D panel — just a "tap to continue" feel
 		var lbl = Label3D.new()
-		lbl.text             = _my_question["answers"][i]
-		lbl.font_size        = 64
+		lbl.text             = "" if is_intro else _my_question["answers"][i]
+		lbl.font_size        = 80 if is_chinese_answer and not is_intro else 48
 		lbl.modulate         = Color.WHITE
 		lbl.outline_size     = 6
 		lbl.outline_modulate = Color.BLACK
@@ -167,7 +218,6 @@ func _build_panels() -> void:
 		add_child(area)
 
 # ─────────────────────────────────────────────────────────────
-# ANSWER LOGIC
 
 func _on_panel_body_entered(body: Node3D, lane: int) -> void:
 	if _question_done or not body.is_in_group("player"):
@@ -181,7 +231,7 @@ func _on_question_answered(correct: bool, _correct_lane: int) -> void:
 		QuizManager.question_answered.disconnect(_on_question_answered)
 	_reveal_hud_answer(correct)
 	_show_flash(correct)
-	if not correct:
+	if not correct and _my_question.get("q_type") != QuizManager.TYPE_INTRO:
 		QuizManager.move_speed      = max(QuizManager.move_speed - SPEED_PENALTY, 3.0)
 		QuizManager.speed_penalised = true
 
@@ -209,10 +259,9 @@ func _exit_tree() -> void:
 			"correct":      false,
 			"answered":     false,
 			"correct_lane": _my_question.get("correct_lane", -1),
-			"answers":      _my_question.get("answers", [])
+			"answers":      _my_question.get("answers", []),
+			"intro":        _my_question.get("q_type") == QuizManager.TYPE_INTRO
 		})
 		_hide_hud_question()
-	if _lbl_english:
-		_lbl_english.modulate = Color.WHITE
 	if QuizManager.question_answered.is_connected(_on_question_answered):
 		QuizManager.question_answered.disconnect(_on_question_answered)

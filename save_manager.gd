@@ -5,14 +5,13 @@ extends Node
 # Must be ABOVE QuizManager in the Autoload list.
 # ─────────────────────────────────────────────────────────────
 
-const SAVE_PATH = "user://save.tres"
+const SAVE_PATH  = "user://save.tres"
+const MAX_LEVEL  = 5   # fully mastered
 
-# _data is created immediately so accessors never hit a null reference
-# even if something reads SaveManager before _ready() finishes.
 var _data: SaveData = SaveData.new()
 
 # ─────────────────────────────────────────────────────────────
-# Accessors — rest of codebase uses SaveManager.streak etc.
+# Accessors
 
 var last_played_date: String:
 	get: return _data.last_played_date
@@ -21,6 +20,14 @@ var last_played_date: String:
 var words_introduced: Array:
 	get: return _data.words_introduced
 	set(v): _data.words_introduced = v
+
+var words_seen: Array:
+	get: return _data.words_seen
+	set(v): _data.words_seen = v
+
+var word_levels: Dictionary:
+	get: return _data.word_levels
+	set(v): _data.word_levels = v
 
 var new_words_today: int:
 	get: return _data.new_words_today
@@ -45,9 +52,8 @@ var saved_new_words_per_day: int:
 # ─────────────────────────────────────────────────────────────
 
 func _ready() -> void:
-	load_save()          # overwrites _data with saved values
-	_check_day_change()  # must run BEFORE _apply_saved_settings
-						 # so streak is correct before anything reads it
+	load_save()
+	_check_day_change()
 	_apply_saved_settings()
 
 func _apply_saved_settings() -> void:
@@ -57,23 +63,17 @@ func _apply_saved_settings() -> void:
 
 func _check_day_change() -> void:
 	var today = _today_string()
-
 	if _data.last_played_date == "":
-		# First ever launch
 		_data.last_played_date = today
 		_data.streak           = 0
 		save()
 		return
-
 	if today == _data.last_played_date:
-		return   # Same day, nothing to do
-
-	# New day
+		return
 	if _is_consecutive(_data.last_played_date, today):
 		_data.streak += 1
 	else:
 		_data.streak = 1
-
 	_data.last_played_date = today
 	_data.new_words_today  = 0
 	save()
@@ -95,17 +95,11 @@ func introduce_new_words(all_words: Array, max_new: int) -> void:
 	var remaining = max_new - _data.new_words_today
 	if remaining <= 0:
 		return
-
-	# Build lookup of already-introduced ranks
 	var introduced_set = {}
 	for rank in _data.words_introduced:
 		introduced_set[rank] = true
-
-	# Build a new array — reassigning fixes the Resource dirty-tracking bug
-	# where appending to the existing array doesn't mark the resource as changed
 	var new_list: Array = _data.words_introduced.duplicate()
 	var added = 0
-
 	for word in all_words:
 		if added >= remaining:
 			break
@@ -114,9 +108,8 @@ func introduce_new_words(all_words: Array, max_new: int) -> void:
 			new_list.append(rank)
 			introduced_set[rank] = true
 			added += 1
-
 	if added > 0:
-		_data.words_introduced = new_list   # reassign so Resource tracks the change
+		_data.words_introduced = new_list
 		_data.new_words_today += added
 		save()
 
@@ -131,6 +124,46 @@ func get_active_pool(all_words: Array) -> Array:
 		if rank_set.has(word["rank"]):
 			pool.append(word)
 	return pool
+
+# ─────────────────────────────────────────────────────────────
+# Word seen / level tracking
+
+func has_seen(rank: int) -> bool:
+	return _data.words_seen.has(rank)
+
+func mark_word_seen(rank: int) -> void:
+	if _data.words_seen.has(rank):
+		return
+	var new_seen = _data.words_seen.duplicate()
+	new_seen.append(rank)
+	_data.words_seen    = new_seen
+	# Initialise level at 0 if not already set
+	var new_levels      = _data.word_levels.duplicate()
+	if not new_levels.has(str(rank)):
+		new_levels[str(rank)] = 0
+	_data.word_levels   = new_levels
+	save()
+
+func get_level(rank: int) -> int:
+	return _data.word_levels.get(str(rank), 0)
+
+# Call after a correct answer — moves word up one level (max MAX_LEVEL)
+func level_up(rank: int) -> void:
+	var new_levels        = _data.word_levels.duplicate()
+	var current           = new_levels.get(str(rank), 0)
+	new_levels[str(rank)] = min(current + 1, MAX_LEVEL)
+	_data.word_levels     = new_levels
+	save()
+
+# Call after a wrong answer — drops word back one level (min 0)
+func level_down(rank: int) -> void:
+	var new_levels        = _data.word_levels.duplicate()
+	var current           = new_levels.get(str(rank), 0)
+	new_levels[str(rank)] = max(current - 1, 0)
+	_data.word_levels     = new_levels
+	save()
+
+# ─────────────────────────────────────────────────────────────
 
 func add_stars(amount: int) -> void:
 	_data.total_stars += amount
@@ -150,9 +183,7 @@ func save() -> void:
 
 func load_save() -> void:
 	if not ResourceLoader.exists(SAVE_PATH):
-		# No save file yet — _data is already a fresh SaveData from var declaration
 		return
-
 	var loaded = ResourceLoader.load(SAVE_PATH)
 	if loaded is SaveData:
 		_data = loaded

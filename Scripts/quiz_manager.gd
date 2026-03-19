@@ -2,21 +2,37 @@ extends Node
 
 # ─────────────────────────────────────────────────────────────
 # QuizManager — Autoload singleton  (Scripts/quiz_manager.gd)
+#
+# Word selection — Quizlet-style weighted by mastery level:
+#   Level 0 (just introduced) : weight 8  — seen very often
+#   Level 1                   : weight 5
+#   Level 2                   : weight 3
+#   Level 3                   : weight 2
+#   Level 4                   : weight 1
+#   Level 5 (mastered)        : weight 0  — no longer quizzed
+#
+# Unseen words always appear first as intro cards.
 # ─────────────────────────────────────────────────────────────
 
 const WORD_FILE = "res://hsk1_words.json"
 
-var all_words:        Array      = []
-var current_question: Dictionary = {}
-var run_results:      Array      = []
-var stars_collected:  int        = 0   # stars this run only
+const TYPE_EN_TO_ZH = 0
+const TYPE_PY_TO_ZH = 1
+const TYPE_ZH_TO_EN = 2
+const TYPE_INTRO    = 3
 
-var base_move_speed:  float = 15.0
-var move_speed:       float = 15.0
-var speed_penalised:  bool  = false
+# Weight per mastery level — index = level
+const LEVEL_WEIGHTS = [8, 5, 3, 2, 1, 0]
 
-# How many new words to introduce per run start (set in settings)
-var new_words_per_day: int = 10
+var all_words:         Array      = []
+var current_question:  Dictionary = {}
+var run_results:       Array      = []
+var stars_collected:   int        = 0
+
+var base_move_speed:   float = 15.0
+var move_speed:        float = 15.0
+var speed_penalised:   bool  = false
+var new_words_per_day: int   = 10
 
 signal question_answered(correct: bool, correct_lane: int)
 
@@ -37,41 +53,84 @@ func _load_words() -> void:
 	else:
 		printerr("QuizManager: failed to parse hsk1_words.json")
 
-# ─────────────────────────────────────────────────────────────
-# Call this when a run starts — introduces today's new words
-
 func prepare_run() -> void:
 	SaveManager.introduce_new_words(all_words, new_words_per_day)
 
 # ─────────────────────────────────────────────────────────────
+# Word selection — weighted by mastery level
+
+func _pick_word(pool: Array) -> Dictionary:
+	# Build weighted list — unseen words get highest weight automatically
+	# because they start at level 0 (weight 8) and haven't been introduced yet
+	var weighted: Array = []
+	for word in pool:
+		var rank   = word["rank"]
+		var level  = SaveManager.get_level(rank)
+		var weight = LEVEL_WEIGHTS[level] if level < LEVEL_WEIGHTS.size() else 0
+		for _i in weight:
+			weighted.append(word)
+
+	if weighted.is_empty():
+		# All words mastered — fall back to full pool
+		return pool[randi() % pool.size()]
+
+	return weighted[randi() % weighted.size()]
 
 func generate_question() -> void:
 	var pool = SaveManager.get_active_pool(all_words)
 	if pool.is_empty():
-		printerr("QuizManager: no words introduced yet — run prepare_run() first")
+		printerr("QuizManager: no words in pool")
 		return
 
-	var correct_word = pool[randi() % pool.size()]
+	# Always show unseen words first as intro cards
+	var unseen = pool.filter(func(w): return not SaveManager.has_seen(w["rank"]))
+	if not unseen.is_empty():
+		_build_intro_question(unseen[randi() % unseen.size()])
+		return
+
+	# Pick word weighted by mastery level
+	var correct_word = _pick_word(pool)
+	_build_quiz_question(correct_word, pool)
+
+func _build_intro_question(word: Dictionary) -> void:
+	current_question = {
+		"word":         word,
+		"q_type":       TYPE_INTRO,
+		"correct_lane": 0,
+		"answers":      [word["meaning"], word["meaning"], word["meaning"]],
+		"answered":     false
+	}
+
+func _build_quiz_question(correct_word: Dictionary, pool: Array) -> void:
+	var q_type = randi() % 3
 
 	var wrong_answers: Array[String] = []
 	var attempts = 0
 	while wrong_answers.size() < 2 and attempts < 100:
 		attempts += 1
-		var candidate = pool[randi() % pool.size()]
-		if candidate["meaning"] != correct_word["meaning"] and \
-		   not wrong_answers.has(candidate["meaning"]):
-			wrong_answers.append(candidate["meaning"])
+		var candidate        = pool[randi() % pool.size()]
+		var candidate_answer = _answer_for_type(candidate, q_type)
+		var correct_answer   = _answer_for_type(correct_word, q_type)
+		if candidate_answer != correct_answer and not wrong_answers.has(candidate_answer):
+			wrong_answers.append(candidate_answer)
 
-	var answer_meanings = [correct_word["meaning"], wrong_answers[0], wrong_answers[1]]
-	answer_meanings.shuffle()
-	var correct_lane = answer_meanings.find(correct_word["meaning"])
+	var answer_options = [_answer_for_type(correct_word, q_type), wrong_answers[0], wrong_answers[1]]
+	answer_options.shuffle()
+	var correct_lane = answer_options.find(_answer_for_type(correct_word, q_type))
 
 	current_question = {
 		"word":         correct_word,
+		"q_type":       q_type,
 		"correct_lane": correct_lane,
-		"answers":      answer_meanings,
+		"answers":      answer_options,
 		"answered":     false
 	}
+
+func _answer_for_type(word: Dictionary, q_type: int) -> String:
+	match q_type:
+		TYPE_EN_TO_ZH, TYPE_PY_TO_ZH: return word["chinese"]
+		TYPE_ZH_TO_EN:                 return word["meaning"]
+		_:                             return word["chinese"]
 
 # ─────────────────────────────────────────────────────────────
 
@@ -79,7 +138,20 @@ func submit_answer(chosen_lane: int) -> void:
 	if current_question.is_empty() or current_question.get("answered", false):
 		return
 	current_question["answered"] = true
-	var correct = chosen_lane == current_question["correct_lane"]
+
+	var q_type  = current_question.get("q_type", TYPE_ZH_TO_EN)
+	var rank    = current_question["word"].get("rank", -1)
+	var correct = (q_type == TYPE_INTRO) or (chosen_lane == current_question["correct_lane"])
+
+	# Mark seen and update mastery level
+	if rank >= 0:
+		if not SaveManager.has_seen(rank):
+			SaveManager.mark_word_seen(rank)
+		elif q_type != TYPE_INTRO:
+			if correct:
+				SaveManager.level_up(rank)
+			else:
+				SaveManager.level_down(rank)
 
 	run_results.append({
 		"chinese":      current_question["word"]["chinese"],
@@ -88,7 +160,9 @@ func submit_answer(chosen_lane: int) -> void:
 		"correct":      correct,
 		"answered":     true,
 		"correct_lane": current_question["correct_lane"],
-		"answers":      current_question["answers"]
+		"answers":      current_question["answers"],
+		"intro":        q_type == TYPE_INTRO,
+		"level":        SaveManager.get_level(rank)
 	})
 
 	question_answered.emit(correct, current_question["correct_lane"])
@@ -96,10 +170,8 @@ func submit_answer(chosen_lane: int) -> void:
 # ─────────────────────────────────────────────────────────────
 
 func reset_run() -> void:
-	# Save stars accumulated this run to persistent total
 	if stars_collected > 0:
 		SaveManager.add_stars(stars_collected)
-
 	run_results.clear()
 	current_question = {}
 	stars_collected  = 0
