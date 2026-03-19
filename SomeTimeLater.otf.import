@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://bn28sktmelutm"
-path="res://.godot/imported/Some Time Later.otf-827cbcd334dcab0853afcc118b6e7af5.fontdata"
+path="res://.godot/imported/SomeTimeLater.otf-df7b33f9886862d0a00aaaf766b17851.fontdata"
 
 [deps]
 
-source_file="res://Some Time Later.otf"
-dest_files=["res://.godot/imported/Some Time Later.otf-827cbcd334dcab0853afcc118b6e7af5.fontdata"]
+source_file="res://SomeTimeLater.otf"
+dest_files=["res://.godot/imported/SomeTimeLater.otf-df7b33f9886862d0a00aaaf766b17851.fontdata"]
 
 [params]
 

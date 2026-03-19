@@ -1,66 +1,101 @@
 extends Control
 
-# settings.gd  (Scenes/settings.gd)
-
-@onready var easy_btn:      Button = $DifficultyButtons/EasyBtn
-@onready var normal_btn:    Button = $DifficultyButtons/NormalBtn
-@onready var hard_btn:      Button = $DifficultyButtons/HardBtn
-@onready var words_label:   Label  = $WordsPerDayLabel
-@onready var words_decrease:Button = $WordsPerDayButtons/DecreaseBtn
-@onready var words_value:   Label  = $WordsPerDayButtons/ValueLabel
-@onready var words_increase:Button = $WordsPerDayButtons/IncreaseBtn
-
-const SPEED_EASY   := 9.0
-const SPEED_NORMAL := 15.0
-const SPEED_HARD   := 23.0
-
-const WORDS_MIN  := 5
-const WORDS_MAX  := 50
-const WORDS_STEP := 5
-
-# ─────────────────────────────────────────────────────────────
+# run_results.gd  (Scripts/run_results.gd)
 
 func _ready() -> void:
-	easy_btn.pressed.connect(func():   _select_difficulty(SPEED_EASY,   easy_btn))
-	normal_btn.pressed.connect(func(): _select_difficulty(SPEED_NORMAL, normal_btn))
-	hard_btn.pressed.connect(func():   _select_difficulty(SPEED_HARD,   hard_btn))
-	words_decrease.pressed.connect(_decrease_words)
-	words_increase.pressed.connect(_increase_words)
+	UIStyle.make_bg(self)
+	UIStyle.make_title("Run Results", self)
 
-	match QuizManager.base_move_speed:
-		SPEED_EASY:  _highlight_difficulty(easy_btn)
-		SPEED_HARD:  _highlight_difficulty(hard_btn)
-		_:           _highlight_difficulty(normal_btn)
+	# Summary panel
+	var summary_panel = PanelContainer.new()
+	summary_panel.add_theme_stylebox_override("panel", UIStyle.card_style())
+	summary_panel.set_anchors_preset(Control.PRESET_CENTER_TOP)
+	summary_panel.position = Vector2(-280, 80)
+	summary_panel.custom_minimum_size = Vector2(560, 0)
+	add_child(summary_panel)
 
-	_update_words_display()
+	var summary_lbl = UIStyle.make_label("", UIStyle.FS_BODY, UIStyle.ACCENT)
+	summary_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	summary_panel.add_child(summary_lbl)
 
-# ─────────────────────────────────────────────────────────────
+	# Results list
+	var results_list = UIStyle.make_scroll(self, 180, -80)
 
-func _select_difficulty(speed: float, btn: Button) -> void:
-	QuizManager.base_move_speed = speed
-	QuizManager.move_speed      = speed
-	QuizManager.speed_penalised = false
-	_highlight_difficulty(btn)
-	SaveManager.save_settings()   # persist immediately
+	# Continue button
+	var cont_btn = UIStyle.make_button("Continue", UIStyle.FS_BODY)
+	cont_btn.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
+	cont_btn.offset_left   = -220
+	cont_btn.offset_top    = -60
+	cont_btn.offset_right  = -20
+	cont_btn.offset_bottom = -10
+	cont_btn.pressed.connect(_on_continue)
+	add_child(cont_btn)
 
-func _highlight_difficulty(active: Button) -> void:
-	for b in [easy_btn, normal_btn, hard_btn]:
-		b.modulate = Color(1.0, 1.0, 1.0) if b == active else Color(0.5, 0.5, 0.5)
+	# Populate
+	var all_results   = QuizManager.run_results
+	var answered      = all_results.filter(func(e): return e["answered"])
+	var correct_count = answered.filter(func(e): return e["correct"]).size()
 
-func _decrease_words() -> void:
-	QuizManager.new_words_per_day = max(QuizManager.new_words_per_day - WORDS_STEP, WORDS_MIN)
-	_update_words_display()
-	SaveManager.save_settings()   # persist immediately
+	summary_lbl.text = "%d / %d correct   |   ⭐ %d this run   |   ⭐ %d total" % [
+		correct_count,
+		answered.size(),
+		QuizManager.stars_collected,
+		SaveManager.total_stars + QuizManager.stars_collected
+	]
 
-func _increase_words() -> void:
-	QuizManager.new_words_per_day = min(QuizManager.new_words_per_day + WORDS_STEP, WORDS_MAX)
-	_update_words_display()
-	SaveManager.save_settings()   # persist immediately
+	if answered.is_empty():
+		var empty_lbl = UIStyle.make_label("No questions answered this run.", UIStyle.FS_BODY, UIStyle.TEXT_DIM)
+		empty_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		results_list.add_child(empty_lbl)
+		return
 
-func _update_words_display() -> void:
-	words_value.text        = str(QuizManager.new_words_per_day)
-	words_decrease.modulate = Color(0.5, 0.5, 0.5) if QuizManager.new_words_per_day <= WORDS_MIN else Color(1, 1, 1)
-	words_increase.modulate = Color(0.5, 0.5, 0.5) if QuizManager.new_words_per_day >= WORDS_MAX else Color(1, 1, 1)
+	# Header
+	results_list.add_child(_make_header())
+	for entry in answered:
+		results_list.add_child(_make_row(entry))
 
-func _on_back_pressed() -> void:
+func _make_header() -> HBoxContainer:
+	var row = HBoxContainer.new()
+	row.add_theme_constant_override("separation", 12)
+	for pair in [["", 28], ["字", 50], ["Pinyin", 110], ["Meaning", 300]]:
+		var lbl = UIStyle.make_label(pair[0], UIStyle.FS_SMALL, UIStyle.TEXT_DIM)
+		lbl.custom_minimum_size = Vector2(pair[1], 0)
+		if pair[0] == "Meaning":
+			lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(lbl)
+	return row
+
+func _make_row(entry: Dictionary) -> PanelContainer:
+	var panel = PanelContainer.new()
+	panel.add_theme_stylebox_override("panel", UIStyle.card_style())
+
+	var hbox = HBoxContainer.new()
+	hbox.add_theme_constant_override("separation", 12)
+	panel.add_child(hbox)
+
+	var status = UIStyle.make_label(
+		"✓" if entry["correct"] else "✗",
+		UIStyle.FS_BODY,
+		UIStyle.GREEN if entry["correct"] else UIStyle.RED
+	)
+	status.custom_minimum_size = Vector2(28, 0)
+	hbox.add_child(status)
+
+	var chinese = UIStyle.make_label(entry["chinese"], 20)
+	chinese.custom_minimum_size = Vector2(50, 0)
+	hbox.add_child(chinese)
+
+	var pinyin = UIStyle.make_label(entry["pinyin"], UIStyle.FS_SMALL, UIStyle.TEXT_DIM)
+	pinyin.custom_minimum_size = Vector2(110, 0)
+	hbox.add_child(pinyin)
+
+	var meaning = UIStyle.make_label(entry["meaning"], UIStyle.FS_SUB)
+	meaning.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	meaning.autowrap_mode         = TextServer.AUTOWRAP_WORD
+	hbox.add_child(meaning)
+
+	return panel
+
+func _on_continue() -> void:
+	QuizManager.reset_run()
 	get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")

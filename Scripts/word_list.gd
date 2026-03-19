@@ -1,39 +1,37 @@
 extends Control
 
 # word_list.gd  (Scripts/word_list.gd)
-#
-# Scene structure (Scenes/word_list.tscn):
-#   Control (root, this script)
-#     Panel
-#     Label          (name: TitleLabel,  text: "My Words")
-#     LineEdit       (name: SearchBox,   placeholder: "Search...")
-#     ScrollContainer
-#       VBoxContainer  (name: WordList)
-#     Button         (name: BackBtn,    text: "Back")
 
-@onready var word_list:  VBoxContainer = $ScrollContainer/WordList
-@onready var search_box: LineEdit      = $SearchBox
-@onready var back_btn:   Button        = $BackBtn
-
-var _all_words: Array = []
+var _all_words:   Array = []
 var _search_term: String = ""
+var _word_list:   VBoxContainer
+var _search_box:  LineEdit
 
 func _ready() -> void:
-	back_btn.pressed.connect(func():
-		get_tree().change_scene_to_file("res://Scenes/words_hub.tscn")
-	)
-	search_box.text_changed.connect(_on_search_changed)
+	UIStyle.make_bg(self)
+	UIStyle.make_title("My Words", self)
 
-	# Load words from active pack
+	# Search box
+	_search_box = LineEdit.new()
+	_search_box.placeholder_text = "Search chinese, pinyin, meaning..."
+	_search_box.set_anchors_preset(Control.PRESET_CENTER_TOP)
+	_search_box.position = Vector2(-280, 80)
+	_search_box.custom_minimum_size = Vector2(560, 40)
+	_search_box.text_changed.connect(_on_search)
+	add_child(_search_box)
+
+	_word_list = UIStyle.make_scroll(self, 134, -20)
+	UIStyle.make_back_button(self, "res://Scenes/words_hub.tscn")
+
 	_all_words = WordPacks.load_words_for_pack(SaveManager.active_pack)
 	_rebuild()
 
-func _on_search_changed(new_text: String) -> void:
-	_search_term = new_text.to_lower().strip_edges()
+func _on_search(text: String) -> void:
+	_search_term = text.to_lower().strip_edges()
 	_rebuild()
 
 func _rebuild() -> void:
-	for child in word_list.get_children():
+	for child in _word_list.get_children():
 		child.queue_free()
 	await get_tree().process_frame
 
@@ -41,18 +39,12 @@ func _rebuild() -> void:
 	var unlearned: Array = []
 
 	for word in _all_words:
-		# Apply search filter
 		if _search_term != "":
-			var chinese = word["chinese"].to_lower()
-			var pinyin  = word["pinyin"].to_lower()
-			var meaning = word["meaning"].to_lower()
-			if not (chinese.contains(_search_term) or
-					pinyin.contains(_search_term) or
-					meaning.contains(_search_term)):
+			if not (word["chinese"].to_lower().contains(_search_term) or
+					word["pinyin"].to_lower().contains(_search_term) or
+					word["meaning"].to_lower().contains(_search_term)):
 				continue
-
-		var rank = word["rank"]
-		if SaveManager.has_seen(rank):
+		if SaveManager.has_seen(word["rank"]):
 			learned.append(word)
 		else:
 			unlearned.append(word)
@@ -62,88 +54,77 @@ func _rebuild() -> void:
 	)
 
 	for word in learned:
-		word_list.add_child(_make_learned_row(word))
+		_word_list.add_child(_make_learned_row(word))
 	for word in unlearned:
-		word_list.add_child(_make_unlearned_row(word))
+		_word_list.add_child(_make_unlearned_row(word))
 
-func _make_learned_row(word: Dictionary) -> HBoxContainer:
+func _make_learned_row(word: Dictionary) -> PanelContainer:
 	var rank  = word["rank"]
 	var level = SaveManager.get_level(rank)
 	var ws    = SaveManager.get_word_streak(rank)
 
-	var row = HBoxContainer.new()
-	row.add_theme_constant_override("separation", 12)
+	var panel = PanelContainer.new()
+	panel.add_theme_stylebox_override("panel", UIStyle.card_style())
 
-	var chinese = Label.new()
-	chinese.text                = word["chinese"]
+	var hbox = HBoxContainer.new()
+	hbox.add_theme_constant_override("separation", 12)
+	panel.add_child(hbox)
+
+	var chinese = UIStyle.make_label(word["chinese"], 22)
 	chinese.custom_minimum_size = Vector2(50, 0)
-	chinese.add_theme_font_size_override("font_size", 22)
-	row.add_child(chinese)
+	hbox.add_child(chinese)
 
-	var pinyin = Label.new()
-	pinyin.text                = word["pinyin"]
-	pinyin.custom_minimum_size = Vector2(100, 0)
-	pinyin.modulate            = Color(0.8, 0.8, 0.8)
-	pinyin.add_theme_font_size_override("font_size", 14)
-	row.add_child(pinyin)
+	var pinyin = UIStyle.make_label(word["pinyin"], UIStyle.FS_SUB, UIStyle.TEXT_DIM)
+	pinyin.custom_minimum_size = Vector2(110, 0)
+	hbox.add_child(pinyin)
 
-	var meaning = Label.new()
-	meaning.text                  = word["meaning"]
+	var meaning = UIStyle.make_label(word["meaning"], UIStyle.FS_SUB)
 	meaning.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	meaning.autowrap_mode         = TextServer.AUTOWRAP_WORD
-	meaning.add_theme_font_size_override("font_size", 14)
-	row.add_child(meaning)
+	hbox.add_child(meaning)
 
-	# Stars + streak progress (e.g. ★★★☆☆  2/3)
-	var progress = Label.new()
-	progress.text                = "%s  %d/3" % [_stars_string(level), ws]
-	progress.custom_minimum_size = Vector2(110, 0)
-	progress.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	progress.add_theme_font_size_override("font_size", 13)
-	row.add_child(progress)
+	# Stars + streak
+	var prog = UIStyle.make_label("%s %d/3" % [_stars_str(level), ws], UIStyle.FS_SMALL, UIStyle.ACCENT)
+	prog.custom_minimum_size      = Vector2(90, 0)
+	prog.horizontal_alignment     = HORIZONTAL_ALIGNMENT_RIGHT
+	hbox.add_child(prog)
 
-	var reset_btn = Button.new()
-	reset_btn.text                = "↺"
-	reset_btn.custom_minimum_size = Vector2(36, 0)
-	reset_btn.tooltip_text        = "Reset progress for this word"
-	reset_btn.pressed.connect(_on_reset_word.bind(rank))
-	row.add_child(reset_btn)
+	var reset_btn = UIStyle.make_button("↺", UIStyle.FS_SUB)
+	reset_btn.custom_minimum_size = Vector2(40, 0)
+	reset_btn.pressed.connect(_on_reset.bind(rank))
+	hbox.add_child(reset_btn)
 
-	return row
+	return panel
 
-func _make_unlearned_row(word: Dictionary) -> HBoxContainer:
-	var row = HBoxContainer.new()
-	row.add_theme_constant_override("separation", 12)
-	row.modulate = Color(0.35, 0.35, 0.35)
+func _make_unlearned_row(word: Dictionary) -> PanelContainer:
+	var panel = PanelContainer.new()
+	var style = UIStyle.card_style()
+	style.bg_color = Color(0.10, 0.10, 0.16)
+	panel.add_theme_stylebox_override("panel", style)
+	panel.modulate = Color(0.4, 0.4, 0.4)
 
-	var chinese = Label.new()
-	chinese.text                = word["chinese"]
+	var hbox = HBoxContainer.new()
+	hbox.add_theme_constant_override("separation", 12)
+	panel.add_child(hbox)
+
+	var chinese = UIStyle.make_label(word["chinese"], 22)
 	chinese.custom_minimum_size = Vector2(50, 0)
-	chinese.add_theme_font_size_override("font_size", 22)
-	row.add_child(chinese)
+	hbox.add_child(chinese)
 
-	var pinyin = Label.new()
-	pinyin.text                = word["pinyin"]
-	pinyin.custom_minimum_size = Vector2(100, 0)
-	pinyin.add_theme_font_size_override("font_size", 14)
-	row.add_child(pinyin)
+	var pinyin = UIStyle.make_label(word["pinyin"], UIStyle.FS_SUB)
+	pinyin.custom_minimum_size = Vector2(110, 0)
+	hbox.add_child(pinyin)
 
-	var meaning = Label.new()
-	meaning.text                  = word["meaning"]
+	var meaning = UIStyle.make_label(word["meaning"], UIStyle.FS_SUB)
 	meaning.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	meaning.autowrap_mode         = TextServer.AUTOWRAP_WORD
-	meaning.add_theme_font_size_override("font_size", 14)
-	row.add_child(meaning)
+	hbox.add_child(meaning)
 
-	var spacer = Control.new()
-	spacer.custom_minimum_size = Vector2(146, 0)
-	row.add_child(spacer)
+	return panel
 
-	return row
-
-func _stars_string(level: int) -> String:
+func _stars_str(level: int) -> String:
 	return "★".repeat(level) + "☆".repeat(5 - level)
 
-func _on_reset_word(rank: int) -> void:
+func _on_reset(rank: int) -> void:
 	SaveManager.reset_word(rank)
 	_rebuild()

@@ -17,9 +17,10 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+UIStyle="*res://ui_style.gd"
+WordPacks="*res://Scripts/word_packs.gd"
 SaveManager="*res://Scripts/save_manager.gd"
 QuizManager="*res://Scripts/quiz_manager.gd"
-WordPacks="*res://Scripts/word_packs.gd"
 
 [input]
 
